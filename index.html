@@ -253,6 +253,16 @@
     text-overflow: ellipsis;
   }
   .dd-caret { width: 14px; height: 14px; margin: -3px 0; flex: none; align-self: center; color: var(--accent); transition: transform 0.15s ease; }
+  .dd-btn[aria-expanded="true"] .dd-caret { transform: rotate(180deg); }
+  .dd-btn:focus-visible,
+  .dd-btn[aria-expanded="true"] {
+    background-color: var(--accent-soft);
+    border-bottom-color: var(--accent);
+    box-shadow: 0 1px 0 var(--accent);
+  }
+  @media (hover: hover) {
+    .dd-btn:hover { background-color: rgba(0, 68, 102, 0.045); }
+  }
 
   .dd-menu {
     position: absolute;
@@ -262,15 +272,18 @@
     max-width: 540px;
     top: calc(100% + 6px);
     z-index: 500;
-    max-height: min(80vh, 640px);
+    max-height: 360px;
     overflow-y: auto;
     scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
     padding: 6px;
     background: #ffffff;
     border: 1px solid var(--ui-border);
     border-radius: 12px;
     box-shadow: 0 2px 4px rgba(15,23,42,0.08), 0 16px 40px rgba(15,23,42,0.22);
+    animation: cal-in 0.12s ease-out;
   }
+  .dd-menu, .dd-menu * { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
   .dd-opt {
     display: flex;
     align-items: center;
@@ -282,8 +295,31 @@
     font-size: 13px;
     line-height: 1.3;
     cursor: pointer;
+    outline: none;
   }
-  .dd-opt:hover { background: var(--accent-soft); }
+  .dd-opt:hover, .dd-opt:focus { background: var(--accent-soft); }
+  .dd-opt:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
+  .dd-opt[aria-selected="true"] { color: var(--accent); font-weight: 700; }
+  .dd-opt svg { width: 16px; height: 16px; flex: none; color: var(--accent); visibility: hidden; }
+  .dd-opt[aria-selected="true"] svg { visibility: visible; }
+  .dd-clear {
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+    padding: 9px 12px;
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    border-radius: 0 0 8px 8px;
+    background: transparent;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+  }
+  .dd-clear:hover { background: #f1f5f9; color: #0f172a; }
+  .dd-clear:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
+  @keyframes cal-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 
   body { display: block; }
   html, body { overflow-x: hidden; }
@@ -293,21 +329,11 @@
     justify-content: center;
     gap: 16px;
     width: 100%;
-    padding: 0 20px;           /* breathing room between the screen edges and the buttons */
+    padding: 0 186px;          /* room for a 150px panel + 16px gap + 20px screen margin on each side */
     margin: 0 auto;
   }
   .workspace > .paper[hidden] { display: none; }
-  .btn-bar.tab-bar,
-  .btn-bar.action-bar {
-    position: sticky;
-    top: 16px;
-    left: auto;
-    right: auto;
-    flex: none;
-    width: 150px;
-    z-index: 20;
-  }
-
+  body.has-tools .workspace { padding-right: 388px; }   /* + 16px gap + 186px tools panel on the Computation Sheet */
   .thesis-box {
     border: 1px solid var(--line-black);
     margin-bottom: 18px;
@@ -341,9 +367,14 @@
     html, body { width: auto; height: auto; background: #fff; margin: 0; padding: 0; display: block; }
     .workspace { display: block; width: auto; margin: 0; }
     .paper { box-shadow: none; width: auto; min-height: 0; padding: 0; margin: 0; }
-    .btn-bar, .right-col, .picker-btn, .dd-caret, .dd-menu,
+    .btn-bar, .side-left, .side-right, .side-tools, .picker-btn, .dd-caret, .dd-menu,
     .img-tools, .resize-handle, .crop-handle, .rotate-handle, .img-ghost { display: none !important; }
-    .workspace { padding: 0; }
+    .dd-btn, .dd-btn:hover, .dd-btn:focus-visible, .dd-btn[aria-expanded="true"] {
+      background: transparent !important;
+      box-shadow: none !important;
+      border-bottom-color: var(--line-black) !important;
+    }
+    .workspace, body.has-tools .workspace { padding: 0 !important; }
     .paper { transform: none !important; }
     .paper.landscape { display: flow-root !important; }   /* keeps the header's top margin from pushing the paper edge down, which would shift images */
     /* Images are positioned from the paper's padding edge; in print that edge sits at the page margin, so pull them back by the same padding to keep them where they are on screen */
@@ -468,27 +499,30 @@
   .fmt-btn:disabled { opacity: 0.45; cursor: not-allowed; }
   .fmt-btn:focus-visible, .size-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px var(--accent); }
 
-  .right-col {
-    position: sticky;
+  /* Fixed side panels: they never move when the document scrolls */
+  .side-left, .side-right, .side-tools {
+    position: fixed;
     top: 16px;
-    flex: none;
-    width: 186px;
-    z-index: 20;
+    left: 20px;                 /* horizontal position is set by script so the panels hug the sheet */
+    z-index: 200;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    overflow: visible;          /* never scrollable */
+    gap: 12px;
   }
-  .right-col > .btn-bar.action-bar,
-  .right-col > .btn-bar.tools-bar {
+  .side-left  { width: 150px; transform-origin: top right; }
+  .side-right { width: 150px; transform-origin: top left; }
+  .side-tools { width: 186px; transform-origin: top left; }
+  .side-left > .btn-bar,
+  .side-right > .btn-bar,
+  .side-tools > .btn-bar {
     position: static;
     width: 100%;
     max-height: none;
     overflow: visible;
     flex: none;
   }
-  .right-col > .btn-bar.action-bar .btn { min-height: 70px; }
-  .right-col > .btn-bar.tools-bar { padding: 8px; gap: 10px; }
+  .side-right > .btn-bar.action-bar .btn { min-height: 70px; }
+  .side-tools > .btn-bar.tools-bar { padding: 8px; gap: 10px; }
 
   .sei-header { text-align: center; margin-top: 6px; }
   .sei-header .org { font-size: 14px; font-weight: 700; letter-spacing: 0.2px; }
@@ -868,18 +902,6 @@
 
 <div class="workspace">
 
-<!-- Form Switcher (left) -->
-<div class="btn-bar tab-bar" role="toolbar" aria-label="Choose form">
-  <button type="button" class="btn" id="tabTravel" onclick="showForm('travel')" aria-pressed="true" title="Show the Travel Reimbursement Form">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
-    <span class="btn-label">TRAVEL REIMBURSEMENT FORM</span>
-  </button>
-  <button type="button" class="btn btn-secondary" id="tabComp" onclick="showForm('comp')" aria-pressed="false" title="Show the Travel Reimbursement Computation Sheet">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="14" x2="12" y2="14"/><line x1="10" y1="12" x2="10" y2="16"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="9" y1="18" x2="16" y2="18"/></svg>
-    <span class="btn-label">COMPUTATION SHEET</span>
-  </button>
-</div>
-
 <!-- Travel Reimbursement Form Wrap -->
 <div class="sheet-wrap" id="wrapTravel">
 <div class="paper landscape" id="paperTravel">
@@ -1056,20 +1078,39 @@
 </div>
 </div>
 
-<!-- Right column: Compact FORMAT & MATH tools -->
-<div class="right-col">
-<div class="btn-bar action-bar" role="toolbar">
+</div><!-- /workspace -->
+
+<!-- LEFT (fixed, hugs the sheet): form switcher -->
+<div class="side-left" id="sideLeft">
+<div class="btn-bar tab-bar" role="toolbar" aria-label="Choose form">
+  <button type="button" class="btn" id="tabTravel" onclick="showForm('travel')" aria-pressed="true" title="Show the Travel Reimbursement Form">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+    <span class="btn-label">TRAVEL REIMBURSEMENT FORM</span>
+  </button>
+  <button type="button" class="btn btn-secondary" id="tabComp" onclick="showForm('comp')" aria-pressed="false" title="Show the Travel Reimbursement Computation Sheet">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="14" x2="12" y2="14"/><line x1="10" y1="12" x2="10" y2="16"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="9" y1="18" x2="16" y2="18"/></svg>
+    <span class="btn-label">COMPUTATION SHEET</span>
+  </button>
+</div>
+</div>
+
+<!-- RIGHT (fixed, hugs the sheet): upload / print -->
+<div class="side-right" id="sideRight">
+<div class="btn-bar action-bar" role="toolbar" aria-label="Upload and print">
   <button type="button" class="btn btn-secondary" onclick="triggerImageUpload()" title="Upload pictures/signatures">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
     <span class="btn-label">UPLOAD</span>
   </button>
-  <button type="button" class="btn" onclick="window.print()" title="Print/Save as PDF">
+  <button type="button" class="btn" onclick="window.print()" title="Print or save as PDF">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-    <span class="btn-label">PRINT</span>
+    <span class="btn-label">PRINT/DOWNLOAD</span>
   </button>
 </div>
+</div>
 
-<div class="btn-bar tools-bar" id="toolsBar" role="toolbar" aria-label="Text tools" hidden>
+<!-- FAR RIGHT (fixed): text tools, Computation Sheet only -->
+<div class="side-tools" id="sideTools" hidden>
+<div class="btn-bar tools-bar" id="toolsBar" role="toolbar" aria-label="Text tools">
   <div class="size-ctl" role="group">
     <span class="size-lbl">TEXT SIZE</span>
     <div class="size-row">
@@ -1113,7 +1154,6 @@
   </div>
 </div>
 </div>
-</div>
 
 <input type="file" id="pngUploader" accept="image/*" multiple style="display: none;" onchange="handleMultipleImages(event)">
 
@@ -1149,21 +1189,65 @@
       'BS/M Applied Math with Specialization in Mathematical Finance'
     ];
 
+    const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+
     function initDropdown(dd) {
       const btn = dd.querySelector('.dd-btn');
       const text = dd.querySelector('.dd-text');
-      let menu = null;
+      let menu = null, value = '';
 
-      btn.addEventListener('click', () => {
-        if (menu) { menu.remove(); menu = null; return; }
+      function close(returnFocus) {
+        if (!menu) return;
+        menu.remove(); menu = null;
+        btn.setAttribute('aria-expanded', 'false');
+        document.removeEventListener('pointerdown', outside, true);
+        if (returnFocus) btn.focus();
+      }
+      function outside(e) { if (menu && !dd.contains(e.target)) close(false); }
+
+      function choose(v) {
+        value = v;
+        text.textContent = v;
+        close(true);
+      }
+
+      function open() {
         menu = document.createElement('div');
         menu.className = 'dd-menu';
-        menu.innerHTML = COURSES.map((c, i) => `<div class="dd-opt" data-i="${i}">${c}</div>`).join('');
+        menu.setAttribute('role', 'listbox');
+        menu.setAttribute('aria-label', dd.dataset.label || 'Course');
+        menu.innerHTML = COURSES.map((c, i) =>
+          '<div class="dd-opt" role="option" tabindex="-1" data-i="' + i + '" aria-selected="' + (c === value) + '"><span>' + c + '</span>' + CHECK + '</div>'
+        ).join('') + (value ? '<button type="button" class="dd-clear">Clear selection</button>' : '');
         dd.appendChild(menu);
+        btn.setAttribute('aria-expanded', 'true');
+        document.addEventListener('pointerdown', outside, true);
+
         menu.addEventListener('click', (e) => {
           const opt = e.target.closest('.dd-opt');
-          if (opt) { text.textContent = COURSES[Number(opt.dataset.i)]; menu.remove(); menu = null; }
+          if (opt) choose(COURSES[Number(opt.dataset.i)]);
+          else if (e.target.closest('.dd-clear')) choose('');
         });
+        menu.addEventListener('keydown', (e) => {
+          const items = Array.from(menu.querySelectorAll('.dd-opt'));
+          const idx = items.indexOf(document.activeElement);
+          if (e.key === 'ArrowDown') { e.preventDefault(); items[Math.min(items.length - 1, idx + 1)].focus(); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); items[Math.max(0, idx - 1)].focus(); }
+          else if (e.key === 'Home') { e.preventDefault(); items[0].focus(); }
+          else if (e.key === 'End') { e.preventDefault(); items[items.length - 1].focus(); }
+          else if ((e.key === 'Enter' || e.key === ' ') && idx >= 0) { e.preventDefault(); choose(COURSES[Number(items[idx].dataset.i)]); }
+          else if (e.key === 'Escape') { e.preventDefault(); close(true); }
+          else if (e.key === 'Tab') { close(false); }
+        });
+
+        const sel = menu.querySelector('[aria-selected="true"]') || menu.querySelector('.dd-opt');
+        sel.focus();
+        sel.scrollIntoView({ block: 'nearest' });
+      }
+
+      btn.addEventListener('click', () => (menu ? close(false) : open()));
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!menu) open(); }
       });
     }
 
@@ -1604,7 +1688,8 @@
     const travel = which === 'travel';
     document.getElementById('wrapTravel').hidden = !travel;
     document.getElementById('wrapComp').hidden = travel;
-    document.getElementById('toolsBar').hidden = travel;
+    document.getElementById('sideTools').hidden = travel;
+    document.body.classList.toggle('has-tools', !travel);
 
     document.getElementById('tabTravel').classList.toggle('btn-secondary', !travel);
     document.getElementById('tabComp').classList.toggle('btn-secondary', travel);
@@ -1745,11 +1830,8 @@
     const ws = document.querySelector('.workspace');
     const wrap = paper.parentElement;
     const cs = getComputedStyle(ws);
-    const gap = parseFloat(cs.columnGap) || 0;
     const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
-    const left = document.querySelector('.tab-bar').offsetWidth;
-    const right = document.querySelector('.right-col').offsetWidth;
-    const avail = document.documentElement.clientWidth - pad - left - right - gap * 2;
+    const avail = document.documentElement.clientWidth - pad;
 
     paper.style.transform = 'none';
     const w = paper.offsetWidth, h = paper.offsetHeight;
@@ -1759,9 +1841,20 @@
     wrap.style.width = (w * s) + 'px';
     wrap.style.height = (h * s) + 'px';
 
-    // Tall right-hand panel: let it follow the page instead of scrolling inside itself
-    const rc = document.querySelector('.right-col');
-    rc.style.top = Math.min(16, window.innerHeight - rc.offsetHeight - 16) + 'px';
+    // Fixed panels can't scroll, so on a short window shrink them just enough to stay fully visible
+    const L = document.getElementById('sideLeft'), R = document.getElementById('sideRight'), T = document.getElementById('sideTools');
+    [L, R, T].forEach(function (el) {
+      el.style.transform = '';
+      const k = Math.min(1, (window.innerHeight - 32) / (el.offsetHeight || 1));
+      if (k < 1) el.style.transform = 'scale(' + k + ')';
+    });
+
+    // Hug the sheet: form buttons on its left, upload/print on its right, text tools just beyond those
+    const r = wrap.getBoundingClientRect();
+    const GAP = 16;
+    L.style.left = (r.left - GAP - L.offsetWidth) + 'px';
+    R.style.left = (r.right + GAP) + 'px';
+    T.style.left = (R.getBoundingClientRect().right + GAP) + 'px';
   }
   window.addEventListener('resize', fitToScreen);
   window.addEventListener('load', fitToScreen);
