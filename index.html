@@ -329,11 +329,11 @@
     justify-content: center;
     gap: 16px;
     width: 100%;
-    padding: 0 186px;          /* room for a 150px panel + 16px gap + 20px screen margin on each side */
+    padding: 0 188px;          /* room for a 146px panel + 16px gap + 20px screen margin on each side */
     margin: 0 auto;
   }
   .workspace > .paper[hidden] { display: none; }
-  body.has-tools .workspace { padding-right: 388px; }   /* + 16px gap + 186px tools panel on the Computation Sheet */
+  body.has-tools .workspace { padding-right: 356px; }   /* + 16px gap + 146px tools panel on the Computation Sheet */
   .thesis-box {
     border: 1px solid var(--line-black);
     margin-bottom: 18px;
@@ -423,17 +423,18 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    padding: 10px 8px;
+    padding: 8px 6px;
+    width: 100%;
     background: #ffffff;
     color: var(--accent);
     border: 1px solid var(--ui-border);
     border-radius: 12px;
   }
   .size-lbl { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
-  .size-row { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; }
+  .size-row { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; }
   .size-btn {
-    width: 44px;
-    height: 38px;
+    width: 32px;
+    height: 32px;
     padding: 0;
     background: var(--accent);
     color: #ffffff;
@@ -445,7 +446,7 @@
   }
   .size-btn:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
   .size-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-  .size-val { min-width: 30px; text-align: center; font-size: 16px; font-weight: 700; color: #0f172a; }
+  .size-val { min-width: 26px; text-align: center; font-size: 16px; font-weight: 700; color: #0f172a; }
 
   div.ta {
     white-space: pre-wrap;
@@ -462,7 +463,7 @@
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    padding: 10px 8px;
+    padding: 8px 6px;
     background: #ffffff;
     color: var(--accent);
     border: 1px solid var(--ui-border);
@@ -470,14 +471,14 @@
   }
   .fmt-grid {
     display: grid;
-    grid-template-columns: repeat(3, 44px);
-    gap: 6px;
+    grid-template-columns: repeat(3, 34px);
+    gap: 5px;
     justify-content: center;
   }
   .fmt-sep { height: 1px; background: var(--ui-border); width: 100%; margin: 2px 0; }
   .fmt-btn {
-    width: 44px;
-    height: 38px;
+    width: 34px;
+    height: 30px;
     padding: 0;
     display: inline-flex;
     align-items: center;
@@ -485,14 +486,16 @@
     background: #ffffff;
     color: var(--accent);
     border: 1px solid var(--ui-border);
-    border-radius: 9px;
-    font-size: 16px;
+    border-radius: 8px;
+    font-size: 14px;
     line-height: 1;
     cursor: pointer;
     transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
   }
-  .fmt-btn svg { width: 20px; height: 20px; }
-  .fmt-btn b { font-size: 16px !important; }
+  .fmt-btn svg { width: 18px; height: 18px; }
+  .fmt-btn small { font-size: 9px; font-weight: 700; }
+  .fmt-btn:active:not(:disabled) { transform: translateY(1px); }
+  .fmt-btn b { font-size: 15px !important; }
   .fmt-btn sub, .fmt-btn sup { font-size: 10px !important; font-weight: 700; line-height: 0; }
   .fmt-btn:hover:not(:disabled) { background: var(--accent-soft); border-color: var(--accent); }
   .fmt-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #ffffff; }
@@ -509,9 +512,9 @@
     flex-direction: column;
     gap: 12px;
   }
-  .side-left  { width: 150px; transform-origin: top right; }
-  .side-right { width: 150px; transform-origin: top left; }
-  .side-tools { width: 186px; transform-origin: top left; }
+  .side-left  { width: 152px; transform-origin: top right; }
+  .side-right { width: 152px; transform-origin: top left; }
+  .side-tools { width: 152px; transform-origin: top left; }
   .side-left > .btn-bar,
   .side-right > .btn-bar,
   .side-tools > .btn-bar {
@@ -521,7 +524,16 @@
     overflow: visible;
     flex: none;
   }
-  .side-right > .btn-bar.action-bar .btn { min-height: 70px; }
+  /* Square buttons: their side equals the width of the Text Size / Format / Math cards */
+  .side-left .btn, .side-right .btn {
+    width: 100%;
+    height: 87px;
+    min-height: 0;
+    padding: 4px;
+    gap: 4px;
+  }
+  .side-left .btn svg, .side-right .btn svg { width: 30px; height: 30px; stroke-width: 1.8; }
+  .side-left .btn .btn-label, .side-right .btn .btn-label { font-size: 10.5px; letter-spacing: 0.3px; line-height: 1.25; }
   .side-tools > .btn-bar.tools-bar { padding: 8px; gap: 10px; }
 
   .sei-header { text-align: center; margin-top: 6px; }
@@ -561,7 +573,7 @@
   .period-left { width: 142px; flex: none; font-size: 13px; }
   .period-left .lbl { font-weight: 700; font-size: 13px; padding: 0; display: block; margin-bottom: 4px; }
   .period-left .sy { display: flex; align-items: flex-end; }
-  .period-left .sy .inp-line { min-width: 0; width: 100%; }   /* keep the S.Y. line inside its column */
+  .period-left .sy .inp-line { min-width: 0; width: 100%; text-align: center; padding-left: 0; padding-right: 0; }   /* keep the S.Y. line inside its column */
   .period-grid {
     flex: 1;
     display: grid;
@@ -571,6 +583,7 @@
   }
 
   .inp-center { text-align: center; }
+  .inp-line.ctr { text-align: center; }
   .note { font-size: 12px; font-style: italic; margin: 4px 0 12px; }
 
   .tr-grid {
@@ -873,22 +886,33 @@
   .cert-col { width: 58%; }
   .cert-text { margin: 0 0 2px; font-size: 13px; line-height: 1.35; }
 
-  .fmt-btn .mini-frac { display: inline-flex; flex-direction: column; align-items: center; font: 700 11px/1.1 Arial, sans-serif; }
+  .fmt-btn .mini-frac { display: inline-flex; flex-direction: column; align-items: center; font: 700 10px/1.1 Arial, sans-serif; }
   .fmt-btn .mini-frac span:first-child { border-bottom: 1px solid currentColor; padding: 0 1px; }
-  .fmt-btn .glyph { font: 700 17px/1 Georgia, serif; }
+  .fmt-btn .glyph { font: 700 15px/1 Georgia, serif; }
 
   /* Rich text inside the explanation field */
   .ta p, .ta div { margin: 0; }
   .ta ul, .ta ol { margin: 0; padding-left: 1.7em; }
   .ta ul { list-style-type: disc; }
   .ta ul ul { list-style-type: circle; }
+  .ta ul ul ul { list-style-type: square; }
+  .ta ul ul ul ul { list-style-type: disc; }
   .ta ol { list-style-type: decimal; }
   .ta ol ol { list-style-type: lower-alpha; }
+  .ta ol ol ol { list-style-type: lower-roman; }
+  .ta ol ol ol ol { list-style-type: decimal; }
+  .ta blockquote { margin: 0 0 0 2em; padding: 0; border: 0; }
   .ta sub, .ta sup { line-height: 0; }
   .ta li { white-space: pre-wrap; }
   .ta .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 0.2em; text-align: center; line-height: 1.25; }
   .ta .frac > span { display: block; min-width: 1.2ch; padding: 0 0.25em; }
   .ta .frac > span:first-child { border-bottom: 1px solid currentColor; }
+  /* Dynamic brackets: the bracket marks stretch to the full height of whatever they enclose */
+  .ta .brk { display: inline-flex; align-items: stretch; vertical-align: middle; margin: 0 0.05em; }
+  .ta .brk > .bo, .ta .brk > .bc { flex: none; display: block; position: relative; width: 0.55em; user-select: none; -webkit-user-select: none; }
+  .ta .brk > .bi { display: inline-block; min-width: 0.4em; padding: 0 0.08em; }
+  .ta .brk svg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; }   /* absolute so the mark never adds height of its own */
+  .ta .brk svg path { fill: none; stroke: currentColor; stroke-width: 1.3; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: miter; }
 
   @media print {
     .sheet-wrap { width: auto !important; height: auto !important; }
@@ -1001,7 +1025,7 @@
     <div class="cs-info">
       <div class="info-row full"><span class="lbl">Name:</span><input type="text" class="inp-line" aria-label="Name"></div>
       <div class="info-row full"><span class="lbl">Ateneo Student Email Address:</span><input type="text" inputmode="email" autocomplete="off" class="inp-line" aria-label="Ateneo Student Email Address"></div>
-      <div class="info-row"><span class="lbl">ID Number:</span><input type="text" class="inp-line ctr" aria-label="ID Number"></div>
+      <div class="info-row"><span class="lbl">ID No.:</span><input type="text" class="inp-line ctr" aria-label="ID No."></div>
       <div class="info-row"><span class="lbl">Contact No.:</span><input type="text" class="inp-line ctr" maxlength="13" aria-label="Contact Number"></div>
     </div>
 
@@ -1122,18 +1146,28 @@
   <div class="fmt-ctl" role="group">
     <span class="size-lbl">FORMAT</span>
     <div class="fmt-grid">
-      <button type="button" class="fmt-btn" data-cmd="bold"><b>B</b></button>
-      <button type="button" class="fmt-btn" data-cmd="italic"><i style="font-family:Georgia,serif">I</i></button>
-      <button type="button" class="fmt-btn" data-cmd="underline"><u>U</u></button>
-      <button type="button" class="fmt-btn" data-cmd="strikeThrough"><s>S</s></button>
-      <button type="button" class="fmt-btn" data-cmd="subscript"><span>X<sub>2</sub></span></button>
-      <button type="button" class="fmt-btn" data-cmd="superscript"><span>X<sup>2</sup></span></button>
+      <button type="button" class="fmt-btn" data-cmd="bold" title="Bold (Ctrl+B)" aria-label="Bold (Ctrl+B)" aria-pressed="false"><b>B</b></button>
+      <button type="button" class="fmt-btn" data-cmd="italic" title="Italic (Ctrl+I)" aria-label="Italic (Ctrl+I)" aria-pressed="false"><i style="font-family:Georgia,serif">I</i></button>
+      <button type="button" class="fmt-btn" data-cmd="underline" title="Underline (Ctrl+U)" aria-label="Underline (Ctrl+U)" aria-pressed="false"><u>U</u></button>
+      <button type="button" class="fmt-btn" data-cmd="strikeThrough" title="Strikethrough" aria-label="Strikethrough" aria-pressed="false"><s>S</s></button>
+      <button type="button" class="fmt-btn" data-cmd="subscript" title="Subscript" aria-label="Subscript" aria-pressed="false"><span>X<sub style="font-size:9px;font-weight:700;line-height:0">2</sub></span></button>
+      <button type="button" class="fmt-btn" data-cmd="superscript" title="Superscript" aria-label="Superscript" aria-pressed="false"><span>X<sup style="font-size:9px;font-weight:700;line-height:0">2</sup></span></button>
       <div class="fmt-sep" style="grid-column:1/-1"></div>
-      <button type="button" class="fmt-btn" data-cmd="insertOrderedList"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 4.5l1.5-.8V9"/><path d="M3.8 13.5a1.5 1.5 0 1 1 2.6 1L3.8 17.5h3"/></svg></button>
-      <button type="button" class="fmt-btn" data-cmd="insertUnorderedList"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/></svg></button>
-      <button type="button" class="fmt-btn" data-cmd="outdent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 8 3 12 7 16"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="18" x2="11" y2="18"/></svg></button>
-      <button type="button" class="fmt-btn" data-cmd="indent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 3 16"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="18" x2="11" y2="18"/></svg></button>
-      <button type="button" class="fmt-btn" data-cmd="removeFormat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="3" y1="3" x2="21" y2="21"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="listUpperAlpha" title="Uppercase letter list (A. B. C.)" aria-label="Uppercase letter list (A. B. C.)" aria-pressed="false"><b style="font-size:14px;font-family:Georgia,serif">A.</b></button>
+      <button type="button" class="fmt-btn" data-cmd="listLowerAlpha" title="Lowercase letter list (a. b. c.)" aria-label="Lowercase letter list (a. b. c.)" aria-pressed="false"><b style="font-size:14px;font-family:Georgia,serif">a.</b></button>
+      <button type="button" class="fmt-btn" data-cmd="insertOrderedList" title="Numbered list (1. a. i. by indent level)" aria-label="Numbered list (1. a. i. by indent level)" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 4.5l1.5-.8V9"/><path d="M3.8 13.5a1.5 1.5 0 1 1 2.6 1L3.8 17.5h3"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="listUpperRoman" title="Uppercase Roman numeral list (I. II. III.)" aria-label="Uppercase Roman numeral list (I. II. III.)" aria-pressed="false"><b style="font-size:14px;font-family:Georgia,serif">I.</b></button>
+      <button type="button" class="fmt-btn" data-cmd="listLowerRoman" title="Lowercase Roman numeral list (i. ii. iii.)" aria-label="Lowercase Roman numeral list (i. ii. iii.)" aria-pressed="false"><b style="font-size:14px;font-family:Georgia,serif">i.</b></button>
+      <button type="button" class="fmt-btn" data-cmd="insertUnorderedList" title="Bullet list (bullet style changes by indent level)" aria-label="Bullet list (bullet style changes by indent level)" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="outdent" title="Indent left (Shift+Tab in a list)" aria-label="Indent left (Shift+Tab in a list)" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="7 8 3 12 7 16"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="18" x2="11" y2="18"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="indent" title="Indent right (Tab in a list)" aria-label="Indent right (Tab in a list)" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 8 7 12 3 16"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="18" x2="11" y2="18"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="lineSpacing" title="Line spacing (cycles 1.0 / 1.5 / 2.0 for the whole field)" aria-label="Line spacing (cycles 1.0 / 1.5 / 2.0 for the whole field)" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="7 4 4 7 10 7 7 4" /><line x1="7" y1="7" x2="7" y2="17"/><polyline points="4 17 7 20 10 17"/><line x1="14" y1="7" x2="21" y2="7"/><line x1="14" y1="12" x2="21" y2="12"/><line x1="14" y1="17" x2="21" y2="17"/></svg></button>
+      <div class="fmt-sep" style="grid-column:1/-1"></div>
+      <button type="button" class="fmt-btn" data-cmd="justifyLeft" title="Align left" aria-label="Align left" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="10" x2="14" y2="10"/><line x1="3" y1="14" x2="21" y2="14"/><line x1="3" y1="18" x2="14" y2="18"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="justifyCenter" title="Align center" aria-label="Align center" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="7" y1="10" x2="17" y2="10"/><line x1="3" y1="14" x2="21" y2="14"/><line x1="7" y1="18" x2="17" y2="18"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="justifyRight" title="Align right" aria-label="Align right" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="10" y1="10" x2="21" y2="10"/><line x1="3" y1="14" x2="21" y2="14"/><line x1="10" y1="18" x2="21" y2="18"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="justifyFull" title="Justify" aria-label="Justify" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="3" y1="14" x2="21" y2="14"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="removeFormat" title="Clear formatting" aria-label="Clear formatting" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V4h16v3"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="3" y1="3" x2="21" y2="21"/></svg></button>
     </div>
   </div>
 
@@ -1710,7 +1744,7 @@
     const fields = Array.from(document.querySelectorAll('.ta[contenteditable]'));
     const fmtBtns = Array.from(document.querySelectorAll('.fmt-btn[data-cmd]'));
     const mathBtns = Array.from(document.querySelectorAll('.fmt-btn[data-math]'));
-    const STATE = ['bold','italic','underline','strikeThrough','subscript','superscript','insertOrderedList','insertUnorderedList'];
+    const STATE = ['bold','italic','underline','strikeThrough','subscript','superscript','insertOrderedList','insertUnorderedList','justifyLeft','justifyCenter','justifyRight','justifyFull'];
     let lastField = null, lastRange = null;
 
     document.querySelectorAll('label[data-for]').forEach(l =>
@@ -1743,7 +1777,11 @@
         if (STATE.includes(c)) {
           let on = false;
           if (inField) { try { on = document.queryCommandState(c); } catch (e) {} }
+          if (c === 'insertOrderedList' && on) { const o = currentOl(); if (o && o.style.listStyleType) on = false; }
           b.setAttribute('aria-pressed', String(on));
+        } else if (LIST_STYLES[c]) {
+          const o = inField ? currentOl() : null;
+          b.setAttribute('aria-pressed', String(!!o && o.style.listStyleType === LIST_STYLES[c]));
         }
         b.disabled = !active;
       });
@@ -1754,9 +1792,48 @@
     fmtBtns.concat(mathBtns).forEach(b => b.addEventListener('mousedown', e => e.preventDefault()));
     document.execCommand('defaultParagraphSeparator', false, 'div');
 
+    const LIST_STYLES = { listUpperAlpha: 'upper-alpha', listLowerAlpha: 'lower-alpha', listUpperRoman: 'upper-roman', listLowerRoman: 'lower-roman' };
+    const SPACING = ['', '1.5', '2'];   // '' = default (1.45)
+    function currentOl() {
+      const sel = window.getSelection();
+      if (!sel.rangeCount || !lastField) return null;
+      const range = sel.getRangeAt(0);
+      const n = sel.anchorNode;
+      const el = n && (n.nodeType === 1 ? n : n.parentElement);
+      let list = el && el.closest('ol, ul');
+      if (!list && n && n.nodeType === 1) {   // caret sits between children of the field: check the node it is next to
+        const side = n.childNodes[sel.anchorOffset] || n.childNodes[sel.anchorOffset - 1];
+        if (side && side.nodeType === 1 && side.matches('ol, ul')) list = side;
+      }
+      // In an empty field the caret can sit on the list itself (or just outside it), not inside an <li>
+      if (!list) list = Array.from(lastField.querySelectorAll('ol, ul')).find(o => range.intersectsNode(o)) || null;
+      return list && list.tagName === 'OL' && lastField.contains(list) ? list : null;
+    }
+    function applyListStyle(style) {
+      let ol = currentOl();
+      if (ol && ol.style.listStyleType === style) { document.execCommand('insertOrderedList', false, null); return; }  // same style: toggle off
+      if (!ol) {
+        document.execCommand('insertOrderedList', false, null);
+        ol = currentOl() || lastField.querySelector('ol');   // fallback: the list that was just created
+      }
+      if (ol) ol.style.listStyleType = style;
+    }
+
     fmtBtns.forEach(b => b.addEventListener('click', () => {
       if (!restore()) return;
-      document.execCommand(b.dataset.cmd, false, null);
+      const c = b.dataset.cmd;
+      if (c === 'lineSpacing') {
+        const i = (SPACING.indexOf(lastField.dataset.ls || '') + 1) % SPACING.length;
+        lastField.dataset.ls = SPACING[i];
+        lastField.style.lineHeight = SPACING[i];
+        b.title = 'Line spacing: ' + (SPACING[i] || '1.0') + ' (click to change)';
+      } else if (LIST_STYLES[c]) {
+        applyListStyle(LIST_STYLES[c]);
+      } else if (c === 'insertOrderedList' && currentOl() && currentOl().style.listStyleType) {
+        currentOl().style.listStyleType = '';   // back to plain 1. 2. 3.
+      } else {
+        document.execCommand(c, false, null);
+      }
       remember(); refresh();
     }));
 
@@ -1764,6 +1841,44 @@
       const r = document.createRange(); r.selectNodeContents(el);
       const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
     }
+    const BRK_PATHS = {
+      paren:  ['M8 0 C1 30 1 70 8 100', 'M2 0 C9 30 9 70 2 100'],
+      square: ['M8 0 H2 V100 H8', 'M2 0 H8 V100 H2'],
+      curly:  ['M8 0 C4 0 4 3 4 8 V42 C4 47 3 49 1 50 C3 51 4 53 4 58 V92 C4 97 4 100 8 100',
+               'M2 0 C6 0 6 3 6 8 V42 C6 47 7 49 9 50 C7 51 6 53 6 58 V92 C6 97 6 100 2 100']
+    };
+    function brkMark(kind, open) {
+      const m = document.createElement('span');
+      m.className = open ? 'bo' : 'bc';
+      m.contentEditable = 'false';
+      m.innerHTML = '<svg viewBox="0 0 10 100" preserveAspectRatio="none" aria-hidden="true"><path d="' + BRK_PATHS[kind][open ? 0 : 1] + '"/></svg>';
+      return m;
+    }
+    const isEmptyBi = (el) => el.textContent.replace(/\u200b/g, '') === '' && !el.querySelector('.frac, .brk');
+    function insertBracket(kind) {
+      const range = window.getSelection().getRangeAt(0);
+      const wrap = document.createElement('span');
+      wrap.className = 'brk';
+      const inner = document.createElement('span');
+      inner.className = 'bi';
+      const frag = range.extractContents();
+      const hasContent = frag.textContent.length > 0 || (frag.querySelector && frag.querySelector('.frac, .brk'));
+      if (hasContent) inner.appendChild(frag); else inner.textContent = '\u200b';
+      wrap.append(brkMark(kind, true), inner, brkMark(kind, false));
+      const tail = document.createTextNode('\u200b');
+      range.insertNode(tail);
+      range.insertNode(wrap);
+      const r = document.createRange();
+      if (hasContent) { r.selectNodeContents(inner); r.collapse(false); }
+      else { r.setStart(inner.firstChild, 1); r.collapse(true); }
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    }
+    function caretAfter(node) {
+      const r = document.createRange();
+      r.setStartAfter(node); r.collapse(true);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    }
+
     mathBtns.forEach(b => b.addEventListener('click', () => {
       if (!restore()) return;
       const m = b.dataset.math;
@@ -1781,11 +1896,7 @@
         range.insertNode(f);
         selectContents(n);
       } else if (m === 'paren' || m === 'square' || m === 'curly') {
-        const pair = { paren: '()', square: '[]', curly: '{}' }[m];
-        const sel = window.getSelection();
-        const chosen = sel.toString();
-        document.execCommand('insertText', false, chosen ? pair[0] + chosen + pair[1] : pair);
-        if (!chosen && sel.modify) sel.modify('move', 'backward', 'character');
+        insertBracket(m);
       } else {
         document.execCommand('insertText', false, m);
       }
@@ -1800,6 +1911,26 @@
         const frac = n && n.closest('.frac');
         if (frac && !e.shiftKey && frac.firstElementChild.contains(n)) { e.preventDefault(); selectContents(frac.lastElementChild); return; }
         if (n && n.closest('li')) { e.preventDefault(); document.execCommand(e.shiftKey ? 'outdent' : 'indent', false, null); }
+      });
+      f.addEventListener('keydown', e => {
+        if (e.defaultPrevented || e.ctrlKey || e.altKey || e.metaKey) return;
+        const sel = window.getSelection();
+        if (!sel.rangeCount) return;
+        const n = sel.anchorNode && (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement);
+        const bi = n && n.closest('.bi');
+        if (!bi || !f.contains(bi)) return;
+        const brk = bi.parentElement;
+        if (e.key === 'Backspace' && sel.isCollapsed && isEmptyBi(bi)) {
+          e.preventDefault();
+          const prev = brk.previousSibling;
+          brk.remove();
+          if (prev) { const r = document.createRange(); r.setStartAfter(prev); r.collapse(true); sel.removeAllRanges(); sel.addRange(r); }
+        } else if (e.key === 'Tab' && !e.shiftKey && !n.closest('li')) {
+          e.preventDefault();
+          let t = brk.nextSibling;
+          if (!t || t.nodeType !== 3) { t = document.createTextNode('\u200b'); brk.after(t); }
+          const r = document.createRange(); r.setStart(t, t.length); r.collapse(true); sel.removeAllRanges(); sel.addRange(r);
+        }
       });
       f.addEventListener('paste', e => {
         e.preventDefault();
