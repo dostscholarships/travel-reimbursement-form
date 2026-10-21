@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRANSPORTATION REIMBURSEMENT FORM</title>
+<title>TRAVEL REIMBURSEMENT FORM & COMPUTATION SHEET</title>
 <style>
   :root {
     --line-black: #000000;
@@ -19,10 +19,9 @@
     font-family: Arial, Helvetica, sans-serif;
   }
 
-  /* Define A4 landscape (297 x 210 mm) for Print */
   @page {
-    size: A4 landscape;
-    margin: 0.3in 0.5in;
+    size: A4;
+    margin: 0.5in 0.75in;
   }
 
   body {
@@ -36,20 +35,16 @@
     align-items: center;
   }
 
-  /* A4 Landscape Paper Container */
   .paper {
     background: #ffffff;
-    width: 297mm;
-    min-height: 210mm;
-    padding: 0.3in 0.5in;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 0.5in 0.75in;
     box-shadow: 0 1px 2px rgba(15,23,42,0.10), 0 8px 28px rgba(15,23,42,0.16), 0 24px 60px rgba(15,23,42,0.10);
     position: relative;
     color: #000000;
   }
 
-  /* Revision Box Top Right (Left-aligned text) */
-
-  /* Header Section */
   .header {
     display: flex;
     flex-direction: column;
@@ -59,58 +54,10 @@
     margin-bottom: 18px;
   }
 
-  .dost-logo {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
-    margin-bottom: 8px;
-  }
-
-  .header h3 {
-    margin: 0;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.35;
-  }
-
-  .header h3.bold-inst {
-    font-weight: 700;
-  }
-
-  /* Form Title Block */
-
-
-
-
-  .title-cb-item input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 13px;
-    height: 13px;
-    border: 1px solid #000;
-    outline: none;
-    cursor: pointer;
-    position: relative;
-    margin: 0;
-    flex-shrink: 0;
-  }
-
-  .title-cb-item input[type="checkbox"]:checked::after {
-    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 9 9'%3E%3Cpolyline points='1.5,4.9 3.6,7 7.6,2' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 11px;
-    height: 11px;
-    line-height: 0;
-  }
-
-  /* Form Line Rows */
-
   .lbl {
     white-space: nowrap;
     padding-right: 4px;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .inp-line {
@@ -118,14 +65,11 @@
     border: none;
     border-bottom: 1px solid var(--line-black);
     outline: none;
-    font-size: 14px;
+    font-size: 13px;
     padding: 0 4px 1px 4px;
     background: transparent;
   }
 
-  /* Specific Input Field Styles */
-
-  /* Field and checkbox interaction states: screen only, so the printed form is unchanged */
   @media screen {
     .inp-line {
       transition: background-color 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
@@ -135,35 +79,14 @@
       border-bottom-color: var(--accent);
       box-shadow: 0 1px 0 var(--accent);
     }
-    .cb-item input[type="checkbox"],
-    .title-cb-item input[type="checkbox"] {
+    .cb-item input[type="checkbox"] {
       transition: border-color 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
     }
-    .cb-item input[type="checkbox"]:checked,
-    .title-cb-item input[type="checkbox"]:checked {
+    .cb-item input[type="checkbox"]:checked {
       border-color: var(--accent);
       background-color: var(--accent-soft);
     }
-    .title-cb-item input[type="checkbox"]:checked::after { content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 9 9'%3E%3Cpolyline points='1.5,4.9 3.6,7 7.6,2' fill='none' stroke='%23004466' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
     .cb-item input[type="checkbox"]:checked::after { content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 9 9'%3E%3Cpolyline points='1.5,4.9 3.6,7 7.6,2' fill='none' stroke='%23004466' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-    .cb-item input[type="checkbox"]:focus-visible,
-    .title-cb-item input[type="checkbox"]:focus-visible {
-      box-shadow: 0 0 0 3px var(--accent-ring);
-    }
-    .picker-btn:focus-visible { box-shadow: 0 0 0 3px var(--accent-ring); border-radius: 3px; }
-  }
-  @media screen and (hover: hover) {
-    .inp-line:hover:not(:focus) { background-color: rgba(0, 68, 102, 0.045); }
-    .cb-item:hover input[type="checkbox"],
-    .title-cb-item:hover input[type="checkbox"] { box-shadow: 0 0 0 3px var(--accent-ring); }
-    .picker-btn { opacity: 0.75; transition: opacity 0.12s ease; }
-    .picker-btn:hover { opacity: 1; }
-  }
-
-  .checkbox-group {
-    display: inline-flex;
-    align-items: center;
-    gap: 14px;
   }
 
   .cb-item {
@@ -171,7 +94,7 @@
     align-items: flex-start;
     gap: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.25;
   }
 
@@ -198,28 +121,6 @@
     line-height: 0;
   }
 
-  /* Matrix Layout strictly conforming to reference image */
-
-
-
-
-
-
-
-  /* Reason Section */
-
-  /* Requirements Box */
-
-
-
-
-
-
-
-  /* Signatures Section */
-
-
-
   .sig-input-area {
     width: 100%;
     height: 42px;
@@ -234,9 +135,6 @@
     text-align: center;
   }
 
-
-
-  /* Date Selector Wrapper */
   .date-wrapper {
     position: relative;
     display: inline-flex;
@@ -249,20 +147,6 @@
   .date-wrapper input[type="text"] {
     width: 100%;
     text-align: center;
-  }
-
-  .picker-date {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 22px;
-    height: 18px;
-    margin: 0;
-    padding: 0;
-    border: none;
-    opacity: 0;
-    pointer-events: none;
-    overflow: hidden;
   }
 
   .picker-btn {
@@ -281,143 +165,6 @@
     flex: none;
   }
   .picker-btn svg { width: 14px; height: 14px; }
-
-  /* Separator Double Line */
-
-  /* Coordinator Section */
-
-
-
-
-
-  /* Movable & Resizable Floating Image Wrapper */
-  .floating-img-wrapper {
-    position: absolute;
-    display: block;
-    cursor: grab;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: none;
-    z-index: 100;
-    transform: rotate(var(--rot, 0deg));
-  }
-
-  .floating-img-wrapper.dragging { cursor: grabbing; z-index: 150; }
-
-  .floating-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    pointer-events: none;
-    -webkit-user-drag: none;
-  }
-
-  .floating-img-wrapper:hover { outline: 1px dashed var(--accent); }
-  .floating-img-wrapper:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-
-  .floating-img-wrapper.selected,
-  .floating-img-wrapper.dragging {
-    outline: 1.5px solid var(--accent);
-    outline-offset: 0;
-  }
-
-  .floating-img-wrapper .btn-delete {
-    position: absolute;
-    top: -11px;
-    right: -11px;
-    width: 22px;
-    height: 22px;
-    padding: 0;
-    background: #dc2626;
-    color: #ffffff;
-    border: 2px solid #ffffff;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 17px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(15,23,42,0.3);
-    display: none;
-  }
-  .floating-img-wrapper .btn-delete:hover { background: #b91c1c; }
-  .floating-img-wrapper .btn-delete:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  .floating-img-wrapper .resize-handle {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    background: var(--accent);
-    border: 2px solid #ffffff;
-    border-radius: 3px;
-    bottom: -8px;
-    right: -8px;
-    cursor: nwse-resize;
-    box-shadow: 0 1px 4px rgba(15,23,42,0.35);
-    touch-action: none;
-    display: none;
-  }
-
-  .floating-img-wrapper .rotate-handle {
-    position: absolute;
-    top: -34px;
-    left: 50%;
-    width: 22px;
-    height: 22px;
-    margin-left: -11px;
-    padding: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent);
-    color: #ffffff;
-    border: 2px solid #ffffff;
-    border-radius: 50%;
-    cursor: grab;
-    box-shadow: 0 1px 4px rgba(15,23,42,0.35);
-    touch-action: none;
-  }
-  .floating-img-wrapper .rotate-handle::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    width: 1.5px;
-    height: 12px;
-    margin-left: -0.75px;
-    background: var(--accent);
-  }
-  .floating-img-wrapper .rotate-handle svg { width: 12px; height: 12px; pointer-events: none; }
-  .floating-img-wrapper .rotate-handle:active { cursor: grabbing; }
-
-  .floating-img-wrapper.selected .btn-delete,
-  .floating-img-wrapper.selected .resize-handle,
-  .floating-img-wrapper:focus-within .btn-delete,
-  .floating-img-wrapper:focus-within .resize-handle {
-    display: block;
-  }
-  .floating-img-wrapper.selected .rotate-handle,
-  .floating-img-wrapper:focus-within .rotate-handle {
-    display: flex;
-  }
-
-  .paper.drop-active::after {
-    content: "Drop images or signatures here";
-    position: absolute;
-    inset: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed var(--accent);
-    border-radius: 10px;
-    background: rgba(0, 68, 102, 0.07);
-    color: var(--accent);
-    font-size: 15px;
-    font-weight: 700;
-    pointer-events: none;
-    z-index: 300;
-  }
 
   .btn-bar {
     position: fixed;
@@ -472,11 +219,6 @@
   .btn-secondary { background-color: #ffffff; color: var(--accent); border-color: var(--ui-border); }
   .btn-secondary:hover { background-color: var(--accent-soft); border-color: var(--accent); }
 
-
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
-  }
-
   .dd {
     flex: 1;
     position: relative;
@@ -495,8 +237,8 @@
     border-radius: 0;
     background: transparent;
     color: #000000;
-    font-size: 14px;
-    line-height: 16px;
+    font-size: 13px;
+    line-height: 15px;
     text-align: left;
     cursor: pointer;
     outline: none;
@@ -505,22 +247,12 @@
     display: block;
     flex: 1;
     min-width: 0;
-    min-height: 16px;
+    min-height: 15px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
   .dd-caret { width: 14px; height: 14px; margin: -3px 0; flex: none; align-self: center; color: var(--accent); transition: transform 0.15s ease; }
-  .dd-btn[aria-expanded="true"] .dd-caret { transform: rotate(180deg); }
-  .dd-btn:focus-visible,
-  .dd-btn[aria-expanded="true"] {
-    background-color: var(--accent-soft);
-    border-bottom-color: var(--accent);
-    box-shadow: 0 1px 0 var(--accent);
-  }
-  @media (hover: hover) {
-    .dd-btn:hover { background-color: rgba(0, 68, 102, 0.045); }
-  }
 
   .dd-menu {
     position: absolute;
@@ -533,15 +265,12 @@
     max-height: 360px;
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #cbd5e1 transparent;
     padding: 6px;
     background: #ffffff;
     border: 1px solid var(--ui-border);
     border-radius: 12px;
     box-shadow: 0 2px 4px rgba(15,23,42,0.08), 0 16px 40px rgba(15,23,42,0.22);
-    animation: cal-in 0.12s ease-out;
   }
-  .dd-menu, .dd-menu * { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
   .dd-opt {
     display: flex;
     align-items: center;
@@ -553,100 +282,21 @@
     font-size: 13px;
     line-height: 1.3;
     cursor: pointer;
-    outline: none;
   }
-  .dd-opt:hover, .dd-opt:focus { background: var(--accent-soft); }
-  .dd-opt:focus-visible { box-shadow: inset 0 0 0 2px var(--accent); }
-  .dd-opt[aria-selected="true"] { color: var(--accent); font-weight: 700; }
-  .dd-opt svg { width: 16px; height: 16px; flex: none; color: var(--accent); visibility: hidden; }
-  .dd-opt[aria-selected="true"] svg { visibility: visible; }
-  .dd-clear {
-    display: block;
-    width: 100%;
-    margin-top: 4px;
-    padding: 9px 12px;
-    border: none;
-    border-top: 1px solid #e2e8f0;
-    border-radius: 0 0 8px 8px;
-    background: transparent;
-    color: #64748b;
-    font-size: 12px;
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-  }
-  .dd-clear:hover { background: #f1f5f9; color: #0f172a; }
-  .dd-clear:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
+  .dd-opt:hover { background: var(--accent-soft); }
 
-  .cal-pop {
-    position: fixed;
-    z-index: 1000;
-    width: 296px;
-    padding: 12px;
-    background: #ffffff;
-    border: 1px solid var(--ui-border);
-    border-radius: 14px;
-    box-shadow: 0 2px 4px rgba(15,23,42,0.08), 0 16px 40px rgba(15,23,42,0.22);
-    color: #0f172a;
-    animation: cal-in 0.12s ease-out;
-  }
-  .cal-pop, .cal-pop * { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 13px; }
-  @keyframes cal-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-
-  .cal-head { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
-  .cal-nav {
-    width: 32px; height: 32px; flex: none;
-    display: inline-flex; align-items: center; justify-content: center;
-    border: none; border-radius: 8px; background: transparent; color: #334155; cursor: pointer;
-  }
-  .cal-nav:hover { background: var(--accent-soft); color: var(--accent); }
-  .cal-nav svg { width: 16px; height: 16px; }
-  .cal-selects { flex: 1; display: flex; gap: 4px; min-width: 0; }
-  .cal-selects select {
-    flex: 1; min-width: 0; height: 32px; padding: 0 6px;
-    border: 1px solid transparent; border-radius: 8px; background: transparent;
-    color: #0f172a; font-weight: 700; cursor: pointer;
-  }
-  .cal-selects select:hover { background: #f1f5f9; }
-  .cal-nav:focus-visible, .cal-selects select:focus-visible,
-  .cal-day:focus-visible, .cal-foot button:focus-visible {
-    outline: none; box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px var(--accent);
-  }
-
-  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
-  .cal-dow { text-align: center; padding: 6px 0; color: #64748b; font-weight: 600; font-size: 12px; }
-  .cal-day {
-    height: 34px; padding: 0;
-    border: none; border-radius: 50%; background: transparent;
-    color: #0f172a; cursor: pointer;
-  }
-  .cal-day:hover { background: var(--accent-soft); }
-  .cal-day.out { color: #94a3b8; }
-  .cal-day.today { box-shadow: inset 0 0 0 1.5px var(--accent); color: var(--accent); font-weight: 700; }
-  .cal-day.sel, .cal-day.sel:hover { background: var(--accent); color: #ffffff; font-weight: 700; box-shadow: none; }
-
-  .cal-foot { display: flex; justify-content: space-between; margin-top: 10px; padding-top: 8px; border-top: 1px solid #e2e8f0; }
-  .cal-foot button {
-    padding: 6px 10px; border: none; border-radius: 8px; background: transparent;
-    color: var(--accent); font-weight: 600; cursor: pointer;
-  }
-  .cal-foot button:hover { background: var(--accent-soft); }
-  .cal-foot .cal-clear { color: #64748b; }
-
-  
-  /* ===== Form switcher (right side) ===== */
-  /* The form and the switcher sit side by side, so the buttons can never cover the form */
   body { display: block; }
+  html, body { overflow-x: hidden; }
   .workspace {
     display: flex;
     align-items: flex-start;
-    gap: 24px;
-    width: max-content;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    padding: 0 20px;           /* breathing room between the screen edges and the buttons */
     margin: 0 auto;
   }
   .workspace > .paper[hidden] { display: none; }
-  .sheet-wrap { flex: none; }
-  .paper { transform-origin: top left; }
   .btn-bar.tab-bar,
   .btn-bar.action-bar {
     position: sticky;
@@ -657,13 +307,187 @@
     width: 150px;
     z-index: 20;
   }
-  .tab-bar .btn-label { font-size: 11px; }
-  .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
-  .btn:disabled:hover { background-color: #ffffff; border-color: var(--ui-border); }
 
+  .thesis-box {
+    border: 1px solid var(--line-black);
+    margin-bottom: 18px;
+  }
+  .tcell { padding: 8px 10px 10px; }
+  .tlabel { display: block; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
 
-  /* ===== Transportation Reimbursement Form specific ===== */
-  .workspace::before { content: ""; flex: none; width: 150px; }   /* mirrors the toolbar so the sheet stays centred */
+  .ta {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 2px 0;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    background: transparent;
+    color: #000;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .cap {
+    text-align: center;
+    font-size: 12px;
+    font-style: italic;
+    padding-top: 2px;
+  }
+
+  @media print {
+    html, body { width: auto; height: auto; background: #fff; margin: 0; padding: 0; display: block; }
+    .workspace { display: block; width: auto; margin: 0; }
+    .paper { box-shadow: none; width: auto; min-height: 0; padding: 0; margin: 0; }
+    .btn-bar, .right-col, .picker-btn, .dd-caret, .dd-menu,
+    .img-tools, .resize-handle, .crop-handle, .rotate-handle, .img-ghost { display: none !important; }
+    .workspace { padding: 0; }
+    .paper { transform: none !important; }
+    /* Images are positioned from the paper's padding edge; in print that edge sits at the page margin, so pull them back by the same padding to keep them where they are on screen */
+    .floating-img-wrapper { outline: none !important; transform: translate(calc(var(--pad-x) * -1), calc(var(--pad-y) * -1)) rotate(var(--rot, 0deg)); }
+    .inp-line::placeholder, .ta::placeholder { color: transparent !important; opacity: 0 !important; }
+    .ta { overflow: visible; }
+  }
+
+  .paper {
+    height: 297mm;
+    min-height: 297mm;
+    display: flex;
+    flex-direction: column;
+  }
+  .paper > form {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .thesis-box {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .thesis-box > .tcell.fill {
+    flex: var(--g, 1) 1 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .tcell.fill > .ta {
+    flex: 1 1 0;
+    min-height: 60px;
+    overflow-y: auto;
+  }
+
+  @media print {
+    .paper { height: 271mm; min-height: 0; overflow: visible; }
+  }
+
+  .ta { font-size: var(--ta-size, 13px); }
+
+  .size-ctl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 8px;
+    background: #ffffff;
+    color: var(--accent);
+    border: 1px solid var(--ui-border);
+    border-radius: 12px;
+  }
+  .size-lbl { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
+  .size-row { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; }
+  .size-btn {
+    width: 44px;
+    height: 38px;
+    padding: 0;
+    background: var(--accent);
+    color: #ffffff;
+    border: 1px solid var(--accent);
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .size-btn:hover:not(:disabled) { background: var(--accent-hover); border-color: var(--accent-hover); }
+  .size-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .size-val { min-width: 30px; text-align: center; font-size: 16px; font-weight: 700; color: #0f172a; }
+
+  div.ta {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    cursor: text;
+    outline: none;
+    -webkit-user-modify: read-write;
+  }
+
+  
+  /* FORMAT & MATH controls */
+  .fmt-ctl {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 8px;
+    background: #ffffff;
+    color: var(--accent);
+    border: 1px solid var(--ui-border);
+    border-radius: 12px;
+  }
+  .fmt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 44px);
+    gap: 6px;
+    justify-content: center;
+  }
+  .fmt-sep { height: 1px; background: var(--ui-border); width: 100%; margin: 2px 0; }
+  .fmt-btn {
+    width: 44px;
+    height: 38px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    color: var(--accent);
+    border: 1px solid var(--ui-border);
+    border-radius: 9px;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  }
+  .fmt-btn svg { width: 20px; height: 20px; }
+  .fmt-btn b { font-size: 16px !important; }
+  .fmt-btn sub, .fmt-btn sup { font-size: 10px !important; font-weight: 700; line-height: 0; }
+  .fmt-btn:hover:not(:disabled) { background: var(--accent-soft); border-color: var(--accent); }
+  .fmt-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+  .fmt-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .fmt-btn:focus-visible, .size-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px var(--accent); }
+
+  .right-col {
+    position: sticky;
+    top: 16px;
+    flex: none;
+    width: 186px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: visible;          /* never scrollable */
+  }
+  .right-col > .btn-bar.action-bar,
+  .right-col > .btn-bar.tools-bar {
+    position: static;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    flex: none;
+  }
+  .right-col > .btn-bar.action-bar .btn { min-height: 70px; }
+  .right-col > .btn-bar.tools-bar { padding: 8px; gap: 10px; }
 
   .sei-header { text-align: center; margin-top: 6px; }
   .sei-header .org { font-size: 14px; font-weight: 700; letter-spacing: 0.2px; }
@@ -677,7 +501,6 @@
     letter-spacing: 0.2px;
   }
 
-  /* Scholar details (3 columns) */
   .info3 {
     display: grid;
     grid-template-columns: 1fr 1.15fr 0.6fr;
@@ -694,34 +517,26 @@
   }
   .f-cell .lbl { font-weight: 700; font-size: 13px; }
   .f-cell .inp-line { font-size: 13px; min-width: 0; }
-  .f-cell .dd-btn { font-size: 13px; }
-  .f-cell.degree { grid-column: 2 / -1; }   /* starts where it did and runs to the right edge of the form, under ID NUMBER */
+  .f-cell.degree { grid-column: 2 / -1; }
 
-  /* Permanent address */
   .addr { margin-bottom: 14px; }
   .addr .f-cell + .f-cell { margin-top: 10px; }
 
-  /* Period covered */
   .period { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
   .period-left { width: 142px; flex: none; font-size: 13px; }
   .period-left .lbl { font-weight: 700; font-size: 13px; padding: 0; display: block; margin-bottom: 4px; }
   .period-left .sy { display: flex; align-items: flex-end; }
-  .period-left .sy .inp-line { font-size: 13px; min-width: 0; }
   .period-grid {
     flex: 1;
     display: grid;
     grid-template-columns: auto auto;
     justify-content: space-between;
     gap: 6px 12px;
-    padding-top: 1px;
   }
-  .period-grid .cb-item { font-size: 12.5px; align-items: center; }
-  .period-grid .cb-item input[type="checkbox"] { margin-top: 0; }
 
+  .inp-center { text-align: center; }
   .note { font-size: 12px; font-style: italic; margin: 4px 0 12px; }
-  .note b { font-weight: 700; }
 
-  /* Travel table */
   .tr-grid {
     display: grid;
     grid-template-columns: 1.15fr 1.7fr 1.9fr 1.5fr 1.25fr;
@@ -732,41 +547,340 @@
   .tr-rows { display: flex; flex-direction: column; gap: 5px; }
   .tr-rows .inp-line { width: 100%; min-width: 0; height: 20px; font-size: 13px; }
   .tr-rows .inp-amt { text-align: right; }
-  .tr-rows .date-wrapper { display: flex; width: 100%; max-width: none; }
-  .tr-rows .date-wrapper input[type="text"] { text-align: center; }
-  .tr-rows .picker-btn { margin-left: 0; width: 18px; }
 
-  .total-row { display: grid; grid-template-columns: calc((100% - 64px) * 1.15 / 7.5) 1fr; column-gap: 16px;  /* first column matches the table's Date column, so the label lines up with Place of Origin */ margin-top: 16px; }
+  .tr-total .tr-total-lbl { grid-column: 4; text-align: right; font-size: 13px; font-weight: 700; align-self: end; }
+  .tr-total .inp-total { grid-column: 5; font-weight: 700; text-align: right; }
+  .total-row { display: grid; grid-template-columns: calc((100% - 64px) * 1.15 / 7.5) 1fr; column-gap: 16px; margin-top: 16px; }
   .total-row .f-cell { grid-column: 2; }
 
+  [hidden] { display: none !important; }
+  .sheet-wrap { flex: none; position: relative; }
+  .paper { transform-origin: 0 0; --pad-x: 0.75in; --pad-y: 0.5in; }
+  .paper.landscape { --pad-x: 0.5in; --pad-y: 0.3in; }
+
+  .paper.landscape { display: block; height: auto; }
+  @media screen {
+    .paper.landscape { width: 297mm; min-height: 210mm; padding: 0.3in 0.5in; }
+  }
+
+  /* Computation Sheet Specific CSS */
+  .cs-head { text-align: center; margin: 4px 0 16px; }
+  .cs-title { font-size: 17px; font-weight: 700; text-decoration: underline; letter-spacing: 0.2px; }
+  .cs-sub { font-size: 14px; margin-top: 5px; }
+
+  .cs-info { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin-bottom: 16px; }
+  .cs-info .info-row { font-size: 13px; display: flex; align-items: flex-end; }
+  .cs-info .info-row.full { grid-column: 1 / -1; }
+
+  .rcpt { margin-bottom: 14px; }
+  .rcpt-row { display: flex; align-items: flex-end; gap: 12px; min-height: 22px; font-size: 13px; }
+  .rcpt .lbl { font-weight: 700; font-size: 13px; padding-right: 0; }
+  .amt-box { display: flex; align-items: flex-end; width: 150px; flex: none; border-bottom: 1px solid var(--line-black); }
+  .amt-box .inp-line { border-bottom: none; text-align: right; flex: 1; min-width: 0; }
+  .amt-box .cur-pre { font-size: 13px; white-space: nowrap; padding: 0 2px 1px 4px; max-width: 70px; overflow: hidden; text-overflow: ellipsis; font-weight: 700; }
+  
+  /* Reverted Currency Conversion Button styling */
+  .conv-toggle {
+    margin-left: auto;
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: #ffffff;
+    color: var(--accent);
+    border: 1px solid var(--ui-border);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(15,23,42,0.06);
+    transition: background-color 0.12s ease, border-color 0.12s ease;
+  }
+  .conv-toggle:hover {
+    background-color: var(--accent-soft);
+    border-color: var(--accent);
+  }
+  .conv-toggle svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  .conv-panel { margin-top: 8px; padding: 8px 10px 6px; border: 1px dashed rgba(0, 68, 102, 0.45); border-radius: 6px; }
+  .conv-row { display: flex; align-items: flex-end; gap: 10px; font-size: 13px; flex-wrap: wrap; }
+  .conv-row .lbl { font-weight: 700; padding-right: 0; }
+  .conv-row .cur-in { width: 80px; flex: none; text-align: center; text-transform: uppercase; }
+  .conv-row .factor-in { width: 80px; flex: none; text-align: right; }
+
+  .cs-table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 14px; flex: none; }
+  .cs-table th, .cs-table td { border: 1px solid var(--line-black); padding: 0 8px; height: 23px; font-size: 13px; vertical-align: middle; }
+  .cs-table th { font-weight: 700; text-align: center; }
+  .cs-table td.nat { text-align: left; }
+  .oth-wrap { display: flex; align-items: flex-end; gap: 6px; }
+  .oth-wrap .inp-line { font-size: 13px; min-width: 0; height: 19px; }
+  .amt-cell { display: flex; align-items: center; justify-content: flex-end; position: relative; min-height: 21px; }
+  .amt-cell .pre { position: absolute; left: 0; top: 50%; transform: translateY(-50%); white-space: nowrap; font-size: 13px; }
+  .amt-cell .neg-pre { visibility: hidden; }
+  .amt-cell .neg-pre.on { visibility: visible; }
+  .amt-cell .inp-line, .amt-cell output { flex: 1; min-width: 0; border-bottom: none; text-align: right; font-size: 13px; padding-left: 55px; height: 19px; line-height: 19px; display: block; }
+  .amt-cell output { padding-right: 4px; }
+  .cs-table tfoot td { font-weight: 700; }
+  .cs-table tr.net td { border-top: 2px solid var(--line-black); border-bottom: 3px double var(--line-black); }
+  .sum-note { display: block; font-size: 10.5px; font-weight: 400; font-style: italic; line-height: 1.15; }
+
+/* Movable & Resizable Floating Image Wrapper */
+  .floating-img-wrapper {
+    position: absolute;
+    display: block;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+    z-index: 100;
+    transform: rotate(var(--rot, 0deg));
+  }
+
+  .floating-img-wrapper.dragging { cursor: grabbing; z-index: 150; }
+
+  /* The wrapper is the *visible* frame. The picture inside is positioned from crop fractions
+     (--cl/--cr/--ct/--cb = share of the original hidden on each side), so resizing the frame
+     scales the cropped result and cropping never throws the original pixels away. */
+  .floating-img-wrapper { --cl: 0; --cr: 0; --ct: 0; --cb: 0; --fx: 1; --fy: 1; }
+
+  .floating-img-wrapper .img-clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .floating-img-wrapper .img-clip img,
+  .floating-img-wrapper .img-ghost {
+    position: absolute;
+    max-width: none;
+    width: calc(100% / var(--fx));
+    height: calc(100% / var(--fy));
+    left: calc(var(--cl) / var(--fx) * -100%);
+    top: calc(var(--ct) / var(--fy) * -100%);
+    object-fit: fill;
+    display: block;
+    pointer-events: none;
+    -webkit-user-drag: none;
+  }
+
+  /* While cropping, the hidden part of the picture shows faintly around the frame */
+  .floating-img-wrapper .img-ghost { display: none; opacity: 0.35; }
+  .floating-img-wrapper.cropping .img-ghost { display: block; }
+
+  .floating-img-wrapper:hover { outline: 1px dashed var(--accent); }
+  .floating-img-wrapper:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .floating-img-wrapper.selected,
+  .floating-img-wrapper.dragging {
+    outline: 1.5px solid var(--accent);
+    outline-offset: 0;
+  }
+
+  /* Small toolbar under the selected image: crop / reset / remove */
+  .floating-img-wrapper .img-tools {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-top: 16px;
+    transform: translateX(-50%);
+    display: none;
+    gap: 6px;
+    z-index: 3;
+  }
+  .floating-img-wrapper .img-tools button {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(15,23,42,0.3);
+  }
+  .floating-img-wrapper .img-tools button svg { width: 12px; height: 12px; pointer-events: none; }
+  .floating-img-wrapper .img-tools button:hover { filter: brightness(1.2); }
+  .floating-img-wrapper .img-tools button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .floating-img-wrapper .img-tools .btn-crop.active { background: #ffffff; color: var(--accent); border-color: var(--accent); }
+  .floating-img-wrapper .img-tools .btn-delete { background: #dc2626; }
+  .floating-img-wrapper .img-tools .btn-delete:hover { background: #b91c1c; filter: none; }
+
+  /* Resize handles: corners scale proportionally, side handles stretch one direction */
+  .floating-img-wrapper .resize-handle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    background: var(--accent);
+    border: 2px solid #ffffff;
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(15,23,42,0.35);
+    touch-action: none;
+    display: none;
+    z-index: 2;
+  }
+  .floating-img-wrapper .resize-handle[data-dir="n"],
+  .floating-img-wrapper .resize-handle[data-dir="s"] { width: 22px; height: 10px; margin: -5px 0 0 -11px; border-radius: 5px; }
+  .floating-img-wrapper .resize-handle[data-dir="e"],
+  .floating-img-wrapper .resize-handle[data-dir="w"] { width: 10px; height: 22px; margin: -11px 0 0 -5px; border-radius: 5px; }
+  .floating-img-wrapper .resize-handle[data-dir="nw"] { top: 0;    left: 0;    cursor: nwse-resize; }
+  .floating-img-wrapper .resize-handle[data-dir="n"]  { top: 0;    left: 50%;  cursor: ns-resize; }
+  .floating-img-wrapper .resize-handle[data-dir="ne"] { top: 0;    left: 100%; cursor: nesw-resize; }
+  .floating-img-wrapper .resize-handle[data-dir="e"]  { top: 50%;  left: 100%; cursor: ew-resize; }
+  .floating-img-wrapper .resize-handle[data-dir="se"] { top: 100%; left: 100%; cursor: nwse-resize; }
+  .floating-img-wrapper .resize-handle[data-dir="s"]  { top: 100%; left: 50%;  cursor: ns-resize; }
+  .floating-img-wrapper .resize-handle[data-dir="sw"] { top: 100%; left: 0;    cursor: nesw-resize; }
+  .floating-img-wrapper .resize-handle[data-dir="w"]  { top: 50%;  left: 0;    cursor: ew-resize; }
+
+  /* Crop handles: dark corner brackets and edge bars, like a photo editor */
+  .floating-img-wrapper .crop-handle {
+    position: absolute;
+    display: none;
+    touch-action: none;
+    z-index: 2;
+    background: #111827;
+    box-shadow: 0 0 0 1px #ffffff;
+  }
+  .floating-img-wrapper .crop-handle[data-dir="n"],
+  .floating-img-wrapper .crop-handle[data-dir="s"] { width: 28px; height: 6px; left: 50%; margin-left: -14px; cursor: ns-resize; }
+  .floating-img-wrapper .crop-handle[data-dir="e"],
+  .floating-img-wrapper .crop-handle[data-dir="w"] { width: 6px; height: 28px; top: 50%; margin-top: -14px; cursor: ew-resize; }
+  .floating-img-wrapper .crop-handle[data-dir="n"] { top: -4px; }
+  .floating-img-wrapper .crop-handle[data-dir="s"] { bottom: -4px; }
+  .floating-img-wrapper .crop-handle[data-dir="w"] { left: -4px; }
+  .floating-img-wrapper .crop-handle[data-dir="e"] { right: -4px; }
+  .floating-img-wrapper .crop-handle[data-dir="nw"],
+  .floating-img-wrapper .crop-handle[data-dir="ne"],
+  .floating-img-wrapper .crop-handle[data-dir="sw"],
+  .floating-img-wrapper .crop-handle[data-dir="se"] {
+    width: 20px; height: 20px;
+    background: transparent;
+    box-shadow: none;
+    border: 0 solid #111827;
+    filter: drop-shadow(0 0 1px #ffffff) drop-shadow(0 0 1px #ffffff);
+  }
+  .floating-img-wrapper .crop-handle[data-dir="nw"] { top: -4px;    left: -4px;  border-width: 5px 0 0 5px; cursor: nwse-resize; }
+  .floating-img-wrapper .crop-handle[data-dir="ne"] { top: -4px;    right: -4px; border-width: 5px 5px 0 0; cursor: nesw-resize; }
+  .floating-img-wrapper .crop-handle[data-dir="sw"] { bottom: -4px; left: -4px;  border-width: 0 0 5px 5px; cursor: nesw-resize; }
+  .floating-img-wrapper .crop-handle[data-dir="se"] { bottom: -4px; right: -4px; border-width: 0 5px 5px 0; cursor: nwse-resize; }
+
+  .floating-img-wrapper .rotate-handle {
+    position: absolute;
+    top: -34px;
+    left: 50%;
+    width: 22px;
+    height: 22px;
+    margin-left: -11px;
+    padding: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    cursor: grab;
+    box-shadow: 0 1px 4px rgba(15,23,42,0.35);
+    touch-action: none;
+  }
+  .floating-img-wrapper .rotate-handle::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 1.5px;
+    height: 12px;
+    margin-left: -0.75px;
+    background: var(--accent);
+  }
+  .floating-img-wrapper .rotate-handle svg { width: 12px; height: 12px; pointer-events: none; }
+  .floating-img-wrapper .rotate-handle:active { cursor: grabbing; }
+
+  .floating-img-wrapper.selected .img-tools,
+  .floating-img-wrapper:focus-within .img-tools { display: flex; }
+  .floating-img-wrapper.selected .resize-handle,
+  .floating-img-wrapper:focus-within .resize-handle { display: block; }
+  .floating-img-wrapper.selected .rotate-handle,
+  .floating-img-wrapper:focus-within .rotate-handle { display: flex; }
+
+  /* Crop mode swaps the resize and rotate handles for crop handles */
+  .floating-img-wrapper.cropping .resize-handle,
+  .floating-img-wrapper.cropping .rotate-handle { display: none !important; }
+  .floating-img-wrapper.cropping .crop-handle { display: block; }
+
+  .paper.drop-active::after {
+    content: "Drop images or signatures here";
+    position: absolute;
+    inset: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed var(--accent);
+    border-radius: 10px;
+    background: rgba(0, 68, 102, 0.07);
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 700;
+    pointer-events: none;
+    z-index: 300;
+  }
+
+
+  .ta-expl { min-height: 80px; }
+  .cert-block { display: flex; justify-content: flex-end; flex: none; }
+  .cert-col { width: 58%; }
+  .cert-text { margin: 0 0 2px; font-size: 13px; line-height: 1.35; }
+
+  .fmt-btn .mini-frac { display: inline-flex; flex-direction: column; align-items: center; font: 700 11px/1.1 Arial, sans-serif; }
+  .fmt-btn .mini-frac span:first-child { border-bottom: 1px solid currentColor; padding: 0 1px; }
+  .fmt-btn .glyph { font: 700 17px/1 Georgia, serif; }
+
+  /* Rich text inside the explanation field */
+  .ta p, .ta div { margin: 0; }
+  .ta ul, .ta ol { margin: 0; padding-left: 1.7em; }
+  .ta ul { list-style-type: disc; }
+  .ta ul ul { list-style-type: circle; }
+  .ta ol { list-style-type: decimal; }
+  .ta ol ol { list-style-type: lower-alpha; }
+  .ta sub, .ta sup { line-height: 0; }
+  .ta li { white-space: pre-wrap; }
+  .ta .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 0.2em; text-align: center; line-height: 1.25; }
+  .ta .frac > span { display: block; min-width: 1.2ch; padding: 0 0.25em; }
+  .ta .frac > span:first-child { border-bottom: 1px solid currentColor; }
+
   @media print {
-    html, body { width: auto; height: auto; background: #fff; margin: 0; padding: 0; display: block; }
-    .workspace { display: block; width: auto; margin: 0; }
-    .workspace::before { display: none; }
-    .paper { box-shadow: none; width: auto; min-height: 0; padding: 0; margin: 0; }
-    .btn-bar, .file-input-btn, .btn-delete, .resize-handle, .rotate-handle,
-    .picker-date, .picker-btn, .cal-pop, .dd-caret, .dd-menu { display: none !important; }
-    /* Images are positioned from the paper's top-left corner; in print that corner sits at the page margin, so pull them back by the same amount */
-    .floating-img-wrapper { outline: none !important; transform: translate(-0.5in, -0.3in) rotate(var(--rot, 0deg)); }
-    .dd-btn, .dd-btn:hover, .dd-btn:focus-visible, .dd-btn[aria-expanded="true"] {
-      background: transparent !important;
-      box-shadow: none !important;
-      border-bottom-color: var(--line-black) !important;
-    }
-    .inp-line::placeholder { color: transparent !important; opacity: 0 !important; }
-    .tr-rows, .total-row { break-inside: avoid; page-break-inside: avoid; }
-    /* Print at full size: undo the on-screen fit-to-window scaling and never start a second page */
     .sheet-wrap { width: auto !important; height: auto !important; }
-    .paper { transform: none !important; break-after: avoid; page-break-after: avoid; }
+    .paper.landscape { height: auto; }
+    .conv-toggle, .no-print { display: none !important; }
   }
 </style>
+<style id="pageStyle">@page { size: A4 landscape; margin: 0.3in 0.5in; }</style>
 </head>
 <body>
 
 <div class="workspace">
 
-<div class="sheet-wrap" id="sheetWrap">
-<div class="paper" id="paperDoc">
+<!-- Form Switcher (left) -->
+<div class="btn-bar tab-bar" role="toolbar" aria-label="Choose form">
+  <button type="button" class="btn" id="tabTravel" onclick="showForm('travel')" aria-pressed="true" title="Show the Travel Reimbursement Form">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+    <span class="btn-label">TRAVEL REIMBURSEMENT FORM</span>
+  </button>
+  <button type="button" class="btn btn-secondary" id="tabComp" onclick="showForm('comp')" aria-pressed="false" title="Show the Travel Reimbursement Computation Sheet">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="14" x2="12" y2="14"/><line x1="10" y1="12" x2="10" y2="16"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="9" y1="18" x2="16" y2="18"/></svg>
+    <span class="btn-label">COMPUTATION SHEET</span>
+  </button>
+</div>
+
+<!-- Travel Reimbursement Form Wrap -->
+<div class="sheet-wrap" id="wrapTravel">
+<div class="paper landscape" id="paperTravel">
 
   <div class="sei-header">
     <div class="org">SCIENCE EDUCATION INSTITUTE</div>
@@ -777,17 +891,16 @@
 
   <form id="transpoForm" onsubmit="return false;">
 
-    <!-- Scholar details -->
     <div class="info3">
       <div class="f-cell"><span class="lbl">NAME:</span><input type="text" class="inp-line" aria-label="Name"></div>
-      <div class="f-cell"><span class="lbl">YEAR OF SCHOLARSHIP AWARD:</span><input type="text" class="inp-line" aria-label="Year of Scholarship Award"></div>
-      <div class="f-cell"><span class="lbl">ID NUMBER:</span><input type="text" class="inp-line" aria-label="ID Number"></div>
+      <div class="f-cell"><span class="lbl">YEAR OF SCHOLARSHIP AWARD:</span><input type="text" class="inp-line inp-center" aria-label="Year of Scholarship Award"></div>
+      <div class="f-cell"><span class="lbl">ID NUMBER:</span><input type="text" class="inp-line inp-center" aria-label="ID Number"></div>
 
       <div class="f-cell"><span class="lbl">SCHOOL:</span><input type="text" class="inp-line" value="Ateneo de Manila University" aria-label="School"></div>
-      <div class="f-cell"><span class="lbl">CURRENT YEAR LEVEL:</span><input type="text" class="inp-line" aria-label="Current Year Level"></div>
+      <div class="f-cell"><span class="lbl">CURRENT YEAR LEVEL:</span><input type="text" class="inp-line inp-center" aria-label="Current Year Level"></div>
       <div></div>
 
-      <div class="f-cell"><span class="lbl">CONTACT NO.:</span><input type="text" class="inp-line" maxlength="13" aria-label="Contact Number"></div>
+      <div class="f-cell"><span class="lbl">CONTACT NO.:</span><input type="text" class="inp-line inp-center" maxlength="13" aria-label="Contact Number"></div>
       <div class="f-cell degree">
         <span class="lbl" id="degreeLbl">DEGREE PROGRAM:</span>
         <div class="dd" id="degreeDD" data-label="Degree Program">
@@ -799,13 +912,11 @@
       </div>
     </div>
 
-    <!-- Permanent address -->
     <div class="addr">
       <div class="f-cell"><span class="lbl">PERMANENT ADDRESS:</span><input type="text" class="inp-line" aria-label="Permanent Address"></div>
       <div class="f-cell"><input type="text" class="inp-line" aria-label="Permanent Address, continued"></div>
     </div>
 
-    <!-- Period covered -->
     <div class="period">
       <div class="period-left">
         <span class="lbl">PERIOD COVERED:</span>
@@ -821,371 +932,230 @@
 
     <div class="note"><b>NOTE:</b> Exclude add-ons and additional fees such as rebooking fees, extra baggage fees, seat selection fees, insurance, meals, etc.</div>
 
-    <!-- Travel table -->
     <div class="tr-grid tr-head">
       <span>Date</span><span>Place of Origin</span><span>Destination</span><span>Means of Transportation</span><span>Amount</span>
     </div>
     <div class="tr-rows">
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 1"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 1">
-          <input type="text" class="inp-line" aria-label="Destination, row 1">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 1">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 1">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 2"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 2">
-          <input type="text" class="inp-line" aria-label="Destination, row 2">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 2">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 2">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 3"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 3">
-          <input type="text" class="inp-line" aria-label="Destination, row 3">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 3">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 3">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 4"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 4">
-          <input type="text" class="inp-line" aria-label="Destination, row 4">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 4">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 4">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 5"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 5">
-          <input type="text" class="inp-line" aria-label="Destination, row 5">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 5">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 5">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 6"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 6">
-          <input type="text" class="inp-line" aria-label="Destination, row 6">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 6">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 6">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 7"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 7">
-          <input type="text" class="inp-line" aria-label="Destination, row 7">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 7">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 7">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 8"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 8">
-          <input type="text" class="inp-line" aria-label="Destination, row 8">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 8">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 8">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 9"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 9">
-          <input type="text" class="inp-line" aria-label="Destination, row 9">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 9">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 9">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 10"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 10">
-          <input type="text" class="inp-line" aria-label="Destination, row 10">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 10">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 10">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 11"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 11">
-          <input type="text" class="inp-line" aria-label="Destination, row 11">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 11">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 11">
-        </div>
-        <div class="tr-grid">
-          <div class="date-wrapper"><input type="text" class="inp-line text-date" data-short="1" placeholder="MM/DD/YYYY" aria-label="Date, row 12"><button type="button" class="picker-btn" onclick="openDatePicker(this)" aria-label="Pick a date" title="Pick a date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
-          <input type="text" class="inp-line" aria-label="Place of Origin, row 12">
-          <input type="text" class="inp-line" aria-label="Destination, row 12">
-          <input type="text" class="inp-line" aria-label="Means of Transportation, row 12">
-          <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row 12">
-        </div>
+      <script>
+        for(let i=1; i<=12; i++) {
+          document.write(`
+            <div class="tr-grid">
+              <div class="date-wrapper"><input type="text" class="inp-line text-date" placeholder="MM/DD/YYYY" aria-label="Date, row ${i}"><button type="button" class="picker-btn" onclick="openDatePicker(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></button></div>
+              <input type="text" class="inp-line" aria-label="Place of Origin, row ${i}">
+              <input type="text" class="inp-line" aria-label="Destination, row ${i}">
+              <input type="text" class="inp-line" aria-label="Means of Transportation, row ${i}">
+              <input type="text" class="inp-line inp-amt" inputmode="decimal" aria-label="Amount, row ${i}">
+            </div>
+          `);
+        }
+      </script>
+      <div class="tr-grid tr-total">
+        <span class="tr-total-lbl">TOTAL:</span>
+        <input type="text" class="inp-line inp-total" id="totalNum" readonly tabindex="-1" aria-label="Total Amount">
+      </div>
     </div>
 
     <div class="total-row">
-      <div class="f-cell"><span class="lbl">TOTAL AMOUNT IN WORDS:</span><input type="text" class="inp-line" aria-label="Total Amount in Words"></div>
+      <div class="f-cell"><span class="lbl">TOTAL AMOUNT IN WORDS:</span><input type="text" class="inp-line" aria-label="Total Amount in Words" id="totalWords" readonly tabindex="-1"></div>
     </div>
   </form>
 </div>
 </div>
 
-<!-- Upload / Print (right) -->
-<div class="btn-bar action-bar" role="toolbar" aria-label="Form actions">
-  <button type="button" class="btn btn-secondary" onclick="triggerImageUpload()" title="Upload pictures or signatures. You can also drop images onto the form, drag to move, pull the corner to resize, and use the round handle on top to rotate." aria-label="Upload pictures or signatures">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+<!-- Computation Sheet Wrap -->
+<div class="sheet-wrap" id="wrapComp" hidden>
+<div class="paper" id="paperComp">
+
+  <form id="compForm" onsubmit="return false;">
+
+    <div class="cs-head">
+      <div class="cs-title">Travel Reimbursement Computation Sheet</div>
+      <div class="cs-sub">Computation of Reimbursable Amount</div>
+    </div>
+
+    <!-- Scholar information -->
+    <div class="cs-info">
+      <div class="info-row full"><span class="lbl">Name:</span><input type="text" class="inp-line" aria-label="Name"></div>
+      <div class="info-row full"><span class="lbl">Ateneo Student Email Address:</span><input type="text" inputmode="email" autocomplete="off" class="inp-line" aria-label="Ateneo Student Email Address"></div>
+      <div class="info-row"><span class="lbl">ID Number:</span><input type="text" class="inp-line ctr" aria-label="ID Number"></div>
+      <div class="info-row"><span class="lbl">Contact No.:</span><input type="text" class="inp-line ctr" maxlength="13" aria-label="Contact Number"></div>
+    </div>
+
+    <!-- Total on the receipt + currency converter -->
+    <div class="rcpt">
+      <div class="rcpt-row">
+        <span class="lbl">Total Amount Indicated on the Receipt:</span>
+        <div class="amt-box"><span class="cur-pre" id="rcptPre">&#8369;</span><input type="text" class="inp-line cs-money" id="rcptAmt" inputmode="decimal" aria-label="Total amount indicated on the receipt"></div>
+        <button type="button" class="conv-toggle" id="convBtn" aria-expanded="false" aria-controls="convPanel" title="Show or hide the currency converter">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          CURRENCY CONVERSION
+        </button>
+      </div>
+      <div class="conv-panel" id="convPanel" hidden>
+        <div class="conv-row">
+          <span class="lbl">Currency:</span>
+          <input type="text" class="inp-line cur-in" id="convCur" maxlength="24" autocomplete="off" aria-label="Currency of the receipt">
+          
+          <span class="lbl">Conversion Factor:</span>
+          <input type="text" class="inp-line factor-in" id="convFactor" inputmode="decimal" value="1.00" aria-label="Conversion factor">
+
+          <span class="lbl">Equivalent Amount at the Time of Payment:</span>
+          <div class="amt-box"><span class="cur-pre">&#8369;</span><input type="text" class="inp-line cs-money" id="convEq" readonly tabindex="-1" aria-label="Equivalent amount in pesos"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deductions Table -->
+    <table class="cs-table">
+      <colgroup><col style="width:66%"><col style="width:34%"></colgroup>
+      <thead><tr><th>Nature of Deduction</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td class="nat">Extra Baggage</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Extra Baggage"></div></td></tr>
+        <tr><td class="nat">Seat Selection</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Seat Selection"></div></td></tr>
+        <tr><td class="nat">Companion Fare</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Companion Fare"></div></td></tr>
+        <tr><td class="nat">Checked Pet Fee</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Checked Pet Fee"></div></td></tr>
+        <tr><td class="nat">Comfort Kits</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Comfort Kits"></div></td></tr>
+        <tr><td class="nat">In-flight Entertainment Passes</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: In-flight Entertainment Passes"></div></td></tr>
+        <tr><td class="nat">In-flight Meals</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: In-flight Meals"></div></td></tr>
+        <tr><td class="nat">Lounge Access</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Lounge Access"></div></td></tr>
+        <tr><td class="nat">Payment Processing</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Payment Processing"></div></td></tr>
+        <tr><td class="nat">Priority Boarding</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Priority Boarding"></div></td></tr>
+        <tr><td class="nat">Travel Insurance</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Travel Insurance"></div></td></tr>
+        <script>
+          for(let i=1; i<=5; i++) {
+            document.write(`
+              <tr><td class="nat"><div class="oth-wrap"><span>Others:</span><input type="text" class="inp-line" aria-label="Other deduction ${i}"></div></td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Others ${i}"></div></td></tr>
+            `);
+          }
+        </script>
+      </tbody>
+      <tfoot>
+        <tr><td class="nat">Total Amount Indicated on the Receipt<span class="sum-note" id="sumNote"></span></td><td><div class="amt-cell"><span class="pre neg-pre" id="sumRcptNeg" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><span class="pre" id="sumRcptPre">&#8369;</span><output id="sumRcpt" aria-label="Total amount indicated on the receipt"></output></div></td></tr>
+        <tr><td class="nat">Total Deductions</td><td><div class="amt-cell"><span class="pre neg-pre" id="sumDedNeg" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><span class="pre" id="sumDedPre">&#8369;</span><output id="sumDed" aria-label="Total deductions"></output></div></td></tr>
+        <tr class="net"><td class="nat">NET REIMBURSABLE AMOUNT</td><td><div class="amt-cell"><span class="pre neg-pre" id="sumNetNeg" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><span class="pre" id="sumNetPre">&#8369;</span><output id="sumNet" aria-label="Net reimbursable amount"></output></div></td></tr>
+      </tfoot>
+    </table>
+
+    <div class="thesis-box">
+      <div class="tcell fill" style="--g:1">
+        <label class="tlabel" id="explLbl" data-for="explain">Explanation of the Computation</label>
+        <div class="ta ta-expl" id="explain" contenteditable="true" role="textbox" aria-multiline="true" spellcheck="true"></div>
+      </div>
+    </div>
+
+    <div class="cert-block">
+      <div class="cert-col">
+        <p class="cert-text">I hereby confirm that the computation provided herein is correct and accurate.</p>
+        <div class="sig-input-area" id="sigAreaComp"><input type="text" class="inp-line" aria-label="Printed Name and Signature"></div>
+        <div class="cap">Printed Name and Signature</div>
+      </div>
+    </div>
+  </form>
+</div>
+</div>
+
+<!-- Right column: Compact FORMAT & MATH tools -->
+<div class="right-col">
+<div class="btn-bar action-bar" role="toolbar">
+  <button type="button" class="btn btn-secondary" onclick="triggerImageUpload()" title="Upload pictures/signatures">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
     <span class="btn-label">UPLOAD</span>
   </button>
-  <button type="button" class="btn" onclick="window.print()" title="Print or save the form as a PDF" aria-label="Print or download as PDF">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-    <span class="btn-label">PRINT/<wbr>DOWNLOAD</span>
+  <button type="button" class="btn" onclick="window.print()" title="Print/Save as PDF">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+    <span class="btn-label">PRINT</span>
   </button>
 </div>
 
+<div class="btn-bar tools-bar" id="toolsBar" role="toolbar" aria-label="Text tools" hidden>
+  <div class="size-ctl" role="group">
+    <span class="size-lbl">TEXT SIZE</span>
+    <div class="size-row">
+      <button type="button" class="size-btn" id="fsDown">A&minus;</button>
+      <output class="size-val" id="fsVal">13</output>
+      <button type="button" class="size-btn" id="fsUp">A+</button>
+    </div>
+  </div>
+  <div class="fmt-ctl" role="group">
+    <span class="size-lbl">FORMAT</span>
+    <div class="fmt-grid">
+      <button type="button" class="fmt-btn" data-cmd="bold"><b>B</b></button>
+      <button type="button" class="fmt-btn" data-cmd="italic"><i style="font-family:Georgia,serif">I</i></button>
+      <button type="button" class="fmt-btn" data-cmd="underline"><u>U</u></button>
+      <button type="button" class="fmt-btn" data-cmd="strikeThrough"><s>S</s></button>
+      <button type="button" class="fmt-btn" data-cmd="subscript"><span>X<sub>2</sub></span></button>
+      <button type="button" class="fmt-btn" data-cmd="superscript"><span>X<sup>2</sup></span></button>
+      <div class="fmt-sep" style="grid-column:1/-1"></div>
+      <button type="button" class="fmt-btn" data-cmd="insertOrderedList"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 4.5l1.5-.8V9"/><path d="M3.8 13.5a1.5 1.5 0 1 1 2.6 1L3.8 17.5h3"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="insertUnorderedList"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="outdent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 8 3 12 7 16"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="18" x2="11" y2="18"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="indent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 8 7 12 3 16"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="18" x2="11" y2="18"/></svg></button>
+      <button type="button" class="fmt-btn" data-cmd="removeFormat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="3" y1="3" x2="21" y2="21"/></svg></button>
+    </div>
+  </div>
+
+  <div class="fmt-ctl" role="group">
+    <span class="size-lbl">MATH</span>
+    <div class="fmt-grid">
+      <button type="button" class="fmt-btn" data-math="fraction"><span class="mini-frac"><span>a</span><span>b</span></span></button>
+      <button type="button" class="fmt-btn" data-math="paren"><span class="glyph">( )</span></button>
+      <button type="button" class="fmt-btn" data-math="square"><span class="glyph">[ ]</span></button>
+      <button type="button" class="fmt-btn" data-math="curly"><span class="glyph">{ }</span></button>
+      <button type="button" class="fmt-btn" data-math="+"><span class="glyph">+</span></button>
+      <button type="button" class="fmt-btn" data-math="−"><span class="glyph">&minus;</span></button>
+      <button type="button" class="fmt-btn" data-math="×"><span class="glyph">&times;</span></button>
+      <button type="button" class="fmt-btn" data-math="÷"><span class="glyph">&divide;</span></button>
+      <button type="button" class="fmt-btn" data-math="="><span class="glyph">=</span></button>
+      <button type="button" class="fmt-btn" data-math="₱"><span class="glyph">&#8369;</span></button>
+    </div>
+  </div>
+</div>
+</div>
 </div>
 
-<!-- Hidden File Input for Image Uploads -->
 <input type="file" id="pngUploader" accept="image/*" multiple style="display: none;" onchange="handleMultipleImages(event)">
 
 <script>
-  function formatDate(picker) {
-    if (!picker.value) return;
-    const parts = picker.value.split('-');
-    const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
-    
-    const formatted = dateObj.toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
-    });
-    
-    const textInput = picker.parentElement.querySelector('.text-date');
-    if (textInput) {
-      textInput.value = formatted;
+  function openDatePicker(btn) {
+    const input = btn.parentElement.querySelector('.text-date');
+    if (!input) return;
+    const currentVal = input.value;
+    const formatted = prompt("Enter Date (MM/DD/YYYY):", currentVal || "10/21/2026");
+    if (formatted !== null) {
+      input.value = formatted;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
     }
   }
 
   (function () {
     const COURSES = [
-      'BS Biology',
-      'BS Chemistry',
-      'BS Computer Science',
-      'BS Electronics Engineering',
-      'BS Environmental Science',
-      'BS Health Sciences',
-      'BS Life Sciences',
-      'BS Management Information Systems',
-      'BS Mathematics',
-      'BS Physics',
-      'BS Psychology',
-      'BS Applied Mathematics - Master in Data Science',
-      'BS Applied Physics - BS Materials Science and Engineering',
-      'BS Chemistry - BS Materials Science and Engineering',
-      'BS Computer Science - BS Digital Game Design and Development',
-      'BS/M Applied Math with Specialization in Mathematical Finance'
-    ].sort((a, b) => a < b ? -1 : a > b ? 1 : 0);
-
-    const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+      'BS Biology', 'BS Chemistry', 'BS Computer Science', 'BS Electronics Engineering',
+      'BS Environmental Science', 'BS Health Sciences', 'BS Life Sciences',
+      'BS Management Information Systems', 'BS Mathematics', 'BS Physics', 'BS Psychology'
+    ].sort();
 
     function initDropdown(dd) {
       const btn = dd.querySelector('.dd-btn');
       const text = dd.querySelector('.dd-text');
-      let menu = null, value = '';
+      let menu = null;
 
-      function close(returnFocus) {
-        if (!menu) return;
-        menu.remove(); menu = null;
-        btn.setAttribute('aria-expanded', 'false');
-        document.removeEventListener('pointerdown', outside, true);
-        if (returnFocus) btn.focus();
-      }
-      function outside(e) { if (menu && !dd.contains(e.target)) close(false); }
-
-      function choose(v) {
-        value = v;
-        text.textContent = v;
-        close(true);
-      }
-
-      function open() {
+      btn.addEventListener('click', () => {
+        if (menu) { menu.remove(); menu = null; return; }
         menu = document.createElement('div');
         menu.className = 'dd-menu';
-        menu.setAttribute('role', 'listbox');
-        menu.setAttribute('aria-label', dd.dataset.label || 'Course');
-        menu.innerHTML = COURSES.map((c, i) =>
-          '<div class="dd-opt" role="option" tabindex="-1" data-i="' + i + '" aria-selected="' + (c === value) + '"><span>' + c + '</span>' + CHECK + '</div>'
-        ).join('') + (value ? '<button type="button" class="dd-clear">Clear selection</button>' : '');
+        menu.innerHTML = COURSES.map((c, i) => `<div class="dd-opt" data-i="${i}">${c}</div>`).join('');
         dd.appendChild(menu);
-        btn.setAttribute('aria-expanded', 'true');
-        document.addEventListener('pointerdown', outside, true);
-
         menu.addEventListener('click', (e) => {
           const opt = e.target.closest('.dd-opt');
-          if (opt) choose(COURSES[Number(opt.dataset.i)]);
-          else if (e.target.closest('.dd-clear')) choose('');
+          if (opt) { text.textContent = COURSES[Number(opt.dataset.i)]; menu.remove(); menu = null; }
         });
-        menu.addEventListener('keydown', (e) => {
-          const items = Array.from(menu.querySelectorAll('.dd-opt'));
-          const idx = items.indexOf(document.activeElement);
-          if (e.key === 'ArrowDown') { e.preventDefault(); items[Math.min(items.length - 1, idx + 1)].focus(); }
-          else if (e.key === 'ArrowUp') { e.preventDefault(); items[Math.max(0, idx - 1)].focus(); }
-          else if (e.key === 'Home') { e.preventDefault(); items[0].focus(); }
-          else if (e.key === 'End') { e.preventDefault(); items[items.length - 1].focus(); }
-          else if ((e.key === 'Enter' || e.key === ' ') && idx >= 0) { e.preventDefault(); choose(COURSES[Number(items[idx].dataset.i)]); }
-          else if (e.key === 'Escape') { e.preventDefault(); close(true); }
-          else if (e.key === 'Tab') { close(false); }
-        });
-
-        const sel = menu.querySelector('[aria-selected="true"]') || menu.querySelector('.dd-opt');
-        sel.focus();
-        sel.scrollIntoView({ block: 'nearest' });
-      }
-
-      btn.addEventListener('click', () => (menu ? close(false) : open()));
-      btn.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); if (!menu) open(); }
       });
     }
 
     document.querySelectorAll('.dd').forEach(initDropdown);
   })();
 
-  const CAL_MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const CAL_DOW = ['Su','Mo','Tu','We','Th','Fr','Sa'];
-  const CAL_CHEV_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>';
-  const CAL_CHEV_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>';
-  let calPop = null, calInput = null, calBtn = null, calView = null, calSel = null, calFocus = null;
-
-  const calDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-  const calSame = (a, b) => a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
-  const calFmt = (d) => d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-  const calShort = (d) => String(d.getMonth() + 1).padStart(2, '0') + '/' + String(d.getDate()).padStart(2, '0') + '/' + d.getFullYear();
-
-  function calClose(returnFocus) {
-    if (!calPop) return;
-    calPop.remove();
-    calPop = null;
-    window.removeEventListener('resize', calPlace);
-    window.removeEventListener('scroll', calPlace, true);
-    document.removeEventListener('pointerdown', calOutside, true);
-    document.removeEventListener('keydown', calKeys, true);
-    if (returnFocus && calBtn) calBtn.focus();
-    calInput = null; calBtn = null;
-  }
-
-  function calOutside(e) {
-    if (calPop && !calPop.contains(e.target) && !(calBtn && calBtn.contains(e.target))) calClose(false);
-  }
-
-  function calPlace() {
-    if (!calPop || !calBtn) return;
-    const r = calBtn.getBoundingClientRect();
-    const w = calPop.offsetWidth, h = calPop.offsetHeight;
-    let top = r.bottom + 8;
-    if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 8);
-    let left = r.left + r.width / 2 - w / 2;
-    left = Math.max(8, Math.min(left, window.innerWidth - w - 8));
-    calPop.style.top = top + 'px';
-    calPop.style.left = left + 'px';
-  }
-
-  function calPick(d) {
-    if (!calInput) return;
-    calInput.value = d ? (calInput.dataset.short ? calShort(d) : calFmt(d)) : '';
-    calInput.dispatchEvent(new Event('input', { bubbles: true }));
-    calClose(true);
-  }
-
-  function calRender(focusCell) {
-    const y = calView.getFullYear(), m = calView.getMonth();
-    const today = calDay(new Date());
-    const first = new Date(y, m, 1);
-    const start = new Date(y, m, 1 - first.getDay());
-    const years = [];
-    for (let yr = Math.min(1990, y); yr <= Math.max(today.getFullYear() + 10, y); yr++) years.push(yr);
-
-    let html = '<div class="cal-head">' +
-      '<button type="button" class="cal-nav" data-nav="-1" aria-label="Previous month">' + CAL_CHEV_L + '</button>' +
-      '<div class="cal-selects">' +
-        '<select data-sel="month" aria-label="Month">' + CAL_MONTHS.map((n, i) => '<option value="' + i + '"' + (i === m ? ' selected' : '') + '>' + n + '</option>').join('') + '</select>' +
-        '<select data-sel="year" aria-label="Year">' + years.map(v => '<option value="' + v + '"' + (v === y ? ' selected' : '') + '>' + v + '</option>').join('') + '</select>' +
-      '</div>' +
-      '<button type="button" class="cal-nav" data-nav="1" aria-label="Next month">' + CAL_CHEV_R + '</button>' +
-    '</div><div class="cal-grid" role="grid">';
-
-    html += CAL_DOW.map(d => '<div class="cal-dow" aria-hidden="true">' + d + '</div>').join('');
-    for (let i = 0; i < 42; i++) {
-      const d = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
-      const cls = ['cal-day'];
-      if (d.getMonth() !== m) cls.push('out');
-      if (calSame(d, today)) cls.push('today');
-      if (calSame(d, calSel)) cls.push('sel');
-      html += '<button type="button" class="' + cls.join(' ') + '" data-ts="' + d.getTime() + '" tabindex="' + (calSame(d, calFocus) ? 0 : -1) + '" aria-label="' + calFmt(d) + '"' + (calSame(d, calSel) ? ' aria-pressed="true"' : '') + '>' + d.getDate() + '</button>';
-    }
-    html += '</div><div class="cal-foot"><button type="button" class="cal-today">Today</button><button type="button" class="cal-clear">Clear</button></div>';
-    calPop.innerHTML = html;
-    calPlace();
-    if (focusCell) {
-      const cell = calPop.querySelector('.cal-day[tabindex="0"]');
-      if (cell) cell.focus();
-    }
-  }
-
-  function calMoveFocus(days, months) {
-    const d = new Date(calFocus.getFullYear(), calFocus.getMonth() + months, calFocus.getDate() + days);
-    if (months && d.getDate() !== calFocus.getDate() && !days) d.setDate(0);
-    calFocus = calDay(d);
-    calView = new Date(calFocus.getFullYear(), calFocus.getMonth(), 1);
-    calRender(true);
-  }
-
-  function calKeys(e) {
-    if (!calPop) return;
-    if (e.key === 'Escape') { e.preventDefault(); calClose(true); return; }
-    if (!e.target.classList || !e.target.classList.contains('cal-day')) return;
-    const map = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [-7, 0], ArrowDown: [7, 0], PageUp: [0, -1], PageDown: [0, 1] };
-    if (map[e.key]) { e.preventDefault(); calMoveFocus(map[e.key][0], map[e.key][1]); }
-  }
-
-  function openDatePicker(btn) {
-    if (calPop && calBtn === btn) { calClose(false); return; }
-    calClose(false);
-    const input = btn.parentElement.querySelector('.text-date');
-    if (!input) return;
-
-    const parsed = new Date(input.value);
-    calSel = (input.value && !isNaN(parsed)) ? calDay(parsed) : null;
-    calFocus = calSel || calDay(new Date());
-    calView = new Date(calFocus.getFullYear(), calFocus.getMonth(), 1);
-    calInput = input; calBtn = btn;
-
-    calPop = document.createElement('div');
-    calPop.className = 'cal-pop';
-    calPop.setAttribute('role', 'dialog');
-    calPop.setAttribute('aria-label', 'Choose a date');
-    document.body.appendChild(calPop);
-
-    calPop.addEventListener('click', (e) => {
-      const nav = e.target.closest('[data-nav]');
-      const day = e.target.closest('.cal-day');
-      if (nav) {
-        calView = new Date(calView.getFullYear(), calView.getMonth() + Number(nav.dataset.nav), 1);
-        calFocus = new Date(calView.getFullYear(), calView.getMonth(), Math.min(calFocus.getDate(), new Date(calView.getFullYear(), calView.getMonth() + 1, 0).getDate()));
-        calRender(false);
-      } else if (day) {
-        calPick(calDay(new Date(Number(day.dataset.ts))));
-      } else if (e.target.closest('.cal-today')) {
-        calPick(calDay(new Date()));
-      } else if (e.target.closest('.cal-clear')) {
-        calPick(null);
-      }
-    });
-    calPop.addEventListener('change', (e) => {
-      const sel = e.target.closest('select');
-      if (!sel) return;
-      const y = sel.dataset.sel === 'year' ? Number(sel.value) : calView.getFullYear();
-      const m = sel.dataset.sel === 'month' ? Number(sel.value) : calView.getMonth();
-      calView = new Date(y, m, 1);
-      calFocus = new Date(y, m, Math.min(calFocus.getDate(), new Date(y, m + 1, 0).getDate()));
-      calRender(false);
-    });
-
-    window.addEventListener('resize', calPlace);
-    window.addEventListener('scroll', calPlace, true);
-    document.addEventListener('pointerdown', calOutside, true);
-    document.addEventListener('keydown', calKeys, true);
-    calRender(true);
-  }
-
+  const view = { scale: 1 };   // current on-screen zoom of the sheet (pointer movement is divided by this)
   function triggerImageUpload() {
     document.getElementById('pngUploader').click();
   }
@@ -1195,7 +1165,7 @@
     if (!files || files.length === 0) return;
 
     Array.from(files).forEach((file, idx) => {
-      addImageFile(file, 500 + (idx * 20), 150 + (idx * 20));
+      addImageFile(file, 140 + (idx * 24), 140 + (idx * 24));
     });
 
     event.target.value = '';
@@ -1208,7 +1178,7 @@
     reader.readAsDataURL(file);
   }
 
-  const sheets = [document.getElementById('paperDoc')];
+  const sheets = [document.getElementById('paperTravel'), document.getElementById('paperComp')];
   let paper = sheets[0];   // the form currently showing
 
   function clamp(v, min, max) { return Math.max(min, Math.min(v, Math.max(min, max))); }
@@ -1218,58 +1188,128 @@
     el.style.top = clamp(y, 0, paper.offsetHeight - el.offsetHeight) + 'px';
   }
 
+  const MIN_SIZE = 24;   // smallest visible width/height of an image, in px
+  const DIRS = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
+  const SVG_OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+  const ICON_CROP  = SVG_OPEN + '<path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/></svg>';
+  const ICON_CHECK = SVG_OPEN + '<polyline points="20 6 9 17 4 12"/></svg>';
+  const ICON_RESET = SVG_OPEN + '<path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>';
+
+  function applyCrop(el) {
+    const c = el._crop;
+    el.style.setProperty('--cl', c.l);
+    el.style.setProperty('--cr', c.r);
+    el.style.setProperty('--ct', c.t);
+    el.style.setProperty('--cb', c.b);
+    el.style.setProperty('--fx', 1 - c.l - c.r);
+    el.style.setProperty('--fy', 1 - c.t - c.b);
+  }
+
+  // New crop inset for one side. delta > 0 crops more, delta < 0 brings hidden picture back.
+  function cropInset(inset, other, full, delta, maxVisible) {
+    const lo = Math.max(0, 1 - other - maxVisible / full);   // can't reveal more than fits on the page
+    const hi = 1 - other - MIN_SIZE / full;                  // can't crop below the minimum size
+    return clamp(inset + delta / full, lo, hi);
+  }
+
+  function makeTool(cls, title, icon) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = cls;
+    b.title = title;
+    b.setAttribute('aria-label', title);
+    b.innerHTML = icon;
+    return b;
+  }
+
   function createMovableImage(src, topPos = 500, leftPos = 150) {
     const wrapper = document.createElement('div');
     wrapper.className = 'floating-img-wrapper selected';
     wrapper.tabIndex = 0;
     wrapper.style.width = '140px';
     wrapper.style.height = '80px';
+    wrapper._crop = { l: 0, r: 0, t: 0, b: 0 };
+
+    const ghost = document.createElement('img');
+    ghost.className = 'img-ghost';
+    ghost.alt = '';
+    ghost.draggable = false;
+    ghost.setAttribute('aria-hidden', 'true');
+
+    const clip = document.createElement('div');
+    clip.className = 'img-clip';
 
     const img = document.createElement('img');
     img.alt = '';
     img.draggable = false;
     img.onload = function() {
       if (img.naturalWidth && img.naturalHeight) {
+        wrapper._natRatio = img.naturalWidth / img.naturalHeight;
         wrapper.style.height = (140 * img.naturalHeight / img.naturalWidth) + 'px';
       }
       moveTo(wrapper, leftPos, topPos);
     };
     img.src = src;
+    ghost.src = src;
 
-    const delBtn = document.createElement('button');
-    delBtn.type = 'button';
-    delBtn.className = 'btn-delete';
-    delBtn.innerText = '×';
-    delBtn.title = 'Remove image';
-    delBtn.setAttribute('aria-label', 'Remove image');
-    delBtn.addEventListener('pointerdown', (e) => e.stopPropagation());
+    clip.appendChild(img);
+    wrapper.appendChild(ghost);
+    wrapper.appendChild(clip);
+
+    // Toolbar: crop / reset / remove
+    const tools = document.createElement('div');
+    tools.className = 'img-tools';
+    tools.addEventListener('pointerdown', (e) => e.stopPropagation());
+    const cropBtn = makeTool('btn-crop', 'Crop image', ICON_CROP);
+    cropBtn.setAttribute('aria-pressed', 'false');
+    const resetBtn = makeTool('btn-reset', 'Reset size and crop', ICON_RESET);
+    const delBtn = makeTool('btn-delete', 'Remove image', '<span aria-hidden="true" style="font-size:15px;line-height:1;font-weight:bold">×</span>');
     delBtn.onclick = (e) => {
       e.stopPropagation();
       wrapper.remove();
     };
+    tools.appendChild(cropBtn);
+    tools.appendChild(resetBtn);
+    tools.appendChild(delBtn);
+    wrapper.appendChild(tools);
 
-    const resizeHandle = document.createElement('div');
-    resizeHandle.className = 'resize-handle';
-    resizeHandle.title = 'Drag to resize';
+    // Resize handles (corners keep proportions, sides stretch) and crop handles
+    DIRS.forEach((dir) => {
+      const h = document.createElement('div');
+      h.className = 'resize-handle';
+      h.dataset.dir = dir;
+      h.title = dir.length === 2
+        ? 'Drag to resize (hold Shift to stretch freely)'
+        : (dir === 'n' || dir === 's' ? 'Drag to stretch vertically' : 'Drag to stretch horizontally');
+      wrapper.appendChild(h);
+    });
+    DIRS.forEach((dir) => {
+      const h = document.createElement('div');
+      h.className = 'crop-handle';
+      h.dataset.dir = dir;
+      h.title = 'Drag to crop';
+      wrapper.appendChild(h);
+    });
 
-    wrapper.appendChild(img);
-    wrapper.appendChild(delBtn);
     const rotateHandle = document.createElement('div');
     rotateHandle.className = 'rotate-handle';
     rotateHandle.title = 'Drag to rotate (hold Shift to snap to 15°, double-click to reset)';
     rotateHandle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>';
-
-    wrapper.appendChild(resizeHandle);
     wrapper.appendChild(rotateHandle);
+
     wrapper.style.top = topPos + 'px';
     wrapper.style.left = leftPos + 'px';
     paper.appendChild(wrapper);
 
-    makeElementInteractive(wrapper, resizeHandle, rotateHandle);
+    makeElementInteractive(wrapper);
     deselectAllExcept(wrapper);
   }
 
-  function makeElementInteractive(elmnt, resizeHandle, rotateHandle) {
+  function makeElementInteractive(elmnt) {
+    const rotateHandle = elmnt.querySelector('.rotate-handle');
+    const cropBtn = elmnt.querySelector('.btn-crop');
+    const resetBtn = elmnt.querySelector('.btn-reset');
+
     const getRot = () => parseFloat(elmnt.dataset.rot || '0') || 0;
     function setRot(deg) {
       deg = ((deg + 180) % 360 + 360) % 360 - 180;
@@ -1277,10 +1317,11 @@
       elmnt.style.setProperty('--rot', deg + 'deg');
     }
 
+    /* ---- move ---- */
     let startX, startY, origLeft, origTop, dragging = false;
 
     elmnt.addEventListener('pointerdown', function(e) {
-      if (e.target.closest('.btn-delete, .resize-handle, .rotate-handle')) return;
+      if (e.target.closest('.img-tools, .resize-handle, .crop-handle, .rotate-handle')) return;
       e.preventDefault();
       deselectAllExcept(elmnt);
       elmnt.classList.add('selected', 'dragging');
@@ -1293,12 +1334,36 @@
 
     elmnt.addEventListener('pointermove', function(e) {
       if (!dragging) return;
-      moveTo(elmnt, origLeft + (e.clientX - startX) / viewScale, origTop + (e.clientY - startY) / viewScale);
+      moveTo(elmnt, origLeft + (e.clientX - startX) / view.scale, origTop + (e.clientY - startY) / view.scale);
     });
 
     function stopDrag() { dragging = false; elmnt.classList.remove('dragging'); }
     elmnt.addEventListener('pointerup', stopDrag);
     elmnt.addEventListener('pointercancel', stopDrag);
+
+    /* ---- crop mode on/off ---- */
+    function setCropMode(on) {
+      elmnt.classList.toggle('cropping', on);
+      cropBtn.classList.toggle('active', on);
+      cropBtn.setAttribute('aria-pressed', String(on));
+      cropBtn.title = on ? 'Done cropping' : 'Crop image';
+      cropBtn.setAttribute('aria-label', cropBtn.title);
+      cropBtn.innerHTML = on ? ICON_CHECK : ICON_CROP;
+    }
+    elmnt._setCrop = setCropMode;
+    const isCropping = () => elmnt.classList.contains('cropping');
+
+    cropBtn.onclick = (e) => {
+      e.stopPropagation();
+      deselectAllExcept(elmnt);
+      elmnt.classList.add('selected');
+      setCropMode(!isCropping());
+    };
+    elmnt.addEventListener('dblclick', function(e) {
+      if (e.target.closest('.img-tools, .resize-handle, .crop-handle, .rotate-handle')) return;
+      elmnt.classList.add('selected');
+      setCropMode(!isCropping());
+    });
 
     elmnt.addEventListener('keydown', function(e) {
       const step = e.shiftKey ? 10 : 1;
@@ -1308,7 +1373,11 @@
       else if (e.key === 'ArrowUp') dy = -step;
       else if (e.key === 'ArrowDown') dy = step;
       else if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); elmnt.remove(); return; }
-      else if (e.key === 'Escape') { elmnt.classList.remove('selected'); elmnt.blur(); return; }
+      else if (e.key === 'Enter' && e.target === elmnt) { e.preventDefault(); setCropMode(!isCropping()); return; }
+      else if (e.key === 'Escape') {
+        if (isCropping()) { setCropMode(false); return; }
+        elmnt.classList.remove('selected'); elmnt.blur(); return;
+      }
       else if (e.code === 'BracketLeft' || e.code === 'BracketRight') {
         e.preventDefault();
         elmnt.classList.add('selected');
@@ -1321,34 +1390,123 @@
       moveTo(elmnt, elmnt.offsetLeft + dx, elmnt.offsetTop + dy);
     });
 
-    let resizing = false, rStartX, rStartY, rStartW, rRatio;
+    /* ---- geometry helpers (work for rotated images too) ---- */
+    const num = (v, fallback) => { const n = parseFloat(v); return isNaN(n) ? fallback : n; };
 
-    resizeHandle.addEventListener('pointerdown', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      resizing = true;
-      resizeHandle.setPointerCapture(e.pointerId);
-      rStartX = e.clientX;
-      rStartY = e.clientY;
-      rStartW = elmnt.offsetWidth;
-      rRatio = elmnt.offsetWidth / Math.max(1, elmnt.offsetHeight);
-    });
+    function startGeom() {
+      const w = num(elmnt.style.width, elmnt.offsetWidth);
+      const h = num(elmnt.style.height, elmnt.offsetHeight);
+      return {
+        w, h,
+        cx: num(elmnt.style.left, elmnt.offsetLeft) + w / 2,
+        cy: num(elmnt.style.top, elmnt.offsetTop) + h / 2
+      };
+    }
 
-    resizeHandle.addEventListener('pointermove', function(e) {
-      if (!resizing) return;
-      const maxW = Math.min(paper.clientWidth - elmnt.offsetLeft,
-                            (paper.offsetHeight - elmnt.offsetTop) * rRatio);
-      const a = getRot() * Math.PI / 180;
-      const delta = ((e.clientX - rStartX) * Math.cos(a) + (e.clientY - rStartY) * Math.sin(a)) / viewScale;
-      const w = clamp(rStartW + delta, 24, maxW);
+    // Pointer movement on screen -> movement along the image's own (rotated) axes
+    function toLocal(dx, dy) {
+      const a = getRot() * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+      return { x: dx * c + dy * s, y: -dx * s + dy * c };
+    }
+
+    // Apply a new size. (sx, sy) is how far the centre moved along the image's own axes,
+    // which keeps the edge opposite the dragged handle fixed on screen.
+    function commit(g, w, h, sx, sy) {
+      const a = getRot() * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+      const cx = g.cx + sx * c - sy * s;
+      const cy = g.cy + sx * s + sy * c;
+      const host = elmnt.parentElement;
       elmnt.style.width = w + 'px';
-      elmnt.style.height = (w / rRatio) + 'px';
+      elmnt.style.height = h + 'px';
+      elmnt.style.left = clamp(cx - w / 2, 0, host.clientWidth - w) + 'px';
+      elmnt.style.top = clamp(cy - h / 2, 0, host.offsetHeight - h) + 'px';
+    }
+
+    function bindHandle(handle, onStart, onMove) {
+      let active = false, px, py, st;
+      handle.addEventListener('pointerdown', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        deselectAllExcept(elmnt);
+        elmnt.classList.add('selected');
+        active = true;
+        handle.setPointerCapture(e.pointerId);
+        px = e.clientX; py = e.clientY;
+        st = onStart();
+      });
+      handle.addEventListener('pointermove', function(e) {
+        if (!active) return;
+        onMove(st, toLocal((e.clientX - px) / view.scale, (e.clientY - py) / view.scale), e);
+      });
+      const stop = () => { active = false; };
+      handle.addEventListener('pointerup', stop);
+      handle.addEventListener('pointercancel', stop);
+    }
+
+    /* ---- resize: corners proportional, sides stretch ---- */
+    elmnt.querySelectorAll('.resize-handle').forEach(function(handle) {
+      const dir = handle.dataset.dir;
+      const E = dir.includes('e'), W = dir.includes('w'), S = dir.includes('s'), N = dir.includes('n');
+      const corner = dir.length === 2;
+      bindHandle(handle, startGeom, function(g, d, e) {
+        const host = elmnt.parentElement;
+        const maxW = host.clientWidth, maxH = host.offsetHeight;
+        const dw = E ? d.x : W ? -d.x : 0;
+        const dh = S ? d.y : N ? -d.y : 0;
+        let w, h;
+        if (corner && !e.shiftKey) {
+          let k = 1 + (dw * g.w + dh * g.h) / (g.w * g.w + g.h * g.h);
+          k = clamp(k, Math.max(MIN_SIZE / g.w, MIN_SIZE / g.h), Math.min(maxW / g.w, maxH / g.h));
+          w = g.w * k; h = g.h * k;
+        } else {
+          w = clamp(g.w + dw, MIN_SIZE, maxW);
+          h = clamp(g.h + dh, MIN_SIZE, maxH);
+        }
+        commit(g, w, h,
+               E ? (w - g.w) / 2 : W ? -(w - g.w) / 2 : 0,
+               S ? (h - g.h) / 2 : N ? -(h - g.h) / 2 : 0);
+      });
     });
 
-    function stopResize() { resizing = false; }
-    resizeHandle.addEventListener('pointerup', stopResize);
-    resizeHandle.addEventListener('pointercancel', stopResize);
+    /* ---- crop: move the frame's edges over a fixed picture ---- */
+    elmnt.querySelectorAll('.crop-handle').forEach(function(handle) {
+      const dir = handle.dataset.dir;
+      const E = dir.includes('e'), W = dir.includes('w'), S = dir.includes('s'), N = dir.includes('n');
+      bindHandle(handle, function() {
+        const g = startGeom(), c = elmnt._crop;
+        return { g, c: { l: c.l, r: c.r, t: c.t, b: c.b },
+                 IW: g.w / (1 - c.l - c.r), IH: g.h / (1 - c.t - c.b) };   // full-picture size in px
+      }, function(st, d) {
+        const { g, c, IW, IH } = st;
+        const host = elmnt.parentElement;
+        const n = { l: c.l, r: c.r, t: c.t, b: c.b };
+        if (E) n.r = cropInset(c.r, c.l, IW, -d.x, host.clientWidth);
+        if (W) n.l = cropInset(c.l, c.r, IW,  d.x, host.clientWidth);
+        if (S) n.b = cropInset(c.b, c.t, IH, -d.y, host.offsetHeight);
+        if (N) n.t = cropInset(c.t, c.b, IH,  d.y, host.offsetHeight);
+        elmnt._crop = n;
+        applyCrop(elmnt);
+        const w = IW * (1 - n.l - n.r), h = IH * (1 - n.t - n.b);
+        commit(g, w, h,
+               E ? (w - g.w) / 2 : W ? -(w - g.w) / 2 : 0,
+               S ? (h - g.h) / 2 : N ? -(h - g.h) / 2 : 0);
+      });
+    });
 
+    /* ---- reset: remove the crop and restore the original proportions ---- */
+    resetBtn.onclick = function(e) {
+      e.stopPropagation();
+      const g = startGeom();
+      const host = elmnt.parentElement;
+      elmnt._crop = { l: 0, r: 0, t: 0, b: 0 };
+      applyCrop(elmnt);
+      const ratio = elmnt._natRatio || (g.w / g.h);
+      let w = g.w, h = w / ratio;
+      const k = Math.min(1, host.clientWidth / w, host.offsetHeight / h);
+      commit(g, w * k, h * k, 0, 0);
+    };
+
+    /* ---- rotate ---- */
     let rotating = false;
     rotateHandle.addEventListener('pointerdown', function(e) {
       e.preventDefault();
@@ -1374,9 +1532,17 @@
 
   function deselectAllExcept(target) {
     document.querySelectorAll('.floating-img-wrapper').forEach(el => {
-      if (el !== target) el.classList.remove('selected');
+      if (el !== target) {
+        el.classList.remove('selected');
+        if (el._setCrop) el._setCrop(false);   // leaving an image also ends its crop mode
+      }
     });
   }
+
+  // Never print the crop overlay
+  window.addEventListener('beforeprint', () => {
+    document.querySelectorAll('.floating-img-wrapper').forEach(el => { if (el._setCrop) el._setCrop(false); });
+  });
 
   sheets.forEach(function (el) {
   el.addEventListener('pointerdown', function(e) {
@@ -1409,8 +1575,8 @@
     if (!files || files.length === 0) return;
 
     const rect = el.getBoundingClientRect();
-    const dropX = (e.clientX - rect.left) / viewScale;
-    const dropY = (e.clientY - rect.top) / viewScale;
+    const dropX = (e.clientX - rect.left) / view.scale;
+    const dropY = (e.clientY - rect.top) / view.scale;
 
     Array.from(files).forEach((file, i) => {
       addImageFile(file, dropY + (i * 15), dropX + (i * 15));
@@ -1419,31 +1585,260 @@
   });
 
 
-  /* Fit the sheet to the window so there is always breathing room on both sides.
-     The side toolbars (150px each) plus gaps and a 40px margin per side are reserved. */
-  let viewScale = 1;
+  function showForm(which) {
+    const travel = which === 'travel';
+    document.getElementById('wrapTravel').hidden = !travel;
+    document.getElementById('wrapComp').hidden = travel;
+    document.getElementById('toolsBar').hidden = travel;
+
+    document.getElementById('tabTravel').classList.toggle('btn-secondary', !travel);
+    document.getElementById('tabComp').classList.toggle('btn-secondary', travel);
+
+    document.getElementById('pageStyle').textContent = travel
+      ? '@page { size: A4 landscape; margin: 0.3in 0.5in; }'
+      : '@page { size: A4 portrait; margin: 0.5in 0.75in; }';
+
+    paper = travel ? sheets[0] : sheets[1];
+    deselectAllExcept(null);
+    fitToScreen();
+    window.scrollTo(0, 0);
+  }
+
+
+  /* ===== Text size / Format / Math (Explanation field) ===== */
   (function () {
-    const wrap = document.getElementById('sheetWrap');
-    const sheet = document.getElementById('paperDoc');
-    function fit() {
-      const room = document.documentElement.clientWidth - 2 * 150 - 2 * 24 - 2 * 40;
-      viewScale = Math.max(0.45, Math.min(1, room / sheet.offsetWidth));
-      sheet.style.transform = viewScale < 1 ? 'scale(' + viewScale + ')' : '';
-      wrap.style.width = (sheet.offsetWidth * viewScale) + 'px';
-      wrap.style.height = (sheet.offsetHeight * viewScale) + 'px';
+    const fields = Array.from(document.querySelectorAll('.ta[contenteditable]'));
+    const fmtBtns = Array.from(document.querySelectorAll('.fmt-btn[data-cmd]'));
+    const mathBtns = Array.from(document.querySelectorAll('.fmt-btn[data-math]'));
+    const STATE = ['bold','italic','underline','strikeThrough','subscript','superscript','insertOrderedList','insertUnorderedList'];
+    let lastField = null, lastRange = null;
+
+    document.querySelectorAll('label[data-for]').forEach(l =>
+      l.addEventListener('click', () => { const t = document.getElementById(l.dataset.for); if (t) t.focus(); }));
+
+    const fieldOf = (node) => {
+      const el = node && (node.nodeType === 1 ? node : node.parentElement);
+      return el ? el.closest('.ta[contenteditable]') : null;
+    };
+    function remember() {
+      const sel = window.getSelection();
+      if (!sel.rangeCount) return;
+      const f = fieldOf(sel.anchorNode);
+      if (f && f === fieldOf(sel.focusNode)) { lastField = f; lastRange = sel.getRangeAt(0).cloneRange(); }
     }
-    window.addEventListener('resize', fit);
-    if (window.ResizeObserver) new ResizeObserver(fit).observe(sheet);
-    fit();
+    function restore() {
+      if (!lastField || !lastField.offsetParent) return false;
+      if (fieldOf(window.getSelection().anchorNode) !== lastField) {
+        lastField.focus();
+        if (lastRange) { const s = window.getSelection(); s.removeAllRanges(); s.addRange(lastRange); }
+      }
+      return true;
+    }
+    function refresh() {
+      const inField = !!fieldOf(window.getSelection().anchorNode);
+      if (inField) remember();
+      const active = !!(lastField && lastField.offsetParent);
+      fmtBtns.forEach(b => {
+        const c = b.dataset.cmd;
+        if (STATE.includes(c)) {
+          let on = false;
+          if (inField) { try { on = document.queryCommandState(c); } catch (e) {} }
+          b.setAttribute('aria-pressed', String(on));
+        }
+        b.disabled = !active;
+      });
+      mathBtns.forEach(b => { b.disabled = !active; });
+    }
+    document.addEventListener('selectionchange', refresh);
+    fields.forEach(f => f.addEventListener('focus', refresh));
+    fmtBtns.concat(mathBtns).forEach(b => b.addEventListener('mousedown', e => e.preventDefault()));
+    document.execCommand('defaultParagraphSeparator', false, 'div');
+
+    fmtBtns.forEach(b => b.addEventListener('click', () => {
+      if (!restore()) return;
+      document.execCommand(b.dataset.cmd, false, null);
+      remember(); refresh();
+    }));
+
+    function selectContents(el) {
+      const r = document.createRange(); r.selectNodeContents(el);
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    }
+    mathBtns.forEach(b => b.addEventListener('click', () => {
+      if (!restore()) return;
+      const m = b.dataset.math;
+      if (m === 'fraction') {
+        const sel = window.getSelection();
+        const range = sel.getRangeAt(0);
+        range.deleteContents();
+        const f = document.createElement('span');
+        f.className = 'frac';
+        const n = document.createElement('span'); n.textContent = 'a';
+        const d = document.createElement('span'); d.textContent = 'b';
+        f.append(n, d);
+        const tail = document.createTextNode('\u200b');
+        range.insertNode(tail);
+        range.insertNode(f);
+        selectContents(n);
+      } else if (m === 'paren' || m === 'square' || m === 'curly') {
+        const pair = { paren: '()', square: '[]', curly: '{}' }[m];
+        const sel = window.getSelection();
+        const chosen = sel.toString();
+        document.execCommand('insertText', false, chosen ? pair[0] + chosen + pair[1] : pair);
+        if (!chosen && sel.modify) sel.modify('move', 'backward', 'character');
+      } else {
+        document.execCommand('insertText', false, m);
+      }
+      remember(); refresh();
+    }));
+
+    fields.forEach(f => {
+      f.addEventListener('keydown', e => {
+        if (e.key !== 'Tab' || e.ctrlKey || e.altKey || e.metaKey) return;
+        const sel = window.getSelection();
+        const n = sel.anchorNode && (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement);
+        const frac = n && n.closest('.frac');
+        if (frac && !e.shiftKey && frac.firstElementChild.contains(n)) { e.preventDefault(); selectContents(frac.lastElementChild); return; }
+        if (n && n.closest('li')) { e.preventDefault(); document.execCommand(e.shiftKey ? 'outdent' : 'indent', false, null); }
+      });
+      f.addEventListener('paste', e => {
+        e.preventDefault();
+        document.execCommand('insertText', false, (e.clipboardData || window.clipboardData).getData('text/plain'));
+      });
+    });
+    refresh();
   })();
 
-  /* Amount column: tidy to 2 decimals once the scholar leaves the field */
-  document.querySelectorAll('.inp-amt').forEach(function (inp) {
-    inp.addEventListener('blur', function () {
-      const n = parseFloat(inp.value.replace(/[^0-9.]/g, ''));
-      if (isFinite(n)) inp.value = n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  (function () {
+    const MIN = 8, MAX = 20, DEF = 13;
+    const val = document.getElementById('fsVal'), dn = document.getElementById('fsDown'), up = document.getElementById('fsUp');
+    let size = DEF;
+    function apply(n) {
+      size = Math.max(MIN, Math.min(MAX, n));
+      document.documentElement.style.setProperty('--ta-size', size + 'px');
+      val.textContent = size;
+      dn.disabled = size <= MIN;
+      up.disabled = size >= MAX;
+    }
+    dn.addEventListener('click', () => apply(size - 1));
+    up.addEventListener('click', () => apply(size + 1));
+    apply(DEF);
+  })();
+
+  /* ===== Fit the sheet to the window width (no sideways scrolling) ===== */
+  function fitToScreen() {
+    const ws = document.querySelector('.workspace');
+    const wrap = paper.parentElement;
+    const cs = getComputedStyle(ws);
+    const gap = parseFloat(cs.columnGap) || 0;
+    const pad = (parseFloat(cs.paddingLeft) || 0) + (parseFloat(cs.paddingRight) || 0);
+    const left = document.querySelector('.tab-bar').offsetWidth;
+    const right = document.querySelector('.right-col').offsetWidth;
+    const avail = document.documentElement.clientWidth - pad - left - right - gap * 2;
+
+    paper.style.transform = 'none';
+    const w = paper.offsetWidth, h = paper.offsetHeight;
+    const s = Math.max(0.3, Math.min(1, avail / w));
+    view.scale = s;
+    paper.style.transform = s < 1 ? 'scale(' + s + ')' : '';
+    wrap.style.width = (w * s) + 'px';
+    wrap.style.height = (h * s) + 'px';
+
+    // Tall right-hand panel: let it follow the page instead of scrolling inside itself
+    const rc = document.querySelector('.right-col');
+    rc.style.top = Math.min(16, window.innerHeight - rc.offsetHeight - 16) + 'px';
+  }
+  window.addEventListener('resize', fitToScreen);
+  window.addEventListener('load', fitToScreen);
+  if (window.ResizeObserver) sheets.forEach(p => new ResizeObserver(() => { if (p === paper) fitToScreen(); }).observe(p));
+  fitToScreen();
+
+  /* Computation Sheet Real-time Calculations with Negative Sign Prefix Support */
+  (function () {
+    const rcpt = document.getElementById('rcptAmt');
+    const eq = document.getElementById('convEq');
+    const cur = document.getElementById('convCur');
+    const factor = document.getElementById('convFactor');
+    const btn = document.getElementById('convBtn');
+    const panel = document.getElementById('convPanel');
+    const deds = Array.from(document.querySelectorAll('#paperComp .cs-ded'));
+    const PESO = '\u20B1';
+
+    const parseVal = (v) => {
+      const n = parseFloat(String(v).replace(/[^0-9.]/g, ''));
+      return isFinite(n) ? n : 0;
+    };
+
+    const numFmt = (n) => Math.abs(n).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const isOpen = () => btn.getAttribute('aria-expanded') === 'true';
+
+    function setAmountDisplay(idPrefix, val) {
+      const out = document.getElementById(idPrefix);
+      const negSpan = document.getElementById(idPrefix + 'Neg');
+      const preSpan = document.getElementById(idPrefix + 'Pre');
+
+      if (val !== 0) {
+        out.textContent = numFmt(val);
+        if (val < 0) {
+          if (negSpan) negSpan.classList.add('on');
+          if (preSpan) preSpan.style.display = 'none';
+        } else {
+          if (negSpan) negSpan.classList.remove('on');
+          if (preSpan) preSpan.style.display = 'inline';
+        }
+      } else {
+        out.textContent = '';
+        if (negSpan) negSpan.classList.remove('on');
+        if (preSpan) preSpan.style.display = 'inline';
+      }
+    }
+
+    function calc() {
+      const open = isOpen();
+      const r = parseVal(rcpt.value);
+      const f = parseVal(factor.value) || 1.0;
+      
+      let base = r;
+      if (open) {
+        const eqVal = r * f;
+        eq.value = eqVal > 0 ? numFmt(eqVal) : '';
+        base = eqVal;
+      }
+
+      let d = 0;
+      deds.forEach((i) => { d += parseVal(i.value); });
+
+      const net = base - d;
+
+      setAmountDisplay('sumRcpt', base);
+      setAmountDisplay('sumDed', d > 0 ? -d : 0);
+      setAmountDisplay('sumNet', net);
+
+      const code = cur.value.trim();
+      document.getElementById('rcptPre').textContent = (open && code) ? code.toUpperCase() : PESO;
+    }
+
+    deds.forEach((inp) => {
+      const pre = inp.closest('.amt-cell').querySelector('.neg-pre');
+      const sync = () => pre.classList.toggle('on', inp.value.trim() !== '');
+      inp.addEventListener('input', () => { sync(); calc(); });
+      inp.addEventListener('blur', sync);
     });
-  });
+
+    rcpt.addEventListener('input', calc);
+    factor.addEventListener('input', calc);
+    cur.addEventListener('input', calc);
+
+    btn.addEventListener('click', () => {
+      const open = !isOpen();
+      btn.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      calc();
+      if (open) cur.focus();
+    });
+
+    calc();
+  })();
 </script>
 
 </body>
