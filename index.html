@@ -262,7 +262,7 @@
     max-width: 540px;
     top: calc(100% + 6px);
     z-index: 500;
-    max-height: 360px;
+    max-height: min(80vh, 640px);
     overflow-y: auto;
     scrollbar-width: thin;
     padding: 6px;
@@ -345,8 +345,9 @@
     .img-tools, .resize-handle, .crop-handle, .rotate-handle, .img-ghost { display: none !important; }
     .workspace { padding: 0; }
     .paper { transform: none !important; }
+    .paper.landscape { display: flow-root !important; }   /* keeps the header's top margin from pushing the paper edge down, which would shift images */
     /* Images are positioned from the paper's padding edge; in print that edge sits at the page margin, so pull them back by the same padding to keep them where they are on screen */
-    .floating-img-wrapper { outline: none !important; transform: translate(calc(var(--pad-x) * -1), calc(var(--pad-y) * -1)) rotate(var(--rot, 0deg)); }
+    .floating-img-wrapper { outline: none !important; transform: translate(calc(var(--pad-x) * -1), calc(var(--pad-y) * -1)) rotate(var(--rot, 0deg)) !important; }
     .inp-line::placeholder, .ta::placeholder { color: transparent !important; opacity: 0 !important; }
     .ta { overflow: visible; }
   }
@@ -526,6 +527,7 @@
   .period-left { width: 142px; flex: none; font-size: 13px; }
   .period-left .lbl { font-weight: 700; font-size: 13px; padding: 0; display: block; margin-bottom: 4px; }
   .period-left .sy { display: flex; align-items: flex-end; }
+  .period-left .sy .inp-line { min-width: 0; width: 100%; }   /* keep the S.Y. line inside its column */
   .period-grid {
     flex: 1;
     display: grid;
@@ -1129,10 +1131,23 @@
 
   (function () {
     const COURSES = [
-      'BS Biology', 'BS Chemistry', 'BS Computer Science', 'BS Electronics Engineering',
-      'BS Environmental Science', 'BS Health Sciences', 'BS Life Sciences',
-      'BS Management Information Systems', 'BS Mathematics', 'BS Physics', 'BS Psychology'
-    ].sort();
+      'BS Applied Mathematics - Master in Data Science',
+      'BS Applied Physics - BS Materials Science and Engineering',
+      'BS Biology',
+      'BS Chemistry',
+      'BS Chemistry - BS Materials Science and Engineering',
+      'BS Computer Science',
+      'BS Computer Science - BS Digital Game Design and Development',
+      'BS Electronics Engineering',
+      'BS Environmental Science',
+      'BS Health Sciences',
+      'BS Life Sciences',
+      'BS Management Information Systems',
+      'BS Mathematics',
+      'BS Physics',
+      'BS Psychology',
+      'BS/M Applied Math with Specialization in Mathematical Finance'
+    ];
 
     function initDropdown(dd) {
       const btn = dd.querySelector('.dd-btn');
@@ -1752,6 +1767,55 @@
   window.addEventListener('load', fitToScreen);
   if (window.ResizeObserver) sheets.forEach(p => new ResizeObserver(() => { if (p === paper) fitToScreen(); }).observe(p));
   fitToScreen();
+
+
+  /* ===== Travel form: TOTAL and TOTAL AMOUNT IN WORDS ===== */
+  (function () {
+    const amts = Array.from(document.querySelectorAll('#paperTravel .inp-amt'));
+    const totalEl = document.getElementById('totalNum');
+    const wordsEl = document.getElementById('totalWords');
+
+    const ONES = ['ZERO','ONE','TWO','THREE','FOUR','FIVE','SIX','SEVEN','EIGHT','NINE','TEN','ELEVEN','TWELVE',
+      'THIRTEEN','FOURTEEN','FIFTEEN','SIXTEEN','SEVENTEEN','EIGHTEEN','NINETEEN'];
+    const TENS = ['','','TWENTY','THIRTY','FORTY','FIFTY','SIXTY','SEVENTY','EIGHTY','NINETY'];
+    const SCALES = ['','THOUSAND','MILLION','BILLION','TRILLION'];
+
+    function below1000(n) {
+      const out = [];
+      if (n >= 100) { out.push(ONES[Math.floor(n / 100)] + ' HUNDRED'); n %= 100; }
+      if (n >= 20) { out.push(TENS[Math.floor(n / 10)] + (n % 10 ? '-' + ONES[n % 10] : '')); }
+      else if (n > 0) out.push(ONES[n]);
+      return out.join(' ');
+    }
+    function toWords(n) {            // whole number >= 1
+      const parts = [];
+      for (let i = 0; n > 0; i++, n = Math.floor(n / 1000)) {
+        const chunk = n % 1000;
+        if (chunk) parts.unshift(below1000(chunk) + (SCALES[i] ? ' ' + SCALES[i] : ''));
+      }
+      return parts.join(' ');
+    }
+    function pesosInWords(centavos) {
+      const pesos = Math.floor(centavos / 100), cents = centavos % 100;
+      const out = [];
+      if (pesos > 0) out.push(toWords(pesos) + (pesos === 1 ? ' PESO' : ' PESOS'));
+      if (cents > 0) out.push(toWords(cents) + (cents === 1 ? ' CENTAVO' : ' CENTAVOS'));
+      return out.join(' AND ');
+    }
+    const toCentavos = (v) => {
+      const n = parseFloat(String(v).replace(/[^0-9.]/g, ''));
+      return isFinite(n) ? Math.round(n * 100) : 0;
+    };
+
+    function update() {
+      const c = amts.reduce((sum, i) => sum + toCentavos(i.value), 0);
+      totalEl.value = c > 0 ? (c / 100).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '';
+      wordsEl.value = c > 0 && c < 1e17 ? pesosInWords(c) : '';
+    }
+    amts.forEach(i => i.addEventListener('input', update));
+    window.__pesosInWords = pesosInWords;
+    update();
+  })();
 
   /* Computation Sheet Real-time Calculations with Negative Sign Prefix Support */
   (function () {
