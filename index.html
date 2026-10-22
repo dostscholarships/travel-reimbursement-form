@@ -742,6 +742,8 @@
   /* Reverted Currency Conversion Button styling */
   .conv-toggle {
     margin-left: auto;
+    flex: none;
+    white-space: nowrap;
     align-self: flex-end;
     display: inline-flex;
     align-items: center;
@@ -1198,11 +1200,11 @@
       <div class="info-row"><span class="lbl">Contact No.</span><input type="text" class="inp-line" maxlength="13" aria-label="Contact Number"></div>
     </div>
 
-    <!-- Total on the receipt + currency converter -->
+    <!-- Total on the sales invoice + currency converter -->
     <div class="rcpt">
       <div class="rcpt-row">
-        <span class="lbl">Total Amount Indicated on the Receipt:</span>
-        <div class="amt-box"><span class="cur-pre" id="rcptPre">&#8369;</span><input type="text" class="inp-line cs-money" id="rcptAmt" inputmode="decimal" aria-label="Total amount indicated on the receipt"></div>
+        <span class="lbl">Total Amount Indicated on the Sales Invoice:</span>
+        <div class="amt-box"><span class="cur-pre" id="rcptPre">&#8369;</span><input type="text" class="inp-line cs-money" id="rcptAmt" inputmode="decimal" aria-label="Total amount indicated on the sales invoice"></div>
         <button type="button" class="conv-toggle" id="convBtn" aria-expanded="false" aria-controls="convPanel" title="Show or hide the currency converter">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
           CURRENCY CONVERSION
@@ -1245,7 +1247,7 @@
     <table class="cs-table" style="margin-bottom:18px">
       <colgroup><col style="width:66%"><col style="width:34%"></colgroup>
       <tfoot>
-        <tr><td class="nat">Total Amount Indicated on the Receipt<span class="sum-note" id="sumNote"></span></td><td><div class="amt-cell"><span class="pre neg-pre" id="sumRcptNeg" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><span class="pre" id="sumRcptPre">&#8369;</span><output id="sumRcpt" aria-label="Total amount indicated on the receipt"></output></div></td></tr>
+        <tr><td class="nat">Total Amount Indicated on the Sales Invoice<span class="sum-note" id="sumNote"></span></td><td><div class="amt-cell"><span class="pre neg-pre" id="sumRcptNeg" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><span class="pre" id="sumRcptPre">&#8369;</span><output id="sumRcpt" aria-label="Total amount indicated on the sales invoice"></output></div></td></tr>
         <tr><td class="nat">Total Deductions</td><td><div class="amt-cell"><span class="pre neg-pre" id="sumDedNeg" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><span class="pre" id="sumDedPre">&#8369;</span><output id="sumDed" aria-label="Total deductions"></output></div></td></tr>
         <tr class="net"><td class="nat">NET REIMBURSABLE AMOUNT</td><td><div class="amt-cell"><span class="pre neg-pre" id="sumNetNeg" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><span class="pre" id="sumNetPre">&#8369;</span><output id="sumNet" aria-label="Net reimbursable amount"></output></div></td></tr>
       </tfoot>
