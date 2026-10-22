@@ -996,6 +996,13 @@
     .sheet-wrap { width: auto !important; height: auto !important; }
     .paper.landscape { height: auto; }
     .conv-toggle, .no-print { display: none !important; }
+
+    /* Print only: draw table borders on the cells' right/bottom edges (plus the table's left/top edge) instead of collapsed borders,
+       so the row lines stop exactly at the table's left edge and never poke out past it */
+    .cs-table { border-collapse: separate; border-spacing: 0; border-left: 1px solid var(--line-black); border-top: 1px solid var(--line-black); }
+    .cs-table th, .cs-table td { border: none; border-right: 1px solid var(--line-black); border-bottom: 1px solid var(--line-black); }
+    .cs-table tfoot tr:nth-child(2) td { border-bottom: none; }
+    .cs-table tr.net td { border-top: 2px solid var(--line-black); border-bottom: 3px double var(--line-black); }
   }
 </style>
 <style id="pageStyle">@page { size: A4 landscape; margin: 0.3in 0.5in; }</style>
