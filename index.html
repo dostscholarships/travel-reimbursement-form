@@ -781,6 +781,14 @@
   .cs-table td.nat { text-align: left; }
   .oth-wrap { display: flex; align-items: flex-end; gap: 6px; }
   .oth-wrap .inp-line { font-size: 13px; min-width: 0; height: 19px; }
+  .oth-wrap { align-items: center; width: 100%; }
+  .oth-wrap textarea.oth-ta {
+    display: block; width: 100%; height: 19px; min-height: 19px; margin: 0; padding: 0 4px 1px 4px;
+    border: none; outline: none; resize: none; overflow: hidden; background: transparent; color: inherit;
+    font: inherit; font-size: 13px; line-height: 19px; white-space: pre-wrap; overflow-wrap: anywhere;
+  }
+  .oth-row td { padding-top: 2px; padding-bottom: 2px; }
+  @media print { .oth-wrap textarea.oth-ta { overflow: visible; } }
   .amt-cell { display: flex; align-items: center; justify-content: flex-end; position: relative; min-height: 21px; }
   .amt-cell .pre { position: absolute; left: 0; top: 50%; transform: translateY(-50%); white-space: nowrap; font-size: 13px; }
   .amt-cell .neg-pre { visibility: hidden; }
@@ -2431,11 +2439,11 @@
     deds.forEach(bindDed);
 
     /* Additional deductions: the + beside Change Fee (and beside each added row) inserts a row below; x deletes it */
-    const ROW_HTML = '<td class="nat"><div class="oth-wrap"><input type="text" class="inp-line"></div><button type="button" class="row-add no-print" title="Add a row below" aria-label="Add a row below"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal"></div><button type="button" class="row-del no-print" title="Delete this row" aria-label="Delete this row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></td>';
+    const ROW_HTML = '<td class="nat"><div class="oth-wrap"><textarea class="inp-line oth-ta" rows="1" spellcheck="true"></textarea></div><button type="button" class="row-add no-print" title="Add a row below" aria-label="Add a row below"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal"></div><button type="button" class="row-del no-print" title="Delete this row" aria-label="Delete this row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></td>';
     const othRows = () => Array.from(document.querySelectorAll('#paperComp .oth-row'));
     function renumber() {
       othRows().forEach((r, i) => {
-        r.querySelector('.oth-wrap input').setAttribute('aria-label', 'Additional deduction ' + (i + 1));
+        r.querySelector('.oth-wrap .inp-line').setAttribute('aria-label', 'Additional deduction ' + (i + 1));
         r.querySelector('.cs-ded').setAttribute('aria-label', 'Amount deducted: Additional ' + (i + 1));
       });
     }
@@ -2453,7 +2461,7 @@
         deds.push(ded);
         bindDed(ded);
         renumber();
-        nr.querySelector('.oth-wrap input').focus();
+        nr.querySelector('.oth-wrap .inp-line').focus();
       } else {
         const ded = row.querySelector('.cs-ded');
         deds = deds.filter((d) => d !== ded);
@@ -2462,6 +2470,14 @@
         calc();
       }
     });
+
+    /* Added-row descriptions grow with their text (wrap to the next line instead of being cut) */
+    const growTa = (t) => { t.style.height = 'auto'; t.style.height = Math.max(19, t.scrollHeight) + 'px'; };
+    const tbodyEl = document.querySelector('#paperComp .cs-table tbody');
+    tbodyEl.addEventListener('input', (e) => { if (e.target.classList && e.target.classList.contains('oth-ta')) growTa(e.target); });
+    tbodyEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('oth-ta')) e.preventDefault(); });
+    window.addEventListener('beforeprint', () => document.querySelectorAll('#paperComp .oth-ta').forEach(growTa));
+    window.addEventListener('resize', () => document.querySelectorAll('#paperComp .oth-ta').forEach(growTa));
 
     rcpt.addEventListener('input', calc);
     factor.addEventListener('input', calc);
