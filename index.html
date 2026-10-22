@@ -770,13 +770,28 @@
   .row-del:hover { background: #b91c1c; border-color: #b91c1c; color: #fff; }
   .row-add:focus-visible, .row-del:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  .conv-panel { margin-top: 8px; padding: 8px 10px 6px; border: 1px dashed rgba(0, 68, 102, 0.45); border-radius: 6px; }
-  .conv-row { display: grid; grid-template-columns: max-content 1fr; align-items: end; gap: 8px 12px; font-size: 13px; }
+  #paperComp .cs-info input[aria-label="ID No."], #paperComp .cs-info input[aria-label="Contact Number"] { text-align: center; }
+  .conv-panel { margin-top: 14px; padding: 8px 10px 6px; border: 1px dashed rgba(0, 68, 102, 0.45); border-radius: 6px; background: #dbeafe; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .conv-row { display: grid; grid-template-columns: max-content max-content; justify-content: start; align-items: end; gap: 8px 12px; font-size: 13px; }
+  /* Currency field: zero intrinsic width, so the column is sized by the "(at the time of payment)" row and the field ends exactly where that text ends */
+  .conv-row { --pay-w: 42px; }   /* about the width of the word "payment" at 11px italic (used by the amount fields) */
+  .conv-row .dd { width: 0; min-width: 100%; flex: none; }
+  .dd-x {
+    position: absolute; right: 20px; bottom: 0; width: 18px; height: 18px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: none; border-radius: 50%; background: transparent; color: #64748b; cursor: pointer; z-index: 2;
+  }
+  .dd-x svg { width: 11px; height: 11px; pointer-events: none; }
+  .dd-x:hover { background: rgba(15,23,42,0.1); color: #0f172a; }
+  .dd-x:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+  .dd-x[hidden] { display: none; }
+  .dd.has-x .dd-text { padding-right: 22px; }
+  @media print { .dd-x { display: none !important; } }
   .conv-row .lbl { font-weight: 700; padding-right: 0; }
   .conv-row .conv-val { display: flex; align-items: flex-end; gap: 10px; }
   .conv-row .conv-sub { white-space: nowrap; padding-bottom: 2px; font-size: 11px; font-style: italic; font-weight: 400; }
   .conv-row .factor-in { text-align: left; }
-  .conv-row .amt-box { width: 140px; flex: none; }   /* room for 8 digits with 2 decimals */
+  .conv-row .amt-box { width: calc(140px + var(--pay-w)); flex: none; }   /* room for 8 digits with 2 decimals */
   .conv-row .amt-box .inp-line { text-align: left; }
 
   .cs-table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 14px; flex: none; }
@@ -1522,7 +1537,20 @@
       const LIST = dd.dataset.list === 'currency' ? CURRENCIES : COURSES;
       const btn = dd.querySelector('.dd-btn');
       const text = dd.querySelector('.dd-text');
-      let menu = null, value = '';
+      let menu = null, value = '', xb = null;
+
+      if (dd.dataset.list === 'currency') {   // clear (x) button inside the currency field
+        dd.classList.add('has-x');
+        xb = document.createElement('button');
+        xb.type = 'button';
+        xb.className = 'dd-x';
+        xb.hidden = true;
+        xb.title = 'Clear currency';
+        xb.setAttribute('aria-label', 'Clear currency');
+        xb.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>';
+        xb.addEventListener('click', (e) => { e.stopPropagation(); choose(''); });
+        dd.appendChild(xb);
+      }
 
       function close(returnFocus) {
         if (!menu) return;
@@ -1536,6 +1564,7 @@
       function choose(v) {
         value = v;
         text.textContent = v;
+        if (xb) xb.hidden = !v;
         const target = dd.dataset.target && document.getElementById(dd.dataset.target);
         if (target) {                       // hidden field holds the 3-letter code, e.g. USD
           const m = /\(([A-Z]{3})\)$/.exec(v);
