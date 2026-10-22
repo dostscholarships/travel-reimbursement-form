@@ -590,6 +590,10 @@
   .side-left .btn svg, .side-right .btn svg { width: 30px; height: 30px; stroke-width: 1.8; }
   .side-left .btn .btn-label, .side-right .btn .btn-label { font-size: 10.5px; letter-spacing: 0.3px; line-height: 1.25; }
   .side-tools > .btn-bar.tools-bar { padding: 8px; gap: 10px; }
+  .side-note-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .side-note-wrap[hidden] { display: none; }
+  .side-arrow { width: 26px; height: 33px; color: var(--accent); }
+  .side-note { padding: 9px 10px; background: #ffffff; border: 1px solid var(--accent); border-radius: 12px; color: var(--accent); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 11px; font-weight: 700; line-height: 1.4; text-align: center; }
 
   .sei-header { text-align: center; margin-top: 6px; }
   .sei-header .org { font-size: 14px; font-weight: 700; letter-spacing: 0.2px; }
@@ -1266,6 +1270,7 @@
     <span class="btn-label">COMPUTATION SHEET</span>
   </button>
 </div>
+<div class="side-note-wrap" id="compNote"><svg class="side-arrow" viewBox="0 0 28 36" aria-hidden="true"><path d="M14 2 L27 18 H19 V34 H9 V18 H1 Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><div class="side-note" role="note">Fill out the Computation Sheet if the amount to be reimbursed is different from the amount indicated on the sales invoice.</div></div>
 </div>
 
 <!-- RIGHT (fixed, hugs the sheet): upload / print -->
@@ -2019,6 +2024,7 @@
     document.getElementById('wrapTravel').hidden = !travel;
     document.getElementById('wrapComp').hidden = travel;
     document.getElementById('sideTools').hidden = travel;
+    document.getElementById('compNote').hidden = !travel;
     document.body.classList.toggle('has-tools', !travel);
 
     document.getElementById('tabTravel').classList.toggle('btn-secondary', !travel);
