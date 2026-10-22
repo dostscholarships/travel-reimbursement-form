@@ -653,7 +653,7 @@
   .dd-opt .opt-sub { flex: none; font-size: 11px; color: #64748b; white-space: nowrap; }
   .dd-note { padding: 8px 12px; font-size: 12px; line-height: 1.35; color: #64748b; }
 
-  .period { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+  .period { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 28px; }
   .period-left { width: 142px; flex: none; font-size: 13px; }
   .period-left .lbl { font-weight: 700; font-size: 13px; padding: 0; display: block; margin-bottom: 4px; }
   .period-left .sy { display: flex; align-items: flex-end; }
@@ -662,8 +662,9 @@
     flex: 1;
     display: grid;
     grid-template-columns: auto auto;
-    justify-content: space-between;
-    gap: 6px 12px;
+    justify-content: start;
+    gap: 6px 40px;
+    padding-left: 60px;
   }
 
   .inp-center { text-align: center; }
@@ -1102,14 +1103,12 @@
         <div class="sy"><span>S.Y.&nbsp;</span><input type="text" class="inp-line" aria-label="School Year"></div>
       </div>
       <div class="period-grid">
-        <label class="cb-item"><input type="checkbox"> Intersession or Start of 1st Semester</label>
-        <label class="cb-item"><input type="checkbox"> End of 2nd Semester</label>
-        <label class="cb-item"><input type="checkbox"> Roundtrip – Start of 1st Sem. and End of 2nd Sem.</label>
-        <label class="cb-item"><input type="checkbox"> Roundtrip – End of December and Start of January</label>
+        <label class="cb-item" style="grid-column:1;grid-row:1"><input type="checkbox"> Intersession or Start of 1st Semester</label>
+        <label class="cb-item" style="grid-column:1;grid-row:2"><input type="checkbox"> Roundtrip – Start of 1st Sem. and End of 2nd Sem.</label>
+        <label class="cb-item" style="grid-column:2;grid-row:1"><input type="checkbox"> End of 2nd Semester</label>
+        <label class="cb-item" style="grid-column:2;grid-row:2"><input type="checkbox"> Roundtrip – End of December and Start of January</label>
       </div>
     </div>
-
-    <div class="note"><b>NOTE:</b> Exclude add-ons and additional fees such as rebooking fees, extra baggage fees, seat selection fees, insurance, meals, etc.</div>
 
     <div class="tr-grid tr-head">
       <span>Date</span><span>Place of Origin</span><span>Destination</span><span>Means of Transportation</span><span>Amount</span>
