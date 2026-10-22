@@ -681,6 +681,7 @@
   .rcpt .lbl { font-weight: 700; font-size: 13px; padding-right: 0; }
   .amt-box { display: flex; align-items: flex-end; width: 150px; flex: none; border-bottom: 1px solid var(--line-black); }
   .amt-box .inp-line { border-bottom: none; text-align: right; flex: 1; min-width: 0; }
+  #rcptAmt { text-align: center; }
   .amt-box .cur-pre { font-size: 13px; white-space: nowrap; padding: 0 2px 1px 4px; max-width: 70px; overflow: hidden; text-overflow: ellipsis; font-weight: 700; }
   
   /* Reverted Currency Conversion Button styling */
@@ -707,16 +708,35 @@
     border-color: var(--accent);
   }
   .conv-toggle svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .oth-row td, .has-add { position: relative; }
+  .row-add, .row-del {
+    position: absolute;
+    width: 18px; height: 18px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%; cursor: pointer; z-index: 5;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.3);
+  }
+  .row-add svg, .row-del svg { width: 10px; height: 10px; pointer-events: none; }
+  .row-add { left: -28px; top: 50%; transform: translateY(-50%); background: #fff; color: var(--accent); border: 1px solid #fff; transition: background-color 0.12s ease, color 0.12s ease, border-color 0.12s ease; }
+  .row-add:hover, .row-add:focus-visible { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .cs-table tbody .inp-line { border-bottom: none; }
+  .cs-table tbody .inp-line:focus { box-shadow: none; }
+  .row-del { right: -28px; top: 50%; transform: translateY(-50%); background: #fff; color: #dc2626; border: 1px solid #dc2626; }
+  .row-del:hover { background: #dc2626; color: #fff; }
+  .row-add:focus-visible, .row-del:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
   .conv-panel { margin-top: 8px; padding: 8px 10px 6px; border: 1px dashed rgba(0, 68, 102, 0.45); border-radius: 6px; }
-  .conv-row { display: flex; align-items: flex-end; gap: 10px; font-size: 13px; flex-wrap: wrap; }
+  .conv-row { display: grid; grid-template-columns: max-content 1fr; align-items: end; gap: 8px 12px; font-size: 13px; }
   .conv-row .lbl { font-weight: 700; padding-right: 0; }
-  .conv-row .cur-in { width: 80px; flex: none; text-align: center; text-transform: uppercase; }
-  .conv-row .factor-in { width: 80px; flex: none; text-align: center; }
+  .conv-row .conv-val { display: flex; align-items: flex-end; gap: 10px; }
+  .conv-row .conv-sub { white-space: nowrap; padding-bottom: 2px; font-size: 11px; font-style: italic; font-weight: 400; }
+  .conv-row .factor-in { text-align: left; }
+  .conv-row .amt-box { width: 140px; flex: none; }   /* room for 8 digits with 2 decimals */
+  .conv-row .amt-box .inp-line { text-align: left; }
 
   .cs-table { width: 100%; border-collapse: collapse; table-layout: fixed; margin-bottom: 14px; flex: none; }
   .cs-table th, .cs-table td { border: 1px solid var(--line-black); padding: 0 8px; height: 23px; font-size: 13px; vertical-align: middle; }
-  .cs-table th { font-weight: 700; text-align: center; }
+  .cs-table th { font-weight: 700; text-align: center; background: var(--accent); color: #ffffff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .cs-table td.nat { text-align: left; }
   .oth-wrap { display: flex; align-items: flex-end; gap: 6px; }
   .oth-wrap .inp-line { font-size: 13px; min-width: 0; height: 19px; }
@@ -727,7 +747,9 @@
   .amt-cell .pre:not(.neg-pre) { left: 1.42em; }
   .amt-cell .inp-line, .amt-cell output { flex: 1; min-width: 0; border-bottom: none; text-align: right; font-size: 13px; padding-left: 55px; height: 19px; line-height: 19px; display: block; }
   .amt-cell output { padding-right: 4px; }
+  .cs-table tbody .amt-cell .neg-pre { left: 1.42em; }   /* peso sign lines up with the totals table */
   .cs-table tfoot td { font-weight: 700; }
+  .cs-table tr.net .amt-cell { color: #15803d; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .cs-table tr.net td { border-top: 2px solid var(--line-black); border-bottom: 3px double var(--line-black); }
   .sum-note { display: block; font-size: 10.5px; font-weight: 400; font-style: italic; line-height: 1.15; }
 
@@ -1097,42 +1119,38 @@
       </div>
       <div class="conv-panel" id="convPanel" hidden>
         <div class="conv-row">
-          <span class="lbl">Currency:</span>
-          <input type="text" class="inp-line cur-in" id="convCur" maxlength="24" autocomplete="off" aria-label="Currency of the receipt">
-          
-          <span class="lbl">Conversion Factor (peso per unit currency):</span>
-          <input type="text" class="inp-line factor-in" id="convFactor" inputmode="decimal" value="1.00" aria-label="Conversion factor">
+          <span class="lbl" id="currencyLbl">Currency:</span>
+          <div class="dd" id="currencyDD" data-label="Currency" data-list="currency" data-target="convCur">
+            <button type="button" class="dd-btn" id="currencyBtn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="currencyLbl currencyBtn">
+              <span class="dd-text"></span>
+              <svg class="dd-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+          </div>
+          <input type="hidden" id="convCur">
 
-          <span class="lbl">Equivalent Amount at the Time of Payment:</span>
+          <span class="lbl">Peso per Unit Currency:</span>
+          <div class="conv-val"><div class="amt-box"><span class="cur-pre">&#8369;</span><input type="text" class="inp-line factor-in" id="convFactor" inputmode="decimal" value="1.00" aria-label="Peso per unit currency"></div><span class="conv-sub">(at the time of payment)</span></div>
+
+          <span class="lbl">Equivalent Amount:</span>
           <div class="amt-box"><span class="cur-pre">&#8369;</span><input type="text" class="inp-line cs-money" id="convEq" readonly tabindex="-1" aria-label="Equivalent amount in pesos"></div>
         </div>
       </div>
     </div>
 
     <!-- Deductions Table -->
-    <table class="cs-table">
+    <table class="cs-table" style="margin-bottom:18px">
       <colgroup><col style="width:66%"><col style="width:34%"></colgroup>
       <thead><tr><th>Nature of Deduction</th><th>Amount</th></tr></thead>
       <tbody>
-        <tr><td class="nat">Extra Baggage</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Extra Baggage"></div></td></tr>
-        <tr><td class="nat">Seat Selection</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Seat Selection"></div></td></tr>
-        <tr><td class="nat">Companion Fare</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Companion Fare"></div></td></tr>
-        <tr><td class="nat">Checked Pet Fee</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Checked Pet Fee"></div></td></tr>
-        <tr><td class="nat">Comfort Kits</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Comfort Kits"></div></td></tr>
-        <tr><td class="nat">In-flight Entertainment Passes</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: In-flight Entertainment Passes"></div></td></tr>
-        <tr><td class="nat">In-flight Meals</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: In-flight Meals"></div></td></tr>
-        <tr><td class="nat">Lounge Access</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Lounge Access"></div></td></tr>
-        <tr><td class="nat">Payment Processing</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Payment Processing"></div></td></tr>
-        <tr><td class="nat">Priority Boarding</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Priority Boarding"></div></td></tr>
-        <tr><td class="nat">Travel Insurance</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Travel Insurance"></div></td></tr>
-        <script>
-          for(let i=1; i<=5; i++) {
-            document.write(`
-              <tr><td class="nat"><div class="oth-wrap"><span>Others:</span><input type="text" class="inp-line" aria-label="Other deduction ${i}"></div></td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Others ${i}"></div></td></tr>
-            `);
-          }
-        </script>
+        <tr><td class="nat">Extra Baggage</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Extra Baggage"></div></td></tr>
+        <tr><td class="nat">Companion Fare</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Companion Fare"></div></td></tr>
+        <tr><td class="nat">Seat Selection</td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Seat Selection"></div></td></tr>
+        <tr><td class="nat has-add">Change Fee<button type="button" class="row-add no-print" title="Add a row below" aria-label="Add a row below"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal" aria-label="Amount deducted: Change Fee"></div></td></tr>
       </tbody>
+    </table>
+
+    <table class="cs-table" style="margin-bottom:18px">
+      <colgroup><col style="width:66%"><col style="width:34%"></colgroup>
       <tfoot>
         <tr><td class="nat">Total Amount Indicated on the Receipt<span class="sum-note" id="sumNote"></span></td><td><div class="amt-cell"><span class="pre neg-pre" id="sumRcptNeg" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><span class="pre" id="sumRcptPre">&#8369;</span><output id="sumRcpt" aria-label="Total amount indicated on the receipt"></output></div></td></tr>
         <tr><td class="nat">Total Deductions</td><td><div class="amt-cell"><span class="pre neg-pre" id="sumDedNeg" aria-hidden="true">&minus;&nbsp;&nbsp;&nbsp;&#8369;</span><span class="pre" id="sumDedPre">&#8369;</span><output id="sumDed" aria-label="Total deductions"></output></div></td></tr>
@@ -1427,9 +1445,12 @@
       'BS/M Applied Math with Specialization in Mathematical Finance'
     ];
 
+    const CURRENCIES = ["Afghan Afghani (AFN)", "Albanian Lek (ALL)", "Algerian Dinar (DZD)", "Angolan Kwanza (AOA)", "Argentine Peso (ARS)", "Armenian Dram (AMD)", "Aruban Florin (AWG)", "Australian Dollar (AUD)", "Azerbaijani Manat (AZN)", "Bahamian Dollar (BSD)", "Bahraini Dinar (BHD)", "Bangladeshi Taka (BDT)", "Barbadian Dollar (BBD)", "Belarusian Ruble (BYN)", "Belize Dollar (BZD)", "Bermudian Dollar (BMD)", "Bhutanese Ngultrum (BTN)", "Bolivian Boliviano (BOB)", "Bosnia-Herzegovina Convertible Mark (BAM)", "Botswana Pula (BWP)", "Brazilian Real (BRL)", "British Pound Sterling (GBP)", "Brunei Dollar (BND)", "Bulgarian Lev (BGN)", "Burundian Franc (BIF)", "Cambodian Riel (KHR)", "Canadian Dollar (CAD)", "Cape Verdean Escudo (CVE)", "Cayman Islands Dollar (KYD)", "Central African CFA Franc (XAF)", "CFP Franc (XPF)", "Chilean Peso (CLP)", "Chinese Yuan Renminbi (CNY)", "Colombian Peso (COP)", "Comorian Franc (KMF)", "Congolese Franc (CDF)", "Costa Rican Colón (CRC)", "Cuban Peso (CUP)", "Czech Koruna (CZK)", "Danish Krone (DKK)", "Djiboutian Franc (DJF)", "Dominican Peso (DOP)", "East Caribbean Dollar (XCD)", "Egyptian Pound (EGP)", "Eritrean Nakfa (ERN)", "Eswatini Lilangeni (SZL)", "Ethiopian Birr (ETB)", "Euro (EUR)", "Falkland Islands Pound (FKP)", "Fijian Dollar (FJD)", "Gambian Dalasi (GMD)", "Georgian Lari (GEL)", "Ghanaian Cedi (GHS)", "Gibraltar Pound (GIP)", "Guatemalan Quetzal (GTQ)", "Guinean Franc (GNF)", "Guyanese Dollar (GYD)", "Haitian Gourde (HTG)", "Honduran Lempira (HNL)", "Hong Kong Dollar (HKD)", "Hungarian Forint (HUF)", "Icelandic Króna (ISK)", "Indian Rupee (INR)", "Indonesian Rupiah (IDR)", "Iranian Rial (IRR)", "Iraqi Dinar (IQD)", "Israeli New Shekel (ILS)", "Jamaican Dollar (JMD)", "Japanese Yen (JPY)", "Jordanian Dinar (JOD)", "Kazakhstani Tenge (KZT)", "Kenyan Shilling (KES)", "Kuwaiti Dinar (KWD)", "Kyrgyzstani Som (KGS)", "Lao Kip (LAK)", "Lebanese Pound (LBP)", "Lesotho Loti (LSL)", "Liberian Dollar (LRD)", "Libyan Dinar (LYD)", "Macanese Pataca (MOP)", "Malagasy Ariary (MGA)", "Malawian Kwacha (MWK)", "Malaysian Ringgit (MYR)", "Maldivian Rufiyaa (MVR)", "Mauritanian Ouguiya (MRU)", "Mauritian Rupee (MUR)", "Mexican Peso (MXN)", "Moldovan Leu (MDL)", "Mongolian Tögrög (MNT)", "Moroccan Dirham (MAD)", "Mozambican Metical (MZN)", "Myanmar Kyat (MMK)", "Namibian Dollar (NAD)", "Nepalese Rupee (NPR)", "Netherlands Antillean Guilder (ANG)", "New Taiwan Dollar (TWD)", "New Zealand Dollar (NZD)", "Nicaraguan Córdoba (NIO)", "Nigerian Naira (NGN)", "North Korean Won (KPW)", "North Macedonian Denar (MKD)", "Norwegian Krone (NOK)", "Omani Rial (OMR)", "Pakistani Rupee (PKR)", "Panamanian Balboa (PAB)", "Papua New Guinean Kina (PGK)", "Paraguayan Guaraní (PYG)", "Peruvian Sol (PEN)", "Philippine Peso (PHP)", "Polish Złoty (PLN)", "Qatari Riyal (QAR)", "Romanian Leu (RON)", "Russian Ruble (RUB)", "Rwandan Franc (RWF)", "Saint Helena Pound (SHP)", "Samoan Tālā (WST)", "São Tomé and Príncipe Dobra (STN)", "Saudi Riyal (SAR)", "Serbian Dinar (RSD)", "Seychellois Rupee (SCR)", "Sierra Leonean Leone (SLE)", "Singapore Dollar (SGD)", "Solomon Islands Dollar (SBD)", "Somali Shilling (SOS)", "South African Rand (ZAR)", "South Korean Won (KRW)", "South Sudanese Pound (SSP)", "Sri Lankan Rupee (LKR)", "Sudanese Pound (SDG)", "Surinamese Dollar (SRD)", "Swedish Krona (SEK)", "Swiss Franc (CHF)", "Syrian Pound (SYP)", "Tajikistani Somoni (TJS)", "Tanzanian Shilling (TZS)", "Thai Baht (THB)", "Tongan Paʻanga (TOP)", "Trinidad and Tobago Dollar (TTD)", "Tunisian Dinar (TND)", "Turkish Lira (TRY)", "Turkmenistani Manat (TMT)", "Ugandan Shilling (UGX)", "Ukrainian Hryvnia (UAH)", "United Arab Emirates Dirham (AED)", "United States Dollar (USD)", "Uruguayan Peso (UYU)", "Uzbekistani Som (UZS)", "Vanuatu Vatu (VUV)", "Venezuelan Bolívar (VES)", "Vietnamese Đồng (VND)", "West African CFA Franc (XOF)", "Yemeni Rial (YER)", "Zambian Kwacha (ZMW)", "Zimbabwe Gold (ZWG)"].sort((a, b) => a.localeCompare(b));
+
     const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
 
     function initDropdown(dd) {
+      const LIST = dd.dataset.list === 'currency' ? CURRENCIES : COURSES;
       const btn = dd.querySelector('.dd-btn');
       const text = dd.querySelector('.dd-text');
       let menu = null, value = '';
@@ -1446,6 +1467,12 @@
       function choose(v) {
         value = v;
         text.textContent = v;
+        const target = dd.dataset.target && document.getElementById(dd.dataset.target);
+        if (target) {                       // hidden field holds the 3-letter code, e.g. USD
+          const m = /\(([A-Z]{3})\)$/.exec(v);
+          target.value = m ? m[1] : '';
+          target.dispatchEvent(new Event('input', { bubbles: true }));
+        }
         close(true);
       }
 
@@ -1454,7 +1481,7 @@
         menu.className = 'dd-menu';
         menu.setAttribute('role', 'listbox');
         menu.setAttribute('aria-label', dd.dataset.label || 'Course');
-        menu.innerHTML = COURSES.map((c, i) =>
+        menu.innerHTML = LIST.map((c, i) =>
           '<div class="dd-opt" role="option" tabindex="-1" data-i="' + i + '" aria-selected="' + (c === value) + '"><span>' + c + '</span>' + CHECK + '</div>'
         ).join('') + (value ? '<button type="button" class="dd-clear">Clear selection</button>' : '');
         dd.appendChild(menu);
@@ -1463,7 +1490,7 @@
 
         menu.addEventListener('click', (e) => {
           const opt = e.target.closest('.dd-opt');
-          if (opt) choose(COURSES[Number(opt.dataset.i)]);
+          if (opt) choose(LIST[Number(opt.dataset.i)]);
           else if (e.target.closest('.dd-clear')) choose('');
         });
         menu.addEventListener('keydown', (e) => {
@@ -1473,7 +1500,7 @@
           else if (e.key === 'ArrowUp') { e.preventDefault(); items[Math.max(0, idx - 1)].focus(); }
           else if (e.key === 'Home') { e.preventDefault(); items[0].focus(); }
           else if (e.key === 'End') { e.preventDefault(); items[items.length - 1].focus(); }
-          else if ((e.key === 'Enter' || e.key === ' ') && idx >= 0) { e.preventDefault(); choose(COURSES[Number(items[idx].dataset.i)]); }
+          else if ((e.key === 'Enter' || e.key === ' ') && idx >= 0) { e.preventDefault(); choose(LIST[Number(items[idx].dataset.i)]); }
           else if (e.key === 'Escape') { e.preventDefault(); close(true); }
           else if (e.key === 'Tab') { close(false); }
         });
@@ -2254,7 +2281,7 @@
     const factor = document.getElementById('convFactor');
     const btn = document.getElementById('convBtn');
     const panel = document.getElementById('convPanel');
-    const deds = Array.from(document.querySelectorAll('#paperComp .cs-ded'));
+    let deds = Array.from(document.querySelectorAll('#paperComp .cs-ded'));
     const PESO = '\u20B1';
 
     const parseVal = (v) => {
@@ -2311,15 +2338,54 @@
       document.getElementById('rcptPre').textContent = (open && code) ? code.toUpperCase() : PESO;
     }
 
-    deds.forEach((inp) => {
+    function bindDed(inp) {
       const pre = inp.closest('.amt-cell').querySelector('.neg-pre');
       const sync = () => pre.classList.toggle('on', inp.value.trim() !== '');
       inp.addEventListener('input', () => { sync(); calc(); });
       inp.addEventListener('blur', sync);
+    }
+    deds.forEach(bindDed);
+
+    /* Additional deductions: the + beside Change Fee (and beside each added row) inserts a row below; x deletes it */
+    const ROW_HTML = '<td class="nat"><div class="oth-wrap"><input type="text" class="inp-line"></div><button type="button" class="row-add no-print" title="Add a row below" aria-label="Add a row below"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></td><td><div class="amt-cell"><span class="pre neg-pre" aria-hidden="true">&#8369;</span><input type="text" class="inp-line cs-money cs-ded" inputmode="decimal"></div><button type="button" class="row-del no-print" title="Delete this row" aria-label="Delete this row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></td>';
+    const othRows = () => Array.from(document.querySelectorAll('#paperComp .oth-row'));
+    function renumber() {
+      othRows().forEach((r, i) => {
+        r.querySelector('.oth-wrap input').setAttribute('aria-label', 'Additional deduction ' + (i + 1));
+        r.querySelector('.cs-ded').setAttribute('aria-label', 'Amount deducted: Additional ' + (i + 1));
+      });
+    }
+    document.querySelector('#paperComp .cs-table tbody').addEventListener('click', (e) => {
+      const add = e.target.closest('.row-add');
+      const del = e.target.closest('.row-del');
+      if (!add && !del) return;
+      const row = e.target.closest('tr');
+      if (add) {
+        const nr = document.createElement('tr');
+        nr.className = 'oth-row';
+        nr.innerHTML = ROW_HTML;
+        row.after(nr);
+        const ded = nr.querySelector('.cs-ded');
+        deds.push(ded);
+        bindDed(ded);
+        renumber();
+        nr.querySelector('.oth-wrap input').focus();
+      } else {
+        const ded = row.querySelector('.cs-ded');
+        deds = deds.filter((d) => d !== ded);
+        row.remove();
+        renumber();
+        calc();
+      }
     });
 
     rcpt.addEventListener('input', calc);
     factor.addEventListener('input', calc);
+    factor.addEventListener('blur', () => {   // same look as the equivalent amount: thousands separators, at least 2 decimals
+      if (factor.value.trim() === '') return;
+      factor.value = parseVal(factor.value).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 4 });
+      calc();
+    });
     cur.addEventListener('input', calc);
 
     btn.addEventListener('click', () => {
@@ -2327,7 +2393,7 @@
       btn.setAttribute('aria-expanded', String(open));
       panel.hidden = !open;
       calc();
-      if (open) cur.focus();
+      if (open) document.getElementById('currencyBtn').focus();
     });
 
     calc();
