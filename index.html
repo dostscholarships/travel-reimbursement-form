@@ -486,7 +486,7 @@
     border-radius: 12px;
   }
   .size-lbl { font-size: 12px; font-weight: 700; letter-spacing: 0.5px; }
-  .size-row { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; }
+  .size-row { display: flex; align-items: center; justify-content: center; gap: 4px; width: 100%; margin-top: 7px; }
   .size-btn {
     width: 32px;
     height: 32px;
@@ -590,10 +590,20 @@
   .side-left .btn svg, .side-right .btn svg { width: 30px; height: 30px; stroke-width: 1.8; }
   .side-left .btn .btn-label, .side-right .btn .btn-label { font-size: 10.5px; letter-spacing: 0.3px; line-height: 1.25; }
   .side-tools > .btn-bar.tools-bar { padding: 8px; gap: 10px; }
-  .side-note-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .side-note-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; margin-top: 7px; }
   .side-note-wrap[hidden] { display: none; }
-  .side-arrow { width: 26px; height: 33px; color: var(--accent); }
-  .side-note { padding: 9px 10px; background: #ffffff; border: 1px solid var(--accent); border-radius: 12px; color: var(--accent); font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 11px; font-weight: 700; line-height: 1.4; text-align: center; }
+  .side-arrow { width: 36px; height: 56px; color: var(--accent); overflow: visible; animation: arrow-bob 1.6s ease-in-out infinite; }
+  @keyframes note-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+  @keyframes arrow-bob { 0%, 100% { transform: translateY(5px); } 50% { transform: translateY(-5px); } }
+  .side-note {
+    position: relative; overflow: hidden; isolation: isolate; margin-top: 10px; width: calc((100% - 18px) / 1.06); animation: note-pulse 1.6s ease-in-out infinite;
+    padding: 13px 12px; background: var(--accent); border: 1px solid var(--accent); border-radius: 12px; color: #ffffff;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; font-size: 13.5px; font-weight: 700; line-height: 1.45; text-align: center;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .side-arrow { animation: none; }
+    .side-note { animation: none; }
+  }
 
   .sei-header { text-align: center; margin-top: 6px; }
   .sei-header .org { font-size: 14px; font-weight: 700; letter-spacing: 0.2px; }
@@ -1285,7 +1295,7 @@
     <span class="btn-label">COMPUTATION SHEET</span>
   </button>
 </div>
-<div class="side-note-wrap" id="compNote"><svg class="side-arrow" viewBox="0 0 28 36" aria-hidden="true"><path d="M14 2 L27 18 H19 V34 H9 V18 H1 Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><div class="side-note" role="note">Fill out the Computation Sheet if the amount to be reimbursed is different from the amount indicated on the sales invoice.</div></div>
+<div class="side-note-wrap" id="compNote"><svg class="side-arrow" viewBox="0 0 36 56" aria-hidden="true"><path d="M18 2 L35 22 H25 V54 H11 V22 H1 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><div class="side-note" role="note">Fill out the Computation Sheet if the amount to be reimbursed is different from the amount indicated on the sales invoice.</div></div>
 </div>
 
 <!-- RIGHT (fixed, hugs the sheet): upload / print -->
@@ -2782,7 +2792,7 @@
     });
     document.addEventListener('pointerdown', (e) => { if (openCombo && !openCombo.root.contains(e.target)) close(); }, true);
   })();
+
 </script>
 
 </body>
-</html>
