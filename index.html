@@ -605,7 +605,7 @@
 
   .info3 {
     display: grid;
-    grid-template-columns: 1fr 1.15fr 0.6fr;
+    grid-template-columns: 1.2fr 330px 1fr;
     gap: 7px 16px;
     margin-bottom: 16px;
   }
@@ -619,10 +619,39 @@
   }
   .f-cell .lbl { font-weight: 700; font-size: 13px; }
   .f-cell .inp-line { font-size: 13px; min-width: 0; }
-  .f-cell.degree { grid-column: 2 / -1; }
+  .f-cell.degree { grid-column: 1 / -1; }
+  .f-cell .inp-line.short { flex: none; width: 104px; }
 
-  .addr { margin-bottom: 14px; }
+  .addr { margin-bottom: 30px; padding: 12px 14px 14px; border: 1.5px dashed rgba(0, 0, 0, 0.3); border-radius: 8px; }
+  #paperTravel .inp-line, #paperTravel .inp-amt, #paperTravel .inp-total { text-align: center; }
+  #paperTravel .cb .inp-line { padding-left: 18px; }
+  #paperTravel .addr-zip .cb .inp-line { padding-left: 4px; }
+  #paperTravel .dd-text { text-align: left; }
+  #paperTravel input[aria-label="Name"], #paperTravel input[aria-label="School"] { text-align: left; }
   .addr .f-cell + .f-cell { margin-top: 10px; }
+  .addr-row { display: flex; gap: 14px; margin-top: 0; }
+  .addr-row .f-cell { flex: 1 1 0; }
+  .addr-row .f-cell + .f-cell { margin-top: 0; }
+  .addr-row .addr-muni, .addr-row .addr-city, .addr-row .addr-prov { flex: 1 1 0; }
+  .addr-row .addr-zip { flex: 0 0 112px; }
+  .addr-row .addr-zip .cb .inp-line { padding-right: 4px; }
+  .addr-row .addr-zip .dd-caret { display: none; }
+  .addr-row .addr-zip .cb-menu { left: 0; right: auto; }
+  .addr-top { display: flex; gap: 14px; margin-top: 10px; }
+  .addr-top .f-cell { margin-top: 0 !important; }
+  .addr-top .f-cell:not(.addr-brgy):not(.addr-zip) { flex: 1.6 1 0; }
+  .addr-top .addr-zip { flex: 0 0 112px; }
+  .addr-top .addr-zip .cb .inp-line { padding-right: 4px; }
+  .addr-top .addr-zip .dd-caret { display: none; }
+  .addr-top .addr-brgy { flex: 1 1 0; }
+  .cb { position: relative; flex: 1; display: flex; min-width: 0; }
+  .cb .inp-line { width: 100%; padding-right: 18px; text-overflow: ellipsis; }
+  .cb .dd-caret { position: absolute; right: 2px; top: 50%; margin: -7px 0 0; pointer-events: none; }
+  .cb-menu { min-width: 260px; }
+  .dd-opt.active { background: var(--accent-soft); }
+  .dd-opt > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .dd-opt .opt-sub { flex: none; font-size: 11px; color: #64748b; white-space: nowrap; }
+  .dd-note { padding: 8px 12px; font-size: 12px; line-height: 1.35; color: #64748b; }
 
   .period { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
   .period-left { width: 142px; flex: none; font-size: 13px; }
@@ -668,13 +697,22 @@
   }
 
   /* Computation Sheet Specific CSS */
-  .cs-head { text-align: center; margin: 4px 0 16px; }
-  .cs-title { font-size: 17px; font-weight: 700; text-decoration: underline; letter-spacing: 0.2px; }
-  .cs-sub { font-size: 14px; margin-top: 5px; }
+  .cs-head { text-align: center; margin: 6px 0 18px; padding: 0; }
+  .cs-title { font-size: 17px; font-weight: 700; letter-spacing: 0.2px; text-transform: uppercase; color: #000000; }
+  .cs-sub { margin-top: 4px; font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none; color: #000000; }
 
-  .cs-info { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin-bottom: 16px; }
-  .cs-info .info-row { font-size: 13px; display: flex; align-items: flex-end; }
-  .cs-info .info-row.full { grid-column: 1 / -1; }
+  .cs-info { display: grid; grid-template-columns: 1.7fr 1fr; gap: 4px 16px; margin-bottom: 16px; padding: 0; }
+  .cs-info .info-row { position: relative; display: flex; flex-direction: row; align-items: flex-end; gap: 4px; min-width: 0; }
+  .cs-info .info-row .lbl { white-space: nowrap; flex: none; padding: 0; font-size: 13px; font-weight: 700; letter-spacing: 0; text-transform: uppercase; color: #000000; }
+  .cs-info .info-row .lbl::after { content: ":"; }
+  .cs-info .inp-line { flex: 1; min-width: 0; width: auto; height: 20px; padding: 0 4px 1px 4px; font-size: 13px; font-weight: 400; color: #000000; background: transparent; border: none; border-bottom: 1px solid var(--line-black); border-radius: 0; }
+  .email-warn { position: absolute; left: 0; top: 100%; margin-top: 2px; font-size: 10.5px; line-height: 1.1; color: #b91c1c; white-space: nowrap; }
+  @media screen {
+    .cs-info .inp-line.invalid, .cs-info .inp-line.invalid:focus { border-bottom-color: #b91c1c; box-shadow: 0 1px 0 #b91c1c; }
+  }
+  @media screen {
+    .cs-info .inp-line:focus { background: var(--accent-soft); border-bottom-color: var(--accent); box-shadow: 0 1px 0 var(--accent); }
+  }
 
   .rcpt { margin-bottom: 14px; }
   .rcpt-row { display: flex; align-items: flex-end; gap: 12px; min-height: 22px; font-size: 13px; }
@@ -750,6 +788,7 @@
   .cs-table tbody .amt-cell .neg-pre { left: 1.42em; }   /* peso sign lines up with the totals table */
   .cs-table tfoot td { font-weight: 700; }
   .cs-table tr.net .amt-cell { color: #15803d; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .cs-table tr.net .amt-cell.neg { color: #dc2626; }
   .cs-table tr.net td { border-top: 2px solid var(--line-black); border-bottom: 3px double var(--line-black); }
   .sum-note { display: block; font-size: 10.5px; font-weight: 400; font-style: italic; line-height: 1.15; }
 
@@ -1027,13 +1066,12 @@
     <div class="info3">
       <div class="f-cell"><span class="lbl">NAME:</span><input type="text" class="inp-line" aria-label="Name"></div>
       <div class="f-cell"><span class="lbl">YEAR OF SCHOLARSHIP AWARD:</span><input type="text" class="inp-line inp-center" aria-label="Year of Scholarship Award"></div>
-      <div class="f-cell"><span class="lbl">ID NUMBER:</span><input type="text" class="inp-line inp-center" aria-label="ID Number"></div>
+      <div class="f-cell"><span class="lbl">ID NO.:</span><input type="text" class="inp-line inp-center" aria-label="ID Number"></div>
 
       <div class="f-cell"><span class="lbl">SCHOOL:</span><input type="text" class="inp-line" value="Ateneo de Manila University" aria-label="School"></div>
       <div class="f-cell"><span class="lbl">CURRENT YEAR LEVEL:</span><input type="text" class="inp-line inp-center" aria-label="Current Year Level"></div>
-      <div></div>
-
       <div class="f-cell"><span class="lbl">CONTACT NO.:</span><input type="text" class="inp-line inp-center" maxlength="13" aria-label="Contact Number"></div>
+
       <div class="f-cell degree">
         <span class="lbl" id="degreeLbl">DEGREE PROGRAM:</span>
         <div class="dd" id="degreeDD" data-label="Degree Program">
@@ -1046,8 +1084,16 @@
     </div>
 
     <div class="addr">
-      <div class="f-cell"><span class="lbl">PERMANENT ADDRESS:</span><input type="text" class="inp-line" aria-label="Permanent Address"></div>
-      <div class="f-cell"><input type="text" class="inp-line" aria-label="Permanent Address, continued"></div>
+      <div class="addr-row">
+      <div class="f-cell addr-prov"><span class="lbl">PROVINCE:</span><div class="cb" data-kind="province"><input type="text" class="inp-line" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" aria-label="Province"><svg class="dd-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+      <div class="f-cell addr-city"><span class="lbl">CITY:</span><div class="cb" data-kind="city"><input type="text" class="inp-line" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" aria-label="City"><svg class="dd-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+      <div class="f-cell addr-muni"><span class="lbl">MUNICIPALITY:</span><div class="cb" data-kind="municipality"><input type="text" class="inp-line" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" aria-label="Municipality"><svg class="dd-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+      </div>
+      <div class="addr-top">
+        <div class="f-cell addr-brgy"><span class="lbl">BARANGAY:</span><div class="cb" data-kind="barangay"><input type="text" class="inp-line" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" aria-label="Barangay"><svg class="dd-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+      <div class="f-cell addr-zip"><span class="lbl">ZIP CODE:</span><div class="cb" data-kind="zip"><input type="text" class="inp-line" role="combobox" aria-autocomplete="list" aria-expanded="false" autocomplete="off" aria-label="ZIP Code" inputmode="numeric" maxlength="4"><svg class="dd-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+        <div class="f-cell"><span class="lbl">ADDRESS:</span><input type="text" class="inp-line" id="addrSpecific" placeholder="House/Lot No., Street, Subdivision" aria-label="Address"></div>
+      </div>
     </div>
 
     <div class="period">
@@ -1108,10 +1154,10 @@
 
     <!-- Scholar information -->
     <div class="cs-info">
-      <div class="info-row full"><span class="lbl">Name:</span><input type="text" class="inp-line" aria-label="Name"></div>
-      <div class="info-row full"><span class="lbl">Ateneo Student Email Address:</span><input type="text" inputmode="email" autocomplete="off" class="inp-line" aria-label="Ateneo Student Email Address"></div>
-      <div class="info-row"><span class="lbl">ID No.:</span><input type="text" class="inp-line ctr" aria-label="ID No."></div>
-      <div class="info-row"><span class="lbl">Contact No.:</span><input type="text" class="inp-line ctr" maxlength="13" aria-label="Contact Number"></div>
+      <div class="info-row"><span class="lbl">Name</span><input type="text" class="inp-line" aria-label="Name"></div>
+      <div class="info-row"><span class="lbl">ID No.</span><input type="text" class="inp-line" aria-label="ID No."></div>
+      <div class="info-row"><span class="lbl">Email</span><input type="text" inputmode="email" autocomplete="off" class="inp-line" aria-label="Email"></div>
+      <div class="info-row"><span class="lbl">Contact No.</span><input type="text" class="inp-line" maxlength="13" aria-label="Contact Number"></div>
     </div>
 
     <!-- Total on the receipt + currency converter -->
@@ -2280,6 +2326,25 @@
     update();
   })();
 
+  /* ===== Travel form: amount column shows 2 decimal places (editable); empty stays empty ===== */
+  (function () {
+    document.querySelectorAll('#paperTravel .inp-amt').forEach((inp) => {
+      inp.addEventListener('input', () => {   // digits and a single decimal point only
+        const v = inp.value.replace(/[^0-9.]/g, '');
+        const i = v.indexOf('.');
+        const clean = i === -1 ? v : v.slice(0, i + 1) + v.slice(i + 1).replace(/\./g, '');
+        if (clean !== inp.value) inp.value = clean;
+      });
+      inp.addEventListener('blur', () => {
+        const raw = inp.value.replace(/[^0-9.]/g, '');
+        const n = parseFloat(raw);
+        const next = (raw === '' || !isFinite(n)) ? '' : n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        if (next !== inp.value) { inp.value = next; inp.dispatchEvent(new Event('input', { bubbles: true })); }
+      });
+      inp.addEventListener('focus', () => { inp.value = inp.value.replace(/,/g, ''); });   // plain number while editing
+    });
+  })();
+
   /* Computation Sheet Real-time Calculations with Negative Sign Prefix Support */
   (function () {
     const rcpt = document.getElementById('rcptAmt');
@@ -2340,6 +2405,7 @@
       setAmountDisplay('sumRcpt', base);
       setAmountDisplay('sumDed', d > 0 ? -d : 0);
       setAmountDisplay('sumNet', net);
+      document.getElementById('sumNet').closest('.amt-cell').classList.toggle('neg', net < 0);
 
       const code = cur.value.trim();
       document.getElementById('rcptPre').textContent = (open && code) ? code.toUpperCase() : PESO;
@@ -2348,8 +2414,16 @@
     function bindDed(inp) {
       const pre = inp.closest('.amt-cell').querySelector('.neg-pre');
       const sync = () => pre.classList.toggle('on', inp.value.trim() !== '');
+      if (inp.value.trim() === '') inp.value = '0.00';      // empty deductions read 0.00
+      sync();
       inp.addEventListener('input', () => { sync(); calc(); });
-      inp.addEventListener('blur', sync);
+      inp.addEventListener('change', () => { if (inp.value.trim() === '') { inp.value = '0.00'; sync(); calc(); } });
+      inp.addEventListener('focus', () => { if (parseVal(inp.value) === 0) setTimeout(() => inp.select(), 0); });   // typing replaces the 0.00
+      inp.addEventListener('blur', () => {
+        inp.value = inp.value.trim() === '' ? '0.00' : numFmt(parseVal(inp.value));
+        sync();
+        calc();
+      });
     }
     deds.forEach(bindDed);
 
@@ -2404,6 +2478,255 @@
     });
 
     calc();
+  })();
+
+  /* ===== Computation Sheet: Email must end with @student.ateneo.edu ===== */
+  (function () {
+    const input = document.querySelector('#paperComp input[aria-label="Email"]');
+    if (!input) return;
+    const DOMAIN = '@student.ateneo.edu';
+    const warn = document.createElement('span');
+    warn.className = 'email-warn no-print';
+    warn.setAttribute('role', 'alert');
+    warn.hidden = true;
+    warn.textContent = 'Use your Ateneo student email address';
+    input.parentElement.appendChild(warn);
+    let touched = false;
+
+    function valid() {
+      const v = input.value.trim().toLowerCase();
+      return v.length > DOMAIN.length && v.endsWith(DOMAIN) && !/\s/.test(v) && v.indexOf('@') === v.length - DOMAIN.length;
+    }
+    function check() {
+      const bad = touched && !valid();
+      warn.hidden = !bad;
+      input.classList.toggle('invalid', bad);
+      input.setAttribute('aria-invalid', String(bad));
+      input.setCustomValidity(valid() ? '' : 'Use your Ateneo student email address');
+    }
+    input.addEventListener('blur', () => { touched = true; check(); });
+    input.addEventListener('input', check);
+  })();
+
+  /* ===== Permanent Address: typable dropdowns (Barangay, Municipality, City, Province, ZIP Code) ===== */
+  (function () {
+    const API = 'https://psgc.gitlab.io/api';   // PSA PSGC data: provinces, cities, municipalities, barangays
+    const ZIP_URL = 'https://gist.githubusercontent.com/chrisbjr/784565232f10cba6530856dc7fda367a/raw/ph-zip-codes.json';   // [{ "area": "PH - Abra Bangued", "zip": "2800" }, ...]
+    const ZIP_DATA = [];                         // filled at runtime: [{ zip: '2800', place: 'Abra Bangued' }, ...]
+    const FALLBACK_PROVINCES = ["Abra", "Agusan del Norte", "Agusan del Sur", "Aklan", "Albay", "Antique", "Apayao", "Aurora", "Basilan", "Bataan", "Batanes", "Batangas", "Benguet", "Biliran", "Bohol", "Bukidnon", "Bulacan", "Cagayan", "Camarines Norte", "Camarines Sur", "Camiguin", "Capiz", "Catanduanes", "Cavite", "Cebu", "Cotabato", "Davao de Oro", "Davao del Norte", "Davao del Sur", "Davao Occidental", "Davao Oriental", "Dinagat Islands", "Eastern Samar", "Guimaras", "Ifugao", "Ilocos Norte", "Ilocos Sur", "Iloilo", "Isabela", "Kalinga", "La Union", "Laguna", "Lanao del Norte", "Lanao del Sur", "Leyte", "Maguindanao del Norte", "Maguindanao del Sur", "Marinduque", "Masbate", "Misamis Occidental", "Misamis Oriental", "Mountain Province", "Negros Occidental", "Negros Oriental", "Northern Samar", "Nueva Ecija", "Nueva Vizcaya", "Occidental Mindoro", "Oriental Mindoro", "Palawan", "Pampanga", "Pangasinan", "Quezon", "Quirino", "Rizal", "Romblon", "Samar", "Sarangani", "Siquijor", "Sorsogon", "South Cotabato", "Southern Leyte", "Sultan Kudarat", "Sulu", "Surigao del Norte", "Surigao del Sur", "Tarlac", "Tawi-Tawi", "Zambales", "Zamboanga del Norte", "Zamboanga del Sur", "Zamboanga Sibugay"];
+    const NCR = { name: 'Metro Manila', code: '130000000', synthetic: true };
+
+    const norm = (s) => String(s == null ? '' : s).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const byName = (a, b) => a.name.localeCompare(b.name);
+    const asList = (x) => Array.isArray(x) ? x : ((x && (x.data || x.results)) || []);
+    const data = { prov: [], city: [], muni: [], brgy: [] };
+    const state = { prov: 'idle', place: 'idle', brgy: 'idle', zip: 'idle' };   // idle | loading | ok | error
+    function loadZip() {
+      if (state.zip !== 'idle') return;
+      state.zip = 'loading';
+      fetch(ZIP_URL).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); }).then((x) => {
+        asList(x).forEach((z) => {
+          const zip = String(z.zip || '').trim();
+          if (/^\d{4}$/.test(zip)) ZIP_DATA.push({ zip, place: String(z.area || '').replace(/^PH\s*-\s*/i, '').trim() });
+        });
+        ZIP_DATA.sort((a, b) => a.zip.localeCompare(b.zip) || a.place.localeCompare(b.place));
+        state.zip = ZIP_DATA.length ? 'ok' : 'error'; refresh();
+      }).catch(() => { state.zip = 'error'; refresh(); });
+    }
+    const placeName = {};                                          // PSGC code (or 6-digit prefix) -> place name
+    let openCombo = null;
+
+    const getJSON = (path) => fetch(API + path).then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); });
+    const provPrefix = (p) => (p.synthetic || p.code === NCR.code) ? '13' : (p.code || '').slice(0, 4);
+    const inProvince = (item, p) => { const x = provPrefix(p); return !x || item.provinceCode === p.code || item.code.startsWith(x); };
+    const provinceOf = (item) => data.prov.find((p) => provPrefix(p) && item.code.startsWith(provPrefix(p))) || null;
+
+    function loadProv() {
+      if (state.prov !== 'idle') return;
+      state.prov = 'loading';
+      getJSON('/provinces.json').then((x) => {
+        data.prov = asList(x).map((p) => ({ name: p.name, code: String(p.code) }));
+        if (!data.prov.some((p) => norm(p.name) === 'metro manila')) data.prov.push(NCR);
+      }).catch(() => {
+        data.prov = FALLBACK_PROVINCES.map((n) => ({ name: n, code: '' }));
+        data.prov.push({ name: 'Metro Manila', code: '', synthetic: true });
+      }).then(() => { data.prov.sort(byName); state.prov = 'ok'; refresh(); });
+    }
+    function loadPlaces() {
+      if (state.place !== 'idle') return;
+      state.place = 'loading';
+      const shape = (x) => asList(x).map((c) => ({ name: c.name, code: String(c.code), provinceCode: typeof c.provinceCode === 'string' ? c.provinceCode : '' }));
+      Promise.all([getJSON('/cities.json'), getJSON('/municipalities.json')]).then((r) => {
+        data.city = shape(r[0]).sort(byName);
+        data.muni = shape(r[1]).sort(byName);
+        data.city.concat(data.muni).forEach((c) => { placeName[c.code] = c.name; placeName[c.code.slice(0, 6)] = c.name; });
+        data.city.forEach((c) => { if (c.code === '133900000') for (let i = 1; i <= 17; i++) placeName['1339' + String(i).padStart(2, '0')] = c.name; });
+        state.place = 'ok'; refresh();
+      }).catch(() => { state.place = 'error'; refresh(); });
+    }
+    function loadBrgy() {
+      if (state.brgy !== 'idle') return;
+      state.brgy = 'loading';
+      getJSON('/barangays.json').then((x) => {
+        data.brgy = asList(x).map((b) => ({ name: b.name, code: String(b.code), cityCode: b.cityCode ? String(b.cityCode) : '', muniCode: b.municipalityCode ? String(b.municipalityCode) : '' })).sort(byName);
+        state.brgy = 'ok'; refresh();
+      }).catch(() => { state.brgy = 'error'; refresh(); });
+    }
+
+    const field = (kind) => document.querySelector('.cb[data-kind="' + kind + '"] input');
+    const val = (kind) => field(kind).value;
+    const findProv = () => { const v = norm(val('province')); return v ? data.prov.find((p) => norm(p.name) === v) || null : null; };
+    const findPlaces = (list, v, prov) => { const q = norm(v); return q ? list.filter((c) => norm(c.name) === q && (!prov || inProvince(c, prov))) : []; };
+
+    function rank(arr, text, limit) {
+      const q = norm(text);
+      if (!q) return { rows: arr.slice(0, limit), total: arr.length };
+      const a = [], b = [];
+      for (let i = 0; i < arr.length; i++) {
+        const it = arr[i], n = it._n || (it._n = norm(it.name));
+        if (n.startsWith(q)) a.push(it); else if (n.includes(q)) b.push(it);
+      }
+      return { rows: a.concat(b).slice(0, limit), total: a.length + b.length };
+    }
+
+    function compute(kind) {
+      const text = val(kind), LIMIT = 100;
+      const prov = findProv();
+      let list = [], note = '', total = 0, subOf = () => '';
+      if (kind === 'province') {
+        loadProv();
+        const r = rank(data.prov, text, LIMIT); list = r.rows; total = r.total;
+        if (state.prov === 'loading') note = 'Loading provinces…';
+      } else if (kind === 'city' || kind === 'municipality') {
+        loadProv(); loadPlaces();
+        const src = kind === 'city' ? data.city : data.muni;
+        const r = rank(prov ? src.filter((c) => inProvince(c, prov)) : src, text, LIMIT); list = r.rows; total = r.total;
+        subOf = (c) => { const p = provinceOf(c); return p ? p.name : ''; };
+        if (state.place === 'loading') note = 'Loading list…';
+        else if (state.place === 'error') note = 'The list could not be loaded (check your internet connection). You can still type it in.';
+      } else if (kind === 'barangay') {
+        loadProv(); loadPlaces(); loadBrgy();
+        const places = findPlaces(data.city, val('city'), prov).concat(findPlaces(data.muni, val('municipality'), prov));
+        let arr = data.brgy;
+        if (places.length) {
+          const codes = new Set(), pre = new Set();
+          places.forEach((p) => {
+            codes.add(p.code); pre.add(p.code.slice(0, 6));
+            if (p.code === '133900000') for (let i = 1; i <= 17; i++) pre.add('1339' + String(i).padStart(2, '0'));
+          });
+          arr = arr.filter((b) => codes.has(b.cityCode) || codes.has(b.muniCode) || pre.has(b.code.slice(0, 6)));
+        } else if (prov && provPrefix(prov)) {
+          const x = provPrefix(prov); arr = arr.filter((b) => b.code.startsWith(x));
+        }
+        subOf = (b) => placeName[b.cityCode] || placeName[b.muniCode] || placeName[b.code.slice(0, 6)] || '';
+        const scoped = places.length || (prov && provPrefix(prov));
+        if (state.brgy === 'loading') note = 'Loading barangays…';
+        else if (state.brgy === 'error') note = 'The list could not be loaded (check your internet connection). You can still type it in.';
+        else if (!scoped && !norm(text)) note = 'Choose a city/municipality first, or type to search all barangays.';
+        if (scoped || norm(text)) { const r = rank(arr, text, LIMIT); list = r.rows; total = r.total; }
+      } else {   // zip
+        loadZip();
+        const q = norm(text);
+        const clean = (s) => norm(s).replace(/^city of\s+/, '').replace(/\s+city$/, '').replace(/^municipality of\s+/, '').trim();
+        const place = clean(val('city') || val('municipality')), provText = norm(val('province'));
+        let arr = ZIP_DATA.map((z) => ({ name: z.zip, place: z.place || '', _n: norm(z.place) }));
+        let scoped = false;
+        if (place) { const m = arr.filter((z) => z._n.indexOf(place) !== -1); if (m.length) { arr = m; scoped = true; } }
+        if (!scoped && provText) { const m = arr.filter((z) => z._n.indexOf(provText) !== -1); if (m.length) arr = m; }
+        const f = arr.filter((z) => !q || z.name.startsWith(q) || (/\D/.test(q) && z._n.indexOf(q) !== -1));
+        list = f.slice(0, LIMIT); total = f.length;
+        subOf = (z) => z.place;
+        if (state.zip === 'loading') note = 'Loading ZIP codes…';
+        else if (!ZIP_DATA.length) note = 'The ZIP list could not be loaded (check your internet connection). You can still type the 4-digit ZIP code.';
+      }
+      return { rows: list.map((it) => ({ label: it.name, sub: subOf(it), item: it })), note, more: total > list.length ? total - list.length : 0 };
+    }
+
+    function setValue(kind, v) { field(kind).value = v; }
+    const matchesOutside = (list, v, prov) => { const hit = list.filter((c) => norm(c.name) === norm(v)); return hit.length > 0 && !hit.some((c) => inProvince(c, prov)); };
+
+    function onChoose(kind, row) {
+      const input = field(kind), prev = input.value;
+      input.value = row.label;
+      const changed = norm(prev) !== norm(row.label);
+      if (kind === 'province') {
+        const prov = findProv();
+        if (changed && prov && provPrefix(prov)) {
+          ['city', 'municipality'].forEach((k) => { if (matchesOutside(k === 'city' ? data.city : data.muni, val(k), prov)) setValue(k, ''); });
+        }
+        if (changed) setValue('barangay', '');
+      } else if (kind === 'city' || kind === 'municipality') {
+        setValue(kind === 'city' ? 'municipality' : 'city', '');
+        const p = provinceOf(row.item);
+        if (p) setValue('province', p.name);
+        if (changed) setValue('barangay', '');
+      }
+    }
+
+    function close() {
+      if (!openCombo) return;
+      const c = openCombo; openCombo = null;
+      if (c.menu) { c.menu.remove(); c.menu = null; }
+      c.input.setAttribute('aria-expanded', 'false');
+    }
+    function render(c) {
+      const res = compute(c.kind);
+      c.rows = res.rows;
+      c.active = res.rows.length ? Math.min(Math.max(c.active, 0), res.rows.length - 1) : -1;
+      if (!c.menu) {
+        c.menu = document.createElement('div');
+        c.menu.className = 'dd-menu cb-menu';
+        c.menu.setAttribute('role', 'listbox');
+        c.menu.addEventListener('mousedown', (e) => e.preventDefault());   // keep focus in the field
+        c.root.appendChild(c.menu);
+      }
+      c.menu.textContent = '';
+      c.rows.forEach((r, i) => {
+        const o = document.createElement('div');
+        o.className = 'dd-opt' + (i === c.active ? ' active' : '');
+        o.setAttribute('role', 'option');
+        const a = document.createElement('span'); a.textContent = r.label; o.appendChild(a);
+        if (r.sub) { const b = document.createElement('span'); b.className = 'opt-sub'; b.textContent = r.sub; o.appendChild(b); }
+        o.addEventListener('click', () => { onChoose(c.kind, r); close(); c.input.focus(); });
+        c.menu.appendChild(o);
+      });
+      const note = res.note || (res.more ? 'Showing the first ' + c.rows.length + ' matches. Keep typing to narrow it down.' : (!c.rows.length && norm(c.input.value) && c.kind !== 'zip' ? 'No match in the list. You can still type it in.' : ''));
+      if (note) { const n = document.createElement('div'); n.className = 'dd-note'; n.textContent = note; c.menu.appendChild(n); }
+      c.menu.hidden = !c.menu.children.length;
+    }
+    function open(c) {
+      if (openCombo && openCombo !== c) close();
+      openCombo = c; c.active = 0;
+      c.input.setAttribute('aria-expanded', 'true');
+      render(c);
+    }
+    function refresh() { if (openCombo) render(openCombo); }
+
+    document.querySelectorAll('.cb').forEach((root) => {
+      const c = { root, input: root.querySelector('input'), kind: root.dataset.kind, menu: null, rows: [], active: 0 };
+      c.input.addEventListener('focus', () => open(c));
+      c.input.addEventListener('click', () => { if (openCombo !== c) open(c); });
+      c.input.addEventListener('input', () => {
+        if (c.kind === 'zip') c.input.value = c.input.value.replace(/\D/g, '').slice(0, 4);
+        c.active = 0;
+        if (openCombo !== c) open(c); else render(c);
+      });
+      c.input.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (openCombo !== c) { open(c); return; }
+          if (!c.rows.length) return;
+          c.active = (c.active + (e.key === 'ArrowDown' ? 1 : -1) + c.rows.length) % c.rows.length;
+          render(c);
+          const el = c.menu.querySelector('.dd-opt.active'); if (el) el.scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'Enter') {
+          if (openCombo === c && c.active >= 0 && c.rows[c.active]) { e.preventDefault(); onChoose(c.kind, c.rows[c.active]); close(); }
+        } else if (e.key === 'Escape') {
+          if (openCombo === c) { e.preventDefault(); close(); }
+        } else if (e.key === 'Tab') { close(); }
+      });
+    });
+    document.addEventListener('pointerdown', (e) => { if (openCombo && !openCombo.root.contains(e.target)) close(); }, true);
   })();
 </script>
 
