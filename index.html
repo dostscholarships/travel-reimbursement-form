@@ -2385,20 +2385,35 @@
   /* ===== Travel form: amount column shows 2 decimal places (editable); empty stays empty ===== */
   (function () {
     document.querySelectorAll('#paperTravel .inp-amt').forEach((inp) => {
-      inp.addEventListener('input', () => {   // digits and a single decimal point only
-        const v = inp.value.replace(/[^0-9.]/g, '');
-        const i = v.indexOf('.');
-        const clean = i === -1 ? v : v.slice(0, i + 1) + v.slice(i + 1).replace(/\./g, '');
-        if (clean !== inp.value) inp.value = clean;
-      });
       inp.addEventListener('blur', () => {
         const raw = inp.value.replace(/[^0-9.]/g, '');
         const n = parseFloat(raw);
         const next = (raw === '' || !isFinite(n)) ? '' : n.toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         if (next !== inp.value) { inp.value = next; inp.dispatchEvent(new Event('input', { bubbles: true })); }
       });
-      inp.addEventListener('focus', () => { inp.value = inp.value.replace(/,/g, ''); });   // plain number while editing
     });
+  })();
+
+  /* ===== Amount fields: thousands separators appear while typing (1,234,567.89) ===== */
+  (function () {
+    const SEL = '.inp-amt, #rcptAmt, .cs-ded';
+    document.addEventListener('input', (e) => {
+      const el = e.target;
+      if (!el.matches || !el.matches(SEL) || el.readOnly) return;
+      const pos = el.selectionStart == null ? el.value.length : el.selectionStart;
+      const keep = el.value.slice(0, pos).replace(/[^0-9.]/g, '').length;   // digits/dot left of the caret
+      let raw = el.value.replace(/[^0-9.]/g, '');
+      const dot = raw.indexOf('.');
+      let int = dot === -1 ? raw : raw.slice(0, dot);
+      const dec = dot === -1 ? null : raw.slice(dot + 1).replace(/\./g, '').slice(0, 2);
+      int = int.replace(/^0+(?=\d)/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      const out = dec === null ? int : (int || '0') + '.' + dec;
+      if (out === el.value) return;
+      el.value = out;
+      let n = 0, caret = 0;
+      while (caret < out.length && n < keep) { if (out[caret] !== ',') n++; caret++; }
+      try { el.setSelectionRange(caret, caret); } catch (err) {}
+    }, true);
   })();
 
   /* Computation Sheet Real-time Calculations with Negative Sign Prefix Support */
